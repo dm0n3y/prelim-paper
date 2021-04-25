@@ -1,12 +1,21 @@
 \section{Overview}\label{sec:overview}
 
-\note{note explicitly the way our structure editor simplifies but still represents existing editors}
+Tiles-based structure editing departs from traditional
+structure editors in avoiding direct user modifications
+to the AST.
+Instead, much like with a text editor, the user modifies a separate
+``flattened'' editing structure that affords more flexible
+editing mechanisms, which is subsequently parsed into the
+abstract syntax.
+Unlike a text editor, however, a tiles-based editor ensures
+that the edit state can always be successfully parsed.
 
-\note{introduce new terminology, concrete vs abstract is overloaded, instead use something like language vs editor syntax}
+In this section we motivate and give an example-driven
+overview of tiles-based editing as implemented
+in \tylr. We begin by describing the limitations of
+traditional structure editors, then show how tiles-based
+editing overcomes these limitations.
 
-\note{make clear what's coming: naive vs our approach}
-
-\note{cite Hazelnut, Scratch, MPS}
 
 \begin{figure}
   \vspace{-3px}
