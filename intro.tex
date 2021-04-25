@@ -1,0 +1,66 @@
+\section{Introduction}\label{sec:intro}
+
+Structure editors let you directly edit the tree structure of your program.
+By eliminating syntax errors, they
+  provide cognitive benefits for novices and end-users;
+  simplify language composition and language-aware editor tooling;
+  and form an essential component of truly continuous live programming.
+\note{change phrasing to indicate longstanding problem: "structure editors have long promised..."}
+
+\begin{itemize}
+\item but usability issues
+\begin{itemize}
+    \item Despite these myriad benefits, however, structure editors have failed to achieve
+      widespread adoption by programmers beyond the novice level.
+    \item early reputation of being rigid, inefficient
+    \item some progress on relaxing rigid out-in construction
+\end{itemize}
+\item less attention paid to restructuring existing code
+\begin{itemize}
+  \item contemporary structure editors continue to suffer from high viscosity
+  \item eg Scratch
+  \begin{itemize}
+    \item requires clicking and dragging, large visual real estate
+    \item wrapping existing blocks in a new block:
+      create the new block,
+      pull out existing blocks and into new block,
+      then re-insert new block
+    \item deleting a form while preserving some or all children:
+      need to pull child out of form before deleting,
+      then pull child back into the form
+    \item replacing a block with a different one
+    \item \note{
+      perhaps modify framing to cite papers that already note structure editing is a problem, take quotes, establish as recognized problem.
+      look at Guzdial's paper.
+    }
+  \end{itemize}
+  \item eg MPS
+  \begin{itemize}
+    \item designed to more closely emulate text editing experience
+    \item better affordances for some edits described above,
+      eg linear text-like entry of syntactic forms,
+      eg auto-preserving first child on deletion of form (if same sort)
+    \item but text-like appearance presents new challenges,
+      eg selecting \texttt{2 + 3} in \texttt{2 + 3 * 4},
+      eg lack of signifiers making it difficult to predict deletion (experts struggle
+  \end{itemize}
+  \item in general, no ability to select and directly modify substructural
+    and cross-cutting portions of programs (where desirable selections are
+    dictated not by the tree structure of language grammar but rather the
+    projection of the program into a 2d layout)
+  \item \note{perhaps describe more generally as tension between linear vs tree structures}
+  \item \note{distinguish semantic structure vs surface structure? syntactic structure? user structure? projectional structure?}
+\end{itemize}
+\item our approach
+\begin{itemize}
+    \item \note{tree and linear structure can co-exist}
+    \item we propose a new model of tiles for representing a structure editor's edit state along with editing mechanics for these tiles that...
+\end{itemize}
+\item contributions
+\begin{itemize}
+  \item \note{mention modal nature as a way of doing edits within projectional structure}
+  \item \note{note that mode ensures the only way to exit is in a semantically structured state}
+\end{itemize}
+\item outline
+\end{itemize}
+

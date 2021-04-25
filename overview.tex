@@ -1,0 +1,182 @@
+\section{Overview}\label{sec:overview}
+
+\note{note explicitly the way our structure editor simplifies but still represents existing editors}
+
+\note{introduce new terminology, concrete vs abstract is overloaded, instead use something like language vs editor syntax}
+
+\note{make clear what's coming: naive vs our approach}
+
+\note{cite Hazelnut, Scratch, MPS}
+
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Typ} & \styp & ::= &
+          % \tnum ~\vert~
+          \shole ~\vert~
+          \sbool ~\vert~
+          \snum ~\vert~
+          \sarr{\styp}{\styp} ~\vert~
+          \sprod{\styp}{\styp}\\
+      \mathsf{Pat} & \spat & ::= &
+        \shole ~\vert~
+        \svar{x} ~\vert~
+        \sann{p}{\styp} ~\vert~
+        \sprod{\spat}{\spat}\\
+      \mathsf{Exp} & \sexp & ::= &
+        \shole ~\vert~
+        \sboollit{b} ~\vert~
+        \snumlit{n} ~\vert~
+        \svar{x} \\
+      & & \vert &
+        \slam{\spat}{\sexp} ~\vert~
+        \slet{\spat}{\sexp}{\sexp}\\
+      & & \vert &
+        \sap{\sexp}{\sexp} ~\vert~
+        \splus{\sexp}{\sexp} ~\vert~
+        \sequals{\sexp}{\sexp} ~\vert~
+        \scond{\sexp}{\sexp}{\sexp}
+  \end{array}\]
+  \caption{
+    Language syntax of types $\styp$, patterns $\spat$, and expressions $\sexp$.
+    Here, $x$ ranges over variables, $b$ over boolean values, and $n$ over natural numbers.
+  }
+  \label{fig:language-syntax}
+\end{figure}
+
+
+\subsection{A typical structure editor}
+\note{
+  Start by describing running language example
+  and a simple structure editor for it, which
+  despite its simplicity is representative of
+  contemporary editors.
+  Note things it can't do that you can do in a text
+  editor and should be able to do.
+}
+
+\note{consider giving names to each of these problems}
+
+\begin{itemize}
+\item
+  we now describe a few classes of edits that we may wish to perform---and
+  could perform in a text editor---but cannot with the given structured
+  interface
+\item structure-oblivious linear construction of operator sequences
+  \begin{itemize}
+    \item eg going from \texttt{2 * 3 + 4} as opposed to \texttt{2 * (3 + 4)}
+    \item this particular limitation of naive structure editing has received
+      the most attention in prior work
+    \begin{itemize}
+      \item some structure editors defer to text at the leaves
+      \item others develop more sophisticated methods, e.g.,
+        modeless structure editing article,
+        MPS's side transforms
+    \end{itemize}
+  \end{itemize}
+\item deleting the root of a term,
+  leaving behind its children for further processing
+  (eg splicing into the surrounding context)
+  \begin{itemize}
+    \item eg it is not possible to delete a let expression and leave behind its body
+    \item eg it is not possible to remove a conditional expression
+      and leave behind a branch to take its place, or to subsequently join the
+      two remaining branches with an operator
+    \item note how there's no room in the strict tree structure to deal with
+      multiple "floating" children
+    \item MPS mitigates this by leaving behind its first child if its the
+      same sort, but already this does not satisfy the use case described above,
+      and in general the user should have the freedom to choose
+  \end{itemize}
+\item selecting and restructuring sub- and cross-structural
+  parts of the program
+  \begin{itemize}
+    \item eg it is not possible to select \texttt{3 + 4} in \texttt{2 * 3 + 4}
+      and re-associate the expression, as one might in a text editor by
+      wrapping the selection in parentheses
+    \item eg it is not possible to select \texttt{let x = \_ in} and
+      move it before \texttt{let y = 2 in}
+    \item eg it is not possible to select \texttt{in} of \texttt{let x = \_ in}
+      and move it to wrap the subsequent portion of the expression
+    \begin{itemize}
+      \item as one might in a text editor by deleting \texttt{in},
+        moving the caret, re-typing it elsewhere
+      \item as one might when constructing the let line for the first time:
+        having typed out \texttt{let x =}, it remains to move the caret over
+        and type the \texttt{in}
+    \end{itemize}
+    \item while some of these examples are contrived given the simplicity of
+      the language, such selections and edits occur frequently in practice
+    \begin{itemize}
+      \item eg 6\% of logged edits in Design Requirements
+        paper involve making
+        selections across structural boundaries, 10\% of edits excluding those
+        that only involve name changes rather than structural changes
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection{\tylr: a tiles-based structure editor}
+
+We now describe the design of \tylr. \note{elaborate}
+
+Rather than manipulating structures of the language syntax,
+a tiles-based structure editor works within a parallel editor syntax.
+The central form in the editor syntax is the unassociated operator
+sequence. Operator sequence elements each take one of four shapes---operand,
+unary prefix, unary postfix, and
+binary infix---which we collectively refer to as \emph{tiles}.
+Tiles may in turn contain nested operator sequences.
+
+Like text, the editor syntax provides a flattened, more linear representation
+of the language syntax.
+Unlike text, the editor syntax maintains hierarchies of
+bidelimited children and can always be parsed into the
+language syntax, provided that the structure first undergoes
+a hole fixing pass in which holes are inserted and removed
+as needed.
+
+\note{talk about automatic hole fixing + operand vs operator holes}
+
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Typ} & \styp & ::= &
+          % \tnum ~\vert~
+          \shole ~\vert~
+          \sbool ~\vert~
+          \snum ~\vert~
+          \sarr{\styp}{\styp} ~\vert~
+          \sprod{\styp}{\styp}\\
+      \mathsf{Pat} & \spat & ::= &
+        \shole ~\vert~
+        \svar{x} ~\vert~
+        \sann{p}{\styp} ~\vert~
+        \sprod{\spat}{\spat}\\
+      \mathsf{Exp} & \sexp & ::= &
+        \shole ~\vert~
+        \sboollit{b} ~\vert~
+        \snumlit{n} ~\vert~
+        \svar{x} \\
+      & & \vert &
+        \slam{\spat}{\sexp} ~\vert~
+        \slet{\spat}{\sexp}{\sexp}\\
+      & & \vert &
+        \sap{\sexp}{\sexp} ~\vert~
+        \splus{\sexp}{\sexp} ~\vert~
+        \sequals{\sexp}{\sexp} ~\vert~
+        \scond{\sexp}{\sexp}{\sexp}
+  \end{array}\]
+  \caption{
+    Language syntax of types $\styp$, patterns $\spat$, and expressions $\sexp$.
+    Here, $x$ ranges over variables, $b$ over boolean values, and $n$ over natural numbers.
+  }
+  \label{fig:language-syntax}
+\end{figure}
+
+
+\note{after describing, note bonus edits that combine limitations from previous selection}
+
+\note{do get into how restructuring mode fits naturally within the deletion vs construction}

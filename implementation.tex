@@ -1,0 +1,28 @@
+\section{Design \& Implementation of \tylr}\label{sec:implementation}
+
+\note{
+  Talk about \texttt{tylr} design/implementation choices that deviate
+  from and apply restrictions to formalism.
+  Avoid major screenshots, show these instead in Section 2.
+  See if it's possible to avoid Design in section title.
+  Include details about coding details.
+}
+\begin{itemize}
+  \item showing tree structure in pointing mode
+  \begin{itemize}
+    \item parsing as you go
+  \end{itemize}
+  \item no sort dependency cycle
+  \begin{itemize}
+    \item greedy selection
+    \item tile design: same-sort vs diff-sort children
+  \end{itemize}
+  \item picking up multiple matching selections in restructuring mode
+  \begin{itemize}
+    \item copy and pasting of root nodes rather than whole terms
+    \item just as a whole selection can be moved anywhere, matching selections
+      can be moved anywhere as a group
+  \end{itemize}
+  \item enabling restructuring across sorts by unsorting selections
+  \item entering restructuring mode automatically on deletion/construction
+\end{itemize}
