@@ -21,19 +21,19 @@ editing overcomes these limitations.
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{Typ} & \styp & ::= &
+      \mathsf{Type} & \styp & ::= &
           % \tnum ~\vert~
           \shole ~\vert~
           \sbool ~\vert~
           \snum ~\vert~
           \sarr{\styp}{\styp} ~\vert~
           \sprod{\styp}{\styp}\\
-      \mathsf{Pat} & \spat & ::= &
+      \mathsf{Pattern} & \spat & ::= &
         \shole ~\vert~
         \svar{x} ~\vert~
         \sann{p}{\styp} ~\vert~
         \sprod{\spat}{\spat}\\
-      \mathsf{Exp} & \sexp & ::= &
+      \mathsf{Expression} & \sexp & ::= &
         \shole ~\vert~
         \sboollit{b} ~\vert~
         \snumlit{n} ~\vert~
@@ -176,31 +176,34 @@ as needed.
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{Typ} & \styp & ::= &
+      \mathsf{Tiles}^s & \tiles^s & ::= & \tile^s_1\dots\tile^s_n\ \ \text{($n \geq 1$)} \\
+      \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
           % \tnum ~\vert~
           \shole ~\vert~
           \sbool ~\vert~
           \snum ~\vert~
-          \sarr{\styp}{\styp} ~\vert~
-          \sprod{\styp}{\styp}\\
-      \mathsf{Pat} & \spat & ::= &
+          \sarr{}{} ~\vert~
+          \sprod{}{} ~\vert~
+          \sparen{\tiles^{\typ}}\\
+      \mathsf{Tile}^{\pat} & \tile^{\pat} & ::= &
         \shole ~\vert~
         \svar{x} ~\vert~
-        \sann{p}{\styp} ~\vert~
-        \sprod{\spat}{\spat}\\
-      \mathsf{Exp} & \sexp & ::= &
+        \sann{}{\tiles^{\typ}} ~\vert~
+        \sprod{}{} ~\vert~
+        \sparen{\tiles^{\pat}}\\
+      \mathsf{Tile}^{\expr} & \tile^{\expr} & ::= &
         \shole ~\vert~
         \sboollit{b} ~\vert~
         \snumlit{n} ~\vert~
-        \svar{x} \\
+        \svar{x} ~\vert~
+        \sap{}{} ~\vert~
+        \splus{}{} ~\vert~
+        \sequals{}{} ~\vert~
+        \sparen{\tiles^{\exp}} \\
       & & \vert &
-        \slam{\spat}{\sexp} ~\vert~
-        \slet{\spat}{\sexp}{\sexp}\\
-      & & \vert &
-        \sap{\sexp}{\sexp} ~\vert~
-        \splus{\sexp}{\sexp} ~\vert~
-        \sequals{\sexp}{\sexp} ~\vert~
-        \scond{\sexp}{\sexp}{\sexp}
+        \slam{\tiles^{\pat}}{} ~\vert~
+        \slet{\tiles^{\pat}}{\tiles^{\expr}}{} ~\vert~
+        \scond{}{\tiles^{\expr}}{}
   \end{array}\]
   \caption{
     Tile syntax \note{todo}
