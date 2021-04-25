@@ -1,19 +1,19 @@
 \section{Overview}\label{sec:overview}
 
-Tiles-based structure editing departs from traditional
+Tile-based structure editing departs from traditional
 structure editors in avoiding direct user modifications
 to the AST.
 Instead, much like with a text editor, the user modifies a separate
 ``flattened'' editing structure that affords more flexible
 editing mechanisms, which is subsequently parsed into the
 abstract syntax.
-Unlike a text editor, however, a tiles-based editor ensures
-that the edit state can always be successfully parsed.
+Unlike a text editor, however, a tile-based editor ensures
+that every edit state can be parsed successfully.
 
 In this section we motivate and give an example-driven
-overview of tiles-based editing as implemented
+overview of tile-based editing as implemented
 in \tylr. We begin by describing the limitations of
-traditional structure editors, then show how tiles-based
+traditional structure editors, then show how tile-based
 editing overcomes these limitations.
 
 
@@ -126,9 +126,9 @@ editing overcomes these limitations.
   \end{itemize}
 \end{itemize}
 
-\subsection{\tylr: a tiles-based structure editor}
+\subsection{\tylr: a tile-based editor}
 
-We now describe the design of \tylr, a tiles-based structure
+We now describe the design of \tylr, a tile-based structure
 editor.
 Given the disadvantages of operating directly on abstract syntax
 trees, \tylr~ presents programs to the user in a separate
@@ -136,15 +136,20 @@ concrete syntax equipped with its own syntax-directed editing
 mechanisms.
 The concrete syntax is a ``flattened'' version of the abstract
 syntax, where the structural units correspond not to semantic
-terms in the language but rather syntactic groups of matching
+terms of the language but rather syntactic groups of matching
 delimiters and their bidelimited children.
 We call these structural units \emph{tiles}.
 Figure \ref{fig:tile-syntax} shows the subset of \tylr's
 concrete syntax corresponding to the abstract syntax in
 Figure \ref{fig:language-syntax}.
 
-Like a text editor, \tylr~ features a caret that resides between
-tiles...
+Unlike terms of the abstract syntax, tiles can be arranged
+sequentially.
+The cursor resides between consecutive pairs of
+tiles (or between a tile and its parent container),
+much as a text cursor resides between characters.
+Figure \note{todo} shows the different cursor positions
+in the operator sequence \texttt{2 * 3 + 4}.
 
 \subsubsection{Linear construction of operator sequences}
 Figure \note{todo} shows the construction of the operator
@@ -155,7 +160,7 @@ Unlike terms in the abstract syntax, tiles may be arranged
 sequentially as well as hierarchically.
 
 Rather than manipulating structures of the language syntax,
-a tiles-based structure editor works within a parallel editor syntax.
+a tile-based structure editor works within a parallel editor syntax.
 The central form in the editor syntax is the unassociated operator
 sequence. Operator sequence elements each take one of four shapes---operand,
 unary prefix, unary postfix, and
