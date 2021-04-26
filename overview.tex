@@ -5,6 +5,10 @@
   compared to traditional structure editing
 }
 
+\input{term-syntax}
+\input{tile-syntax}
+\input{token-syntax}
+
 We now present an example-driven overview of tile-based
 structure editing as implemented in \tylr.
 
@@ -162,49 +166,6 @@ overview of tile-based editing as implemented
 in \tylr. We begin by describing the limitations of
 traditional structure editors, then show how tile-based
 editing overcomes these limitations.
-
-\begin{figure}
-  \vspace{-3px}
-  \[
-  \arraycolsep=3pt\begin{array}{rlrl}
-      % \mathsf{Token} & \styp & ::= &
-      %     % \tnum ~\vert~
-      %     \shole ~\vert~
-      %     \sbool ~\vert~
-      %     \snum ~\vert~
-      %     \sarr{\styp}{\styp} ~\vert~
-      %     \sprod{\styp}{\styp}\\
-      \mathsf{Pattern} & \spat & ::= &
-        \shole ~\vert~
-        \svar{x} ~\vert~
-        % \sann{p}{\styp} ~\vert~
-        \sprod{\spat}{\spat}\\
-      \mathsf{Expression} & \sexp & ::= &
-        \shole ~\vert~
-        % \sboollit{b} ~\vert~
-        \snumlit{n} ~\vert~
-        \svar{x} \\
-      & & \vert &
-        \slam{\spat}{\sexp} ~\vert~
-        \slet{\spat}{\sexp}{\sexp}\\
-      & & \vert &
-        % \sap{\sexp}{\sexp} ~\vert~
-        \sprod{\sexp}{\sexp} ~\vert~
-        \splus{\sexp}{\sexp} ~\vert~
-        \smult{\sexp}{\sexp}
-        % \sequals{\sexp}{\sexp} ~\vert~
-        % \scond{\sexp}{\sexp}{\sexp}
-  \end{array}\]
-  \caption{
-    Abstract syntax of patterns $\spat$ and expressions $\sexp$.
-    Here,
-      $x$ ranges over variables
-      % $b$ over boolean values,
-      and $n$ over natural numbers.
-  }
-  \label{fig:language-syntax}
-\end{figure}
-
 
 \subsection{A typical structure editor} \label{sec:simple-editor}
 
@@ -369,48 +330,6 @@ a hole fixing pass in which holes are inserted and removed
 as needed.
 
 \note{talk about automatic hole fixing + operand vs operator holes}
-
-\begin{figure}
-  \vspace{-3px}
-  \[
-  \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{Tiles} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n\ \ \text{($n \geq 1$)} \\
-      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
-      %     % \tnum ~\vert~
-      %     \shole ~\vert~
-      %     \sbool ~\vert~
-      %     \snum ~\vert~
-      %     \sarr{}{} ~\vert~
-      %     \sprod{}{} ~\vert~
-      %     \sparen{\tiles^{\typ}}\\
-      \mathsf{PatternTile} & \tile^{\pat} & ::= &
-        \shole ~\vert~
-        \svar{x} ~\vert~
-        % \sann{}{\tiles^{\typ}} ~\vert~
-        \sprod{}{} ~\vert~
-        \sparen{\tiles^{\pat}}\\
-      \mathsf{ExpressionTile} & \tile^{\expr} & ::= &
-        \shole ~\vert~
-        % \sboollit{b} ~\vert~
-        \snumlit{n} ~\vert~
-        \svar{x} ~\vert~
-        % \sap{}{} ~\vert~
-        \sprod{}{} ~\vert~
-        \splus{}{} ~\vert~
-        \smult{}{} ~\vert~
-        % \sequals{}{} ~\vert~
-        \sparen{\tiles^{\expr}} \\
-      & & \vert &
-        \slam{\tiles^{\pat}}{} ~\vert~
-        \slet{\tiles^{\pat}}{\tiles^{\expr}}{} % ~\vert~
-        % \scond{}{\tiles^{\expr}}{}
-  \end{array}\]
-  \caption{
-    Tile syntax \note{write full caption + add operator holes}
-  }
-  \label{fig:tile-syntax}
-\end{figure}
-
 
 \note{after describing, note bonus edits that combine limitations from previous selection}
 

@@ -1,0 +1,41 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      % \mathsf{Token} & \styp & ::= &
+      %     % \tnum ~\vert~
+      %     \shole ~\vert~
+      %     \sbool ~\vert~
+      %     \snum ~\vert~
+      %     \sarr{\styp}{\styp} ~\vert~
+      %     \sprod{\styp}{\styp}\\
+      \mathsf{Pattern} & \spat & ::= &
+        \shole ~\vert~
+        \svar{x} ~\vert~
+        % \sann{p}{\styp} ~\vert~
+        \sprod{\spat}{\spat}\\
+      \mathsf{Expression} & \sexp & ::= &
+        \shole ~\vert~
+        % \sboollit{b} ~\vert~
+        \snumlit{n} ~\vert~
+        \svar{x} \\
+      & & \vert &
+        \slam{\spat}{\sexp} ~\vert~
+        \slet{\spat}{\sexp}{\sexp}\\
+      & & \vert &
+        % \sap{\sexp}{\sexp} ~\vert~
+        \sprod{\sexp}{\sexp} ~\vert~
+        \splus{\sexp}{\sexp} ~\vert~
+        \smult{\sexp}{\sexp}
+        % \sequals{\sexp}{\sexp} ~\vert~
+        % \scond{\sexp}{\sexp}{\sexp}
+  \end{array}\]
+  \caption{
+    Abstract syntax of patterns $\spat$ and expressions $\sexp$.
+    Here,
+      $x$ ranges over variables
+      % $b$ over boolean values,
+      and $n$ over natural numbers.
+  }
+  \label{fig:language-syntax}
+\end{figure}

@@ -1,0 +1,40 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Tiles} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n\ \ \text{($n \geq 1$)} \\
+      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
+      %     % \tnum ~\vert~
+      %     \shole ~\vert~
+      %     \sbool ~\vert~
+      %     \snum ~\vert~
+      %     \sarr{}{} ~\vert~
+      %     \sprod{}{} ~\vert~
+      %     \sparen{\tiles^{\typ}}\\
+      \mathsf{PatternTile} & \tile^{\pat} & ::= &
+        \shole ~\vert~
+        \svar{x} ~\vert~
+        % \sann{}{\tiles^{\typ}} ~\vert~
+        \sprod{}{} ~\vert~
+        \sparen{\tiles^{\pat}}\\
+      \mathsf{ExpressionTile} & \tile^{\expr} & ::= &
+        \shole ~\vert~
+        % \sboollit{b} ~\vert~
+        \snumlit{n} ~\vert~
+        \svar{x} ~\vert~
+        % \sap{}{} ~\vert~
+        \sprod{}{} ~\vert~
+        \splus{}{} ~\vert~
+        \smult{}{} ~\vert~
+        % \sequals{}{} ~\vert~
+        \sparen{\tiles^{\expr}} \\
+      & & \vert &
+        \slam{\tiles^{\pat}}{} ~\vert~
+        \slet{\tiles^{\pat}}{\tiles^{\expr}}{} % ~\vert~
+        % \scond{}{\tiles^{\expr}}{}
+  \end{array}\]
+  \caption{
+    Syntax of pattern and expression tiles. \note{add operator holes}
+  }
+  \label{fig:tile-syntax}
+\end{figure}
