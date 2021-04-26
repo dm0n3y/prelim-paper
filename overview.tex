@@ -1,5 +1,152 @@
 \section{Overview}\label{sec:overview}
 
+\note{
+  some high level discussion of tile-based structure editing
+  compared to traditional structure editing
+}
+
+We now present an example-driven overview of tile-based
+structure editing as implemented in \tylr.
+
+Suppose you are using \tylr~ to define a function that gets called by a
+generative drawing application.
+\note{use word ``exploratory here''}
+The function should take an integer index and
+return a circle---represented as a pair comprising
+its origin and radius---to be drawn in the $xy$-plane.
+Its default implementation, shown below, draws a circle
+of radius \texttt{1} at each point along the line $y = x$.
+Panning the cursor over the expression shows you terms of
+the abstract syntax of \tylr, the relevant subset of which
+is shown in Figure \ref{fig:language-syntax}.
+\begin{align*}
+  & \texttt{|$\lambda$ n . n , n , 1} \\
+  & \texttt{\ $\lambda$|n . n , n , 1} \\
+  & \texttt{\ $\lambda$ n|. n , n , 1} \\
+  & \texttt{\ $\lambda$ n .|n , n , 1} \\
+  & \texttt{\ $\lambda$ n . n|, n , 1} \\
+  & \texttt{\ $\lambda$ n . n ,|n , 1} \\
+  & \texttt{\ $\lambda$ n . n , n|, 1} \\
+  & \texttt{\ $\lambda$ n . n , n ,|1} \\
+  & \texttt{\ $\lambda$ n . n , n , 1|}
+\end{align*}
+You observe that \tylr~ features left-associative binary
+products rather than n-tuples, meaning the default function
+has the expected return type despite the lack of parentheses.
+
+You decide to update the function to draw circles along the
+line $y = 2x + 1$.
+\begin{align*}
+  & \texttt{$\lambda$ n . n , n|, 1} \\
+  & \texttt{$\lambda$ n . n , n *|\_ , 1} \\
+  & \texttt{$\lambda$ n . n , n * 2|, 1} \\
+  & \texttt{$\lambda$ n . n , n * 2 +|\_ , 1} \\
+  & \texttt{$\lambda$ n . n , n * 2 + 1|, 1}
+\end{align*}
+Notice that you were able to construct this operator sequence
+linearly, as you might in a text editor, without any
+required consideration for its tree structure.
+Such an affordance is not trivial
+in traditional structure editors because,
+from the perspective of the AST, linear construction of
+operator sequences is a complex, context-sensitive operation.
+Existing structure editors ignore the problem \note{eg Scratch, clarify},
+avoid it by deferring to text editing at the leaves,
+or solve it at the cost of complexity.
+\note{might wanna reorganize this stuff to overview intro before example}
+
+\tylr~ takes a different approach to this problem.
+Where traditional structure editors simply expose editing
+operations acting directly on the abstract syntactic struture
+of a program, \tylr~ presents the program in a separate
+concrete syntax with its own syntax-directed editing operations.
+\note{
+  talk about tile syntax show in Figure \ref{fig:tile-syntax},
+  note linearity
+}
+Like text, \tylr's concrete syntax gives you ``flattened''
+representation of your program that can be edited in a linear fashion.
+Unlike text, the concrete syntax maintains hierarchies of
+bidelimited children and can always be parsed into
+the abstract syntax, provided that the structure first undergoes
+a hole fixing pass in which holes are inserted and removed
+as needed.
+
+Within the linearized concrete syntax, it is possible to
+select and manipulate sub- and cross-tree portions of the program,
+much like in a text editor. For example, suppose you'd like
+to update your circle drawing to its transposition,
+i.e., draw the circles along the line $x = 2y + 1$.
+You hold Shift to enter \emph{selecting mode}, which exposes
+the concrete syntactic structure of your program, and select
+the tiles \texttt{* 2 + 1}.
+\begin{align*}
+  & \texttt{$\lambda$ n . n , n * 2 + 1|, 1} \\
+  & \texttt{$\lambda$ n . n , n * 2 +|1|, 1} \\
+  & \texttt{$\lambda$ n . n , n * 2|+ 1|, 1} \\
+  & \texttt{$\lambda$ n . n , n *|2 + 1|, 1} \\
+  & \texttt{$\lambda$ n . n , n|* 2 + 1|, 1}
+\end{align*}
+You hit Backspace to enter \emph{restructuring mode}, which
+allows you to move selections to other parts of the program,
+and use it to move the operator sequence fragment to the
+$x$ coordinate.
+\begin{align*}
+  & \texttt{$\lambda$ n . n , n[* 2 + 1], 1} \\
+  & \texttt{$\lambda$ n . n ,[* 2 + 1]n , 1} \\
+  & \texttt{$\lambda$ n . n[* 2 + 1], n , 1} \\
+  & \texttt{$\lambda$ n . n|* 2 + 1 , n , 1}
+\end{align*}
+
+You decide now to see what happens when you let the
+radius depend on the origin coordinates.
+Your plan is to bind the coordinates to variables
+\texttt{x} and \texttt{y} and have the radius be their product.
+You begin by constructing a let expression at the start
+of the function body and constructing the pattern variables.
+\begin{align*}
+  & \texttt{$\lambda$ n .|n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let|\_ = \_ in n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x|= \_ in n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x ,|\_ = \_ in n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y|= \_ in n * 2 + 1 , n , 1}
+\end{align*}
+Now you wish to bind \texttt{x , y} to the coordinates
+\texttt{n * 2 + 1 , n} already in the body.
+One way you could do this is by selecting and moving
+\texttt{n * 2 + 1 , n} into the defining expression of
+the \texttt{let} expression.
+Alternatively, you could select the \texttt{in} delimiter
+of the \texttt{let} expression and move it to wrap
+\texttt{n * 2 + 1 , n}.
+\begin{align*}
+  & \texttt{$\lambda$ n . let x , y = \_ in|n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_|in|n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_[in]n * 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n[in]* 2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n *[in]2 + 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n * 2[in]+ 1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n * 2 +[in]1 , n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1[in], n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 ,[in]n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 , n[in], 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 , n|in , 1}
+\end{align*}
+\note{
+  take a step back here and note that selections are not restricted
+  to whole tiles but can decompose tiles into shards,
+  the general idea being that selections with same-sort ends are
+  the ones that can be moved around
+}
+
+You decide now that you liked the last drawing better
+and aim to undo your recent changes
+You being by deleting the \texttt{let} expression.
+\note{show and discuss minimal deletions}
+
+
+\subsection{\note{everything below this is old overview}}
+
 Tile-based structure editing departs from traditional
 structure editors in avoiding direct user modifications
 to the AST.
