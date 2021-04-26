@@ -148,188 +148,188 @@ You being by deleting the \texttt{let} expression.
 \note{show and discuss minimal deletions}
 
 
-\subsection{\note{everything below this is old overview}}
+% \subsection{\note{everything below this is old overview}}
 
-Tile-based structure editing departs from traditional
-structure editors in avoiding direct user modifications
-to the AST.
-Instead, much like with a text editor, the user modifies a separate
-``flattened'' editing structure that affords more flexible
-editing mechanisms, which is subsequently parsed into the
-abstract syntax.
-Unlike a text editor, however, a tile-based editor ensures
-that every edit state can be parsed successfully.
+% Tile-based structure editing departs from traditional
+% structure editors in avoiding direct user modifications
+% to the AST.
+% Instead, much like with a text editor, the user modifies a separate
+% ``flattened'' editing structure that affords more flexible
+% editing mechanisms, which is subsequently parsed into the
+% abstract syntax.
+% Unlike a text editor, however, a tile-based editor ensures
+% that every edit state can be parsed successfully.
 
-In this section we motivate and give an example-driven
-overview of tile-based editing as implemented
-in \tylr. We begin by describing the limitations of
-traditional structure editors, then show how tile-based
-editing overcomes these limitations.
+% In this section we motivate and give an example-driven
+% overview of tile-based editing as implemented
+% in \tylr. We begin by describing the limitations of
+% traditional structure editors, then show how tile-based
+% editing overcomes these limitations.
 
-\subsection{A typical structure editor} \label{sec:simple-editor}
+% \subsection{A typical structure editor} \label{sec:simple-editor}
 
-Structure editors, also known as projectional editors, typically
-follow a projectional architecture: the editor projects an
-abstract syntax tree into a concrete representation,
-and user interactions with the representation are interpreted
-by the editor as direct modifications to the AST.
+% Structure editors, also known as projectional editors, typically
+% follow a projectional architecture: the editor projects an
+% abstract syntax tree into a concrete representation,
+% and user interactions with the representation are interpreted
+% by the editor as direct modifications to the AST.
 
-For example, suppose we wish to edit expressions with the abstract
-syntax presented in Figure \ref{fig:tile-syntax}.
-A simple editor might project the current expression
-to a textual notation decorated with nested boxes, such
-that there is a one-to-one correspondence between
-boxes and terms. \note{example}
-In this editor, the cursor selects a subterm of the
-current program expression and may be moved through
-the current expression via a pre-order traversal.
-Edits are context-free transformations
-of the selected subterm:
-  deletion replaces the current subterm with
-    a hole of the same sort; and
-  construction replaces the current subterm
-    with the new form, making the original subterm
-    a child of the new form if possible, and moving
-    the cursor to the next child position if available.
+% For example, suppose we wish to edit expressions with the abstract
+% syntax presented in Figure \ref{fig:tile-syntax}.
+% A simple editor might project the current expression
+% to a textual notation decorated with nested boxes, such
+% that there is a one-to-one correspondence between
+% boxes and terms. \note{example}
+% In this editor, the cursor selects a subterm of the
+% current program expression and may be moved through
+% the current expression via a pre-order traversal.
+% Edits are context-free transformations
+% of the selected subterm:
+%   deletion replaces the current subterm with
+%     a hole of the same sort; and
+%   construction replaces the current subterm
+%     with the new form, making the original subterm
+%     a child of the new form if possible, and moving
+%     the cursor to the next child position if available.
 
-While simple, this editor is representative of existing structure
-editors in the way that it restricts editing affordances to easily
-understood tree manipulations of the abstract syntax.
-We believe such restrictions unacceptably hamper usability.
-Consider the following classes of edits that we may wish to
-perform---and could perform in a text editor---but cannot with the
-given interface:
+% While simple, this editor is representative of existing structure
+% editors in the way that it restricts editing affordances to easily
+% understood tree manipulations of the abstract syntax.
+% We believe such restrictions unacceptably hamper usability.
+% Consider the following classes of edits that we may wish to
+% perform---and could perform in a text editor---but cannot with the
+% given interface:
 
-\paragraph{Linearly constructing operator sequences}
-In a text editor, we may type the characters \texttt{2}, \texttt{*},
-\texttt{3}, \texttt{+}, \texttt{4}
-to construct the expression \texttt{2 * 3 + 4} with
-the usual precedence-based operator associations.
-In our simple structure editor, the same inputs would construct
-the following series of edit states: \note{todo figure}.
-To get the associations we want, we would need to interleave
-our constructions with movements through the expression tree
-to ensure that the correct child is chosen before constructing
-the plus node: \note{todo figure}.
-This particular limitation of structure editing is well-recognized
-in prior work, which we discuss in greater detail in Section
-\ref{sec:related-work}.
+% \paragraph{Linearly constructing operator sequences}
+% In a text editor, we may type the characters \texttt{2}, \texttt{*},
+% \texttt{3}, \texttt{+}, \texttt{4}
+% to construct the expression \texttt{2 * 3 + 4} with
+% the usual precedence-based operator associations.
+% In our simple structure editor, the same inputs would construct
+% the following series of edit states: \note{todo figure}.
+% To get the associations we want, we would need to interleave
+% our constructions with movements through the expression tree
+% to ensure that the correct child is chosen before constructing
+% the plus node: \note{todo figure}.
+% This particular limitation of structure editing is well-recognized
+% in prior work, which we discuss in greater detail in Section
+% \ref{sec:related-work}.
 
-\paragraph{Preserving children of deleted terms}
-Deletion in our simple editor is quite coarse, deleting whole
-trees rather than individual nodes.
+% \paragraph{Preserving children of deleted terms}
+% Deletion in our simple editor is quite coarse, deleting whole
+% trees rather than individual nodes.
 
 
-\begin{itemize}
-\item
-  we now describe a few classes of edits that we may wish to perform---and
-  could perform in a text editor---but cannot with the given structured
-  interface
-\item structure-oblivious linear construction of operator sequences
-  \begin{itemize}
-    \item eg going from \texttt{2 * 3 + 4} as opposed to \texttt{2 * (3 + 4)}
-    \item this particular limitation of naive structure editing has received
-      the most attention in prior work
-    \begin{itemize}
-      \item some structure editors defer to text at the leaves
-      \item others develop more sophisticated methods, e.g.,
-        modeless structure editing article,
-        MPS's side transforms
-    \end{itemize}
-  \end{itemize}
-\item deleting the root of a term,
-  leaving behind its children for further processing
-  (eg splicing into the surrounding context)
-  \begin{itemize}
-    \item eg it is not possible to delete a let expression and leave behind its body
-    \item eg it is not possible to remove a conditional expression
-      and leave behind a branch to take its place, or to subsequently join the
-      two remaining branches with an operator
-    \item note how there's no room in the strict tree structure to deal with
-      multiple "floating" children
-    \item MPS mitigates this by leaving behind its first child if its the
-      same sort, but already this does not satisfy the use case described above,
-      and in general the user should have the freedom to choose
-  \end{itemize}
-\item selecting and restructuring sub- and cross-structural
-  parts of the program
-  \begin{itemize}
-    \item eg it is not possible to select \texttt{3 + 4} in \texttt{2 * 3 + 4}
-      and re-associate the expression, as one might in a text editor by
-      wrapping the selection in parentheses
-    \item eg it is not possible to select \texttt{let x = \_ in} and
-      move it before \texttt{let y = 2 in}
-    \item eg it is not possible to select \texttt{in} of \texttt{let x = \_ in}
-      and move it to wrap the subsequent portion of the expression
-    \begin{itemize}
-      \item as one might in a text editor by deleting \texttt{in},
-        moving the caret, re-typing it elsewhere
-      \item as one might when constructing the let line for the first time:
-        having typed out \texttt{let x =}, it remains to move the caret over
-        and type the \texttt{in}
-    \end{itemize}
-    \item while some of these examples are contrived given the simplicity of
-      the language, such selections and edits occur frequently in practice
-    \begin{itemize}
-      \item eg 6\% of logged edits in Design Requirements
-        paper involve making
-        selections across structural boundaries, 10\% of edits excluding those
-        that only involve name changes rather than structural changes
-    \end{itemize}
-  \end{itemize}
-\end{itemize}
+% \begin{itemize}
+% \item
+%   we now describe a few classes of edits that we may wish to perform---and
+%   could perform in a text editor---but cannot with the given structured
+%   interface
+% \item structure-oblivious linear construction of operator sequences
+%   \begin{itemize}
+%     \item eg going from \texttt{2 * 3 + 4} as opposed to \texttt{2 * (3 + 4)}
+%     \item this particular limitation of naive structure editing has received
+%       the most attention in prior work
+%     \begin{itemize}
+%       \item some structure editors defer to text at the leaves
+%       \item others develop more sophisticated methods, e.g.,
+%         modeless structure editing article,
+%         MPS's side transforms
+%     \end{itemize}
+%   \end{itemize}
+% \item deleting the root of a term,
+%   leaving behind its children for further processing
+%   (eg splicing into the surrounding context)
+%   \begin{itemize}
+%     \item eg it is not possible to delete a let expression and leave behind its body
+%     \item eg it is not possible to remove a conditional expression
+%       and leave behind a branch to take its place, or to subsequently join the
+%       two remaining branches with an operator
+%     \item note how there's no room in the strict tree structure to deal with
+%       multiple "floating" children
+%     \item MPS mitigates this by leaving behind its first child if its the
+%       same sort, but already this does not satisfy the use case described above,
+%       and in general the user should have the freedom to choose
+%   \end{itemize}
+% \item selecting and restructuring sub- and cross-structural
+%   parts of the program
+%   \begin{itemize}
+%     \item eg it is not possible to select \texttt{3 + 4} in \texttt{2 * 3 + 4}
+%       and re-associate the expression, as one might in a text editor by
+%       wrapping the selection in parentheses
+%     \item eg it is not possible to select \texttt{let x = \_ in} and
+%       move it before \texttt{let y = 2 in}
+%     \item eg it is not possible to select \texttt{in} of \texttt{let x = \_ in}
+%       and move it to wrap the subsequent portion of the expression
+%     \begin{itemize}
+%       \item as one might in a text editor by deleting \texttt{in},
+%         moving the caret, re-typing it elsewhere
+%       \item as one might when constructing the let line for the first time:
+%         having typed out \texttt{let x =}, it remains to move the caret over
+%         and type the \texttt{in}
+%     \end{itemize}
+%     \item while some of these examples are contrived given the simplicity of
+%       the language, such selections and edits occur frequently in practice
+%     \begin{itemize}
+%       \item eg 6\% of logged edits in Design Requirements
+%         paper involve making
+%         selections across structural boundaries, 10\% of edits excluding those
+%         that only involve name changes rather than structural changes
+%     \end{itemize}
+%   \end{itemize}
+% \end{itemize}
 
-\subsection{\tylr: a tile-based editor}
+% \subsection{\tylr: a tile-based editor}
 
-We now describe the design of \tylr, a tile-based structure
-editor.
-Given the disadvantages of operating directly on abstract syntax
-trees, \tylr~ presents programs to the user in a separate
-concrete syntax equipped with its own syntax-directed editing
-mechanisms.
-The concrete syntax is a ``flattened'' version of the abstract
-syntax, where the structural units correspond not to semantic
-terms of the language but rather syntactic groups of matching
-delimiters and their bidelimited children.
-We call these structural units \emph{tiles}.
-Figure \ref{fig:tile-syntax} shows the subset of \tylr's
-concrete syntax corresponding to the abstract syntax in
-Figure \ref{fig:language-syntax}.
+% We now describe the design of \tylr, a tile-based structure
+% editor.
+% Given the disadvantages of operating directly on abstract syntax
+% trees, \tylr~ presents programs to the user in a separate
+% concrete syntax equipped with its own syntax-directed editing
+% mechanisms.
+% The concrete syntax is a ``flattened'' version of the abstract
+% syntax, where the structural units correspond not to semantic
+% terms of the language but rather syntactic groups of matching
+% delimiters and their bidelimited children.
+% We call these structural units \emph{tiles}.
+% Figure \ref{fig:tile-syntax} shows the subset of \tylr's
+% concrete syntax corresponding to the abstract syntax in
+% Figure \ref{fig:language-syntax}.
 
-Unlike terms of the abstract syntax, tiles can be arranged
-sequentially.
-The cursor resides between consecutive pairs of
-tiles (or between a tile and its parent container),
-much as a text cursor resides between characters.
-Figure \note{todo} shows the different cursor positions
-in the operator sequence \texttt{2 * 3 + 4}.
+% Unlike terms of the abstract syntax, tiles can be arranged
+% sequentially.
+% The cursor resides between consecutive pairs of
+% tiles (or between a tile and its parent container),
+% much as a text cursor resides between characters.
+% Figure \note{todo} shows the different cursor positions
+% in the operator sequence \texttt{2 * 3 + 4}.
 
-\subsubsection{Linear construction of operator sequences}
-Figure \note{todo} shows the construction of the operator
-sequence \texttt{2 * 3 + 4}. Unlike with the simple editor described
-in Section \ref{sec:simple-editor}, it is not necessary
+% \subsubsection{Linear construction of operator sequences}
+% Figure \note{todo} shows the construction of the operator
+% sequence \texttt{2 * 3 + 4}. Unlike with the simple editor described
+% in Section \ref{sec:simple-editor}, it is not necessary
 
-Unlike terms in the abstract syntax, tiles may be arranged
-sequentially as well as hierarchically.
+% Unlike terms in the abstract syntax, tiles may be arranged
+% sequentially as well as hierarchically.
 
-Rather than manipulating structures of the language syntax,
-a tile-based structure editor works within a parallel editor syntax.
-The central form in the editor syntax is the unassociated operator
-sequence. Operator sequence elements each take one of four shapes---operand,
-unary prefix, unary postfix, and
-binary infix---which we collectively refer to as \emph{tiles}.
-Tiles may in turn contain nested operator sequences.
+% Rather than manipulating structures of the language syntax,
+% a tile-based structure editor works within a parallel editor syntax.
+% The central form in the editor syntax is the unassociated operator
+% sequence. Operator sequence elements each take one of four shapes---operand,
+% unary prefix, unary postfix, and
+% binary infix---which we collectively refer to as \emph{tiles}.
+% Tiles may in turn contain nested operator sequences.
 
-Like text, the editor syntax provides a flattened, more linear representation
-of the language syntax.
-Unlike text, the editor syntax maintains hierarchies of
-bidelimited children and can always be parsed into the
-language syntax, provided that the structure first undergoes
-a hole fixing pass in which holes are inserted and removed
-as needed.
+% Like text, the editor syntax provides a flattened, more linear representation
+% of the language syntax.
+% Unlike text, the editor syntax maintains hierarchies of
+% bidelimited children and can always be parsed into the
+% language syntax, provided that the structure first undergoes
+% a hole fixing pass in which holes are inserted and removed
+% as needed.
 
-\note{talk about automatic hole fixing + operand vs operator holes}
+% \note{talk about automatic hole fixing + operand vs operator holes}
 
-\note{after describing, note bonus edits that combine limitations from previous selection}
+% \note{after describing, note bonus edits that combine limitations from previous selection}
 
-\note{do get into how restructuring mode fits naturally within the deletion vs construction}
+% \note{do get into how restructuring mode fits naturally within the deletion vs construction}
