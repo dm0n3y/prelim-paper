@@ -2,13 +2,13 @@
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{Token^{\pat}} & \kappa^{\pat} & ::= &
+      \mathsf{PatternToken} & \kappa^{\pat} & ::= &
         \shole ~\vert~
         \svar{x} ~\vert~
         \sprod{}{} ~\vert~
         \texttt{(} ~\vert~
         \texttt{)} \\
-      \mathsf{Token^{\expr}} & \kappa^{\expr} & ::= &
+      \mathsf{ExpressionToken} & \kappa^{\expr} & ::= &
         \shole ~\vert~
         \sboollit{b} ~\vert~
         \snumlit{n} ~\vert~
@@ -26,7 +26,7 @@
         \texttt{in}
   \end{array}\]
   \caption{
-    Syntax of pattern tokens and expression tokens.
+    Syntax of pattern and expression tokens.
   }
   \label{fig:language-syntax}
 \end{figure}

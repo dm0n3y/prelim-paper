@@ -374,7 +374,7 @@ as needed.
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{Tiles}^s & \tiles^s & ::= & \tile^s_1\dots\tile^s_n\ \ \text{($n \geq 1$)} \\
+      \mathsf{Tiles} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n\ \ \text{($n \geq 1$)} \\
       % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
       %     % \tnum ~\vert~
       %     \shole ~\vert~
@@ -383,13 +383,13 @@ as needed.
       %     \sarr{}{} ~\vert~
       %     \sprod{}{} ~\vert~
       %     \sparen{\tiles^{\typ}}\\
-      \mathsf{Tile}^{\pat} & \tile^{\pat} & ::= &
+      \mathsf{PatternTile} & \tile^{\pat} & ::= &
         \shole ~\vert~
         \svar{x} ~\vert~
         % \sann{}{\tiles^{\typ}} ~\vert~
         \sprod{}{} ~\vert~
         \sparen{\tiles^{\pat}}\\
-      \mathsf{Tile}^{\expr} & \tile^{\expr} & ::= &
+      \mathsf{ExpressionTile} & \tile^{\expr} & ::= &
         \shole ~\vert~
         % \sboollit{b} ~\vert~
         \snumlit{n} ~\vert~
