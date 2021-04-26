@@ -56,16 +56,58 @@ editing overcomes these limitations.
 
 
 \subsection{A typical structure editor} \label{sec:simple-editor}
-\note{
-  Start by describing running language example
-  and a simple structure editor for it, which
-  despite its simplicity is representative of
-  contemporary editors.
-  Note things it can't do that you can do in a text
-  editor and should be able to do.
-}
 
-\note{consider giving names to each of these problems}
+Structure editors, also known as projectional editors, typically
+follow a projectional architecture: the editor projects an
+abstract syntax tree into a concrete representation,
+and user interactions with the representation are interpreted
+by the editor as direct modifications to the AST.
+
+For example, suppose we wish to edit expressions with the abstract
+syntax presented in Figure \ref{fig:tile-syntax}.
+A simple editor might project the current expression
+to a textual notation decorated with nested boxes, such
+that there is a one-to-one correspondence between
+boxes and terms. \note{example}
+In this editor, the cursor selects a subterm of the
+current program expression and may be moved through
+the current expression via a pre-order traversal.
+Edits are context-free transformations
+of the selected subterm:
+  deletion replaces the current subterm with
+    a hole of the same sort; and
+  construction replaces the current subterm
+    with the new form, making the original subterm
+    a child of the new form if possible, and moving
+    the cursor to the next child position if available.
+
+While simple, this editor is representative of existing structure
+editors in the way that it restricts editing affordances to easily
+understood tree manipulations of the abstract syntax.
+We believe such restrictions unacceptably hamper usability.
+Consider the following classes of edits that we may wish to
+perform---and could perform in a text editor---but cannot with the
+given interface:
+
+\paragraph{Linearly constructing operator sequences}
+In a text editor, we may type the characters \texttt{2}, \texttt{*},
+\texttt{3}, \texttt{+}, \texttt{4}
+to construct the expression \texttt{2 * 3 + 4} with
+the usual precedence-based operator associations.
+In our simple structure editor, the same inputs would construct
+the following series of edit states: \note{todo figure}.
+To get the associations we want, we would need to interleave
+our constructions with movements through the expression tree
+to ensure that the correct child is chosen before constructing
+the plus node: \note{todo figure}.
+This particular limitation of structure editing is well-recognized
+in prior work, which we discuss in greater detail in Section
+\ref{sec:related-work}.
+
+\paragraph{Preserving children of deleted terms}
+Deletion in our simple editor is quite coarse, deleting whole
+trees rather than individual nodes.
+
 
 \begin{itemize}
 \item
@@ -204,7 +246,7 @@ as needed.
         \sap{}{} ~\vert~
         \splus{}{} ~\vert~
         \sequals{}{} ~\vert~
-        \sparen{\tiles^{\exp}} \\
+        \sparen{\tiles^{\expr}} \\
       & & \vert &
         \slam{\tiles^{\pat}}{} ~\vert~
         \slet{\tiles^{\pat}}{\tiles^{\expr}}{} ~\vert~
