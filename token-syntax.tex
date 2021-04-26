@@ -1,0 +1,32 @@
+\begin{figure}[t]
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Token^{\pat}} & \kappa^{\pat} & ::= &
+        \shole ~\vert~
+        \svar{x} ~\vert~
+        \sprod{}{} ~\vert~
+        \texttt{(} ~\vert~
+        \texttt{)} \\
+      \mathsf{Token^{\expr}} & \kappa^{\expr} & ::= &
+        \shole ~\vert~
+        \sboollit{b} ~\vert~
+        \snumlit{n} ~\vert~
+        \svar{x} ~\vert~
+        \sprod{}{} ~\vert~
+        \splus{}{} ~\vert~
+        \smult{}{} \\
+      & & \vert &
+        \texttt{(} ~\vert~
+        \texttt{)} ~\vert~
+        \lambda ~\vert~
+        \texttt{.} ~\vert~
+        \texttt{let} ~\vert~
+        \texttt{=} ~\vert~
+        \texttt{in}
+  \end{array}\]
+  \caption{
+    Syntax of pattern tokens and expression tokens.
+  }
+  \label{fig:language-syntax}
+\end{figure}
