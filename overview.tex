@@ -5,6 +5,8 @@
   compared to traditional structure editing
 }
 
+\note{use terminology of term syntax vs tile syntax}
+
 \input{term-syntax}
 \input{tile-syntax}
 
@@ -12,11 +14,11 @@ We now present an example-driven overview of tile-based
 structure editing as implemented in \tylr.
 
 Suppose you are using \tylr~ to define a function that gets called by a
-generative drawing application.
+generative drawing application \note{cite Sketch n Sketch}.
 \note{use word ``exploratory here''}
 The function should take an integer index and
 return a circle---represented as a pair comprising
-its origin and radius---to be drawn in the $xy$-plane.
+its center and radius---to be drawn in the $xy$-plane.
 Its default implementation, shown below, draws a circle
 of radius \texttt{1} at each point along the line $y = x$.
 Panning the cursor over the expression shows you terms of
@@ -58,6 +60,10 @@ avoid it by deferring to text editing at the leaves,
 or solve it at the cost of complexity.
 \note{might wanna reorganize this stuff to overview intro before example}
 
+\note{talk about hole insertion for linear entry, talk about tips noting
+that hole fixing is necessary on construction, then return to this idea
+in restructuring}
+
 \tylr~ takes a different approach to this problem.
 Where traditional structure editors simply expose editing
 operations acting directly on the abstract syntactic struture
@@ -73,7 +79,11 @@ Unlike text, the concrete syntax maintains hierarchies of
 bidelimited children and can always be parsed into
 the abstract syntax, provided that the structure first undergoes
 a hole fixing pass in which holes are inserted and removed
-as needed.
+as needed. \note{need more context about tiles + bidelimited, bring
+back some old words about abstract syntactic structural units
+as opposed to concrete syntactic structural units}
+
+\note{perhaps go back to editor syntax terminology}
 
 Within the linearized concrete syntax, it is possible to
 select and manipulate sub- and cross-tree portions of the program,
@@ -90,6 +100,9 @@ the tiles \texttt{* 2 + 1}.
   & \texttt{$\lambda$ n . n , n *|2 + 1|, 1} \\
   & \texttt{$\lambda$ n . n , n|* 2 + 1|, 1}
 \end{align*}
+\note{rewrite this so that I am invoking the option to
+restructure rather than just delete.}
+\note{make sure to emphasize the selection part}
 You hit Backspace to enter \emph{restructuring mode}, which
 allows you to move selections to other parts of the program,
 and use it to move the operator sequence fragment to the
@@ -100,6 +113,9 @@ $x$ coordinate.
   & \texttt{$\lambda$ n . n[* 2 + 1], n , 1} \\
   & \texttt{$\lambda$ n . n|* 2 + 1 , n , 1}
 \end{align*}
+
+\note{consider adding example of parenthesizing first pair, discussing
+restructuring mode... or maybe find an example for precedence issue}
 
 You decide now to see what happens when you let the
 radius depend on the origin coordinates.
