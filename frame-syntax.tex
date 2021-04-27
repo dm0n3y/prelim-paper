@@ -1,0 +1,27 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Frame} & \tframe^s & ::= & \tiles^s\tfrelem^s\tiles^s \\
+      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
+      %     % \tnum ~\vert~
+      %     \shole ~\vert~
+      %     \sbool ~\vert~
+      %     \snum ~\vert~
+      %     \sarr{}{} ~\vert~
+      %     \sprod{}{} ~\vert~
+      %     \sparen{\tiles^{\typ}}\\
+      \mathsf{PatternTileFrame} & \tfrelem^{\pat} & ::= &
+        \sparen{\tframe^{\pat}} ~\vert~
+        \slam{\tframe^{\expr}}{} ~\vert~
+        \slet{\tframe^{\expr}}{\tiles^{\expr}}{} \\
+      \mathsf{ExpressionTileFrame} & \tfrelem^{\expr} & ::= &
+        \sparen{\tiles^{\expr}} ~\vert~
+        \slet{\tiles^{\pat}}{\tframe^{\expr}}{}
+        % \scond{}{\tiles^{\expr}}{}
+  \end{array}\]
+  \caption{
+    Syntax of pattern and expression frames.
+  }
+  \label{fig:tile-syntax}
+\end{figure}
