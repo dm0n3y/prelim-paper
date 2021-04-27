@@ -1,0 +1,23 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Zipper} & \zip^s & ::= & \zipper{\subject^s}{\tframe^s} \\
+      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
+      %     % \tnum ~\vert~
+      %     \shole ~\vert~
+      %     \sbool ~\vert~
+      %     \snum ~\vert~
+      %     \sarr{}{} ~\vert~
+      %     \sprod{}{} ~\vert~
+      %     \sparen{\tiles^{\typ}}\\
+      \mathsf{Subject} & \subject^{s} & ::= &
+        \pointing{\tiles^s}{\tiles^s} ~\vert~
+        \selecting{\selection}{\selection}{\selection} ~\vert~
+        \restructuring{\selection}{\selection}{\selection}
+  \end{array}\]
+  \caption{
+    Syntax of zippers
+  }
+  \label{fig:zipper-syntax}
+\end{figure}
