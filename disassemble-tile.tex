@@ -1,0 +1,16 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \setlength{\fboxsep}{1pt}
+  \arraycolsep=3pt\begin{array}{rcl}
+      \disassembleTile{\shole} & = & \tokenLit{\shole} \\
+      \disassembleTile{\snumlit{n}} & = & \tokenLit{\snumlit{n}} \\
+      \disassembleTile{\sparen{\tile_1\dots\tile_n}}
+        & = & \tokenLit{\texttt{(}}\ \tile_1\dots\tile_n\ \tokenLit{\texttt{)}} \\
+      & \vdots &
+  \end{array}\]
+  \caption{
+    Disassembling a tile.
+  }
+  \label{fig:disassemble-tile}
+\end{figure}
