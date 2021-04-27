@@ -1,15 +1,15 @@
 \begin{figure}
-\judgbox{\disassembleSelection{\selection_1}{\selection_2}}{$\selection_1$ disassembles to $\selection_2$}
+\judgbox{\stepDisassembleSelection{\selection_1}{\selection_2}}{$\selection_1$ disassembles to $\selection_2$}
 \begin{mathpar}
   \inferrule[]{
     \disassembleTile{\tau^s} = \Psi'
   }{
-    \disassembleSelection{\tau^s\Psi}{\Psi'\Psi}
+    \stepDisassembleSelection{\tau^s\Psi}{\Psi'\Psi}
   }\hspace{40pt}
   \inferrule[]{
-    \disassembleSelection{\Psi}{\Psi'}
+    \stepDisassembleSelection{\Psi}{\Psi'}
   }{
-    \disassembleSelection{\psi\Psi}{\psi\Psi'}
+    \stepDisassembleSelection{\psi\Psi}{\psi\Psi'}
   }
 \end{mathpar}
 \caption{

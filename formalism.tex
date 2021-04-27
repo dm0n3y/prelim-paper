@@ -10,13 +10,41 @@
 \input{disassemble-tile}
 \input{disassemble-selection}
 
-\note{refer to Figures \ref{fig:language-syntax} \& \ref{fig:tile-syntax}}
+\note{
+  discuss the syntax of
+  tiles (Fig \ref{fig:tile-syntax}),
+  tokens (Fig \ref{fig:token-syntax}),
+  selections (Fig \ref{fig:selection-syntax})
+}
+
+\note{
+  discuss
+    disassembly of tiles (Fig \ref{fig:disassemble-tile}),
+    disassembly of selections (Fig \ref{fig:disassemble-selection}),
+    $\succeq$ partial order and parsing function
+}
+
+\begin{definition}
+  $\disassembleSelection{\Psi}{\Psi'}$ if $\Psi = \Psi'$ or
+  $\Psi \searrow^* \Psi'$, where $\searrow^*$ is the transitive
+  closure of $\searrow$.
+\end{definition}
+
+\begin{lemma}
+  $\disassembleSelection{}{}$ is a partial order.
+\end{lemma}
+
+\begin{lemma}
+  For every selection $\Psi$, there is a unique maximal
+  element $\Psi'$ such that $\disassembleSelection{\Psi'}{\Psi}$.
+\end{lemma}
+
+\begin{definition}
+  \note{define function that returns unique maximal element of selection}
+\end{definition}
 
 
 \subsection{Frames \& zippers}
-
-\subsection{Edit States}
-% \input{token-syntax}
 
 \subsubsection{Actions}
 \note{
