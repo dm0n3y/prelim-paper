@@ -25,18 +25,17 @@
 }
 
 \begin{definition}
-  $\disassembleSelection{\Psi}{\Psi'}$ if
-  $\Psi \searrow^* \Psi'$, where $\searrow^*$ is the transitive
+  $\searrow^*$ is the reflexive transitive
   closure of $\searrow$.
 \end{definition}
 
 \begin{lemma}
-  $\disassembleSelection{}{}$ is a partial order.
+  $\searrow^*$ is a partial order.
 \end{lemma}
 
 \begin{lemma}
   For every selection $\Psi$, there is a unique maximal
-  element $\Psi'$ such that $\disassembleSelection{\Psi'}{\Psi}$.
+  element $\Psi'$ such that $\Psi'\searrow^*\Psi$.
 \end{lemma}
 
 \begin{definition}
