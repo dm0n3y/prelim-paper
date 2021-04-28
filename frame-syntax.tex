@@ -2,7 +2,7 @@
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{Frame} & \tframe^s & ::= & \tiles^s\tfrelem^s\tiles^s \\
+      \mathsf{TilesFrame} & \tframe^s & ::= & \tframelit{\tiles^s\_\tiles^s}{\tfrelem^s} \\
       % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
       %     % \tnum ~\vert~
       %     \shole ~\vert~
@@ -11,13 +11,16 @@
       %     \sarr{}{} ~\vert~
       %     \sprod{}{} ~\vert~
       %     \sparen{\tiles^{\typ}}\\
-      \mathsf{PatternTileFrame} & \tfrelem^{\pat} & ::= &
-        \sparen{\tframe^{\pat}} ~\vert~
-        \slam{\tframe^{\expr}}{} ~\vert~
-        \slet{\tframe^{\expr}}{\tiles^{\expr}}{} \\
-      \mathsf{ExpressionTileFrame} & \tfrelem^{\expr} & ::= &
-        \sparen{\tframe^{\expr}} ~\vert~
-        \slet{\tiles^{\pat}}{\tframe^{\expr}}{}
+      \mathsf{PatTileFrame} & \tfrelem^{\pat} & ::= &
+        \tframelit{\sparen{\_}}{\tframe^{\pat}} \\
+      & & \vert &
+        \tframelit{\slam{\_}{}}{\tframe^{\expr}} \\
+      & & \vert &
+        \tframelit{\slet{\_}{\tiles^{\expr}}{}}{\tframe^{\expr}} \\
+      \mathsf{ExpTileFrame} & \tfrelem^{\expr} & ::= &
+        \tframelit{\sparen{\_}}{\tframe^{\expr}} \\
+      & & \vert &
+        \tframelit{\slet{\tiles^{\pat}}{\_}{}}{\tframe^{\expr}}
         % \scond{}{\tiles^{\expr}}{}
   \end{array}\]
   \caption{
