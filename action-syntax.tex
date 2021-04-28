@@ -1,0 +1,16 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{Action} & \action & ::= &
+        \actionlit{mark} ~\vert~
+        \actionlit{move}~\direction ~\vert~
+        \actionlit{delete}~\direction ~\vert~
+        \actionlit{construct}~\tile^s \\
+      \mathsf{Direction} & \direction & ::= &
+        \texttt{left} ~\vert~
+        \texttt{right}
+  \end{array}\]
+  \caption{Syntax of actions}
+  \label{fig:action-syntax}
+\end{figure}
