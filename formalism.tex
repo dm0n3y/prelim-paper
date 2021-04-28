@@ -45,8 +45,27 @@
 
 \subsection{Frames \& zippers}
 \input{frame-syntax}
-\input{disassemble-frame-tile.tex}
 \input{zipper-syntax}
+\input{disassemble-frame-tile}
+
+\begin{definition}
+  $\zeta^s_1\nearrow\zeta^s_2$ if $\disassembleTileFrame{\zeta^s_1} = \zeta^s_2$.
+  \note{defined this for symmetry with diassembling of tiles}
+\end{definition}
+
+\begin{definition}
+  $\nearrow^*$ is the reflexive transitive closure of $\nearrow$.
+\end{definition}
+
+\begin{lemma}
+  $\nearrow^*$ is a partial order.
+\end{lemma}
+
+\begin{lemma}
+  For every zipper $\zip^s_1 = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$, there exists
+  a unique minimal element $\zip^s_2$ such that $\zip^s_2 \nearrow^* \zip^s_1$.
+\end{lemma}
+
 \input{action-judgment}
 
 \note{give an example of a frame to clarify what's going on}
