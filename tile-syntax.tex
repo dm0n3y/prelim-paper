@@ -12,17 +12,19 @@
       %     \sprod{}{} ~\vert~
       %     \sparen{\tiles^{\typ}}\\
       \mathsf{PatTile} & \tile^{\pat} & ::= &
-        \shole ~\vert~
+        \ophole ~\vert~
         \svar{x} ~\vert~
         % \sann{}{\tiles^{\typ}} ~\vert~
+        \binhole ~\vert~
         \sprod{}{} ~\vert~
         \sparen{\tiles^{\pat}}\\
       \mathsf{ExpTile} & \tile^{\expr} & ::= &
-        \shole ~\vert~
+        \ophole ~\vert~
         % \sboollit{b} ~\vert~
         \snumlit{n} ~\vert~
         \svar{x} ~\vert~
         % \sap{}{} ~\vert~
+        \binhole ~\vert~
         \sprod{}{} ~\vert~
         \splus{}{} ~\vert~
         \smult{}{} ~\vert~

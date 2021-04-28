@@ -37,6 +37,31 @@
 \newcommand{\actionlit}[1]{\texttt{#1}}
 \newcommand{\direction}{\delta}
 
+\newcommand{\ophole}{%
+\begin{tikzpicture}%
+\draw[line width=0.75pt,violet]
+  (-0.25ex,0.5ex)
+  -- (0,1ex)
+  -- (0.5ex,1ex)
+  -- (0.75ex,0.5ex)
+  -- (0.5ex,0)
+  -- (0,0)
+  -- cycle;%
+\end{tikzpicture}%
+}
+\newcommand{\binhole}{%
+\begin{tikzpicture}%
+\draw[line width=0.65pt,violet]
+  (0,0.5ex)
+  -- (-0.25ex,1ex)
+  -- (0.75ex,1ex)
+  -- (0.5ex,0.5ex)
+  -- (0.75ex,0)
+  -- (-0.25ex,0)
+  -- cycle;%
+\end{tikzpicture}%
+}
+
 \newcommand{\editState}{\mathcal{E}}
 \newcommand{\performAction}[3]{#1 \xlongrightarrow{#2} #3}
 
