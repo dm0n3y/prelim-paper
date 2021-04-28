@@ -1,0 +1,70 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \setlength{\fboxsep}{1pt}
+  \arraycolsep=3pt\def\arraystretch{1.4}\begin{array}{rcl}
+      \disassembleTileFrame{
+        \tframelit{
+          \sparen{\_}
+        }{
+          \tframelit{\tiles^s_1\_\tiles^s_2}{\tfrelem^{\pat}}
+        }
+      } & = &
+        \zipper{
+          \pointing{\tiles^s_1\tokenLit{\texttt{(}}~}{~\tokenLit{\texttt{)}}\tiles^s_2}
+        }{
+          \tfrelem^{\pat}
+        } \\
+
+      \disassembleTileFrame{
+        \tframelit{
+          \slam{\_}{}
+        }{
+          \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
+        }
+      } & = &
+        \zipper{
+          \pointing{\tiles^{\expr}_1\tokenLit{\lambda}~}{~\tokenLit{\texttt{.}}\tiles^{\expr}_2}
+        }{
+          \tfrelem^{\expr}
+        } \\
+
+      \disassembleTileFrame{
+        \tframelit{
+          \slet{\_}{\tiles^{\expr}_0}{}
+        }{
+          \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
+        }
+      } & = & \\
+        \zipper{
+          \pointing{
+            \tiles^{\expr}_1\tokenLit{\texttt{let}}~
+          }{
+            ~\tokenLit{\texttt{=}}~\tiles^{\expr}_0\tokenLit{\texttt{in}}~\tiles^{\expr}_2
+          }
+        }{
+          \tfrelem^{\expr}
+        } \\
+
+      \disassembleTileFrame{
+        \tframelit{
+          \slet{\tiles^{\pat}}{\_}{}
+        }{
+          \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
+        }
+      } & = & \\
+        \zipper{
+          \pointing{
+            \tiles^{\expr}_1\tokenLit{\texttt{let}}~\tiles^{\pat}~\tokenLit{\texttt{=}}~
+          }{
+            ~\tokenLit{\texttt{in}}~\tiles^{\expr}_2
+          }
+        }{
+          \tfrelem^{\expr}
+        }
+  \end{array}\]
+  \caption{
+    Disassembling a tile frame.
+  }
+  \label{fig:disassemble-tile}
+\end{figure}
