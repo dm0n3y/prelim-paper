@@ -2,7 +2,7 @@
   \judgbox{\performAction{\editState_1}{\action}{\editState_2}}{$\editState_1$ transitions via $\alpha$ to $\editState_2$}
   \begin{mathpar}
   \inferrule[MoveRightEnterTile]{
-    \disassembleTile{\tile^s} = \token^{s'}\selection
+    \disassembleTile{\tile^s} = \token^{s}\selection
   }{
     \performAction{
       \zipper{\pointing{\tiles^s_1}{\tile^s\tiles^s_2}}{\tframe^s}
