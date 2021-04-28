@@ -1,0 +1,52 @@
+\begin{figure}
+  \judgbox{\fixHoles{\selection_1}{\selection_2}{\selection_3}{\selection_4}}{$\selection_1$ and $\selection_2$ are hole-fixed to $\selection_3$ and $\selection_4$}
+  \begin{mathpar}
+  \inferrule{
+  }{
+    \fixHoles{\selection_1\ophole}{\binhole\selection_2}{\selection_1}{\selection_2}
+  }\ \ \ \ \ \ \ \ \
+  \inferrule{
+  }{
+    \fixHoles{\selection_1\binhole}{\ophole\selection_2}{\selection_1}{\selection_2}
+  } \\
+  \inferrule{
+    \leftTip{\tile} = \ltip
+  }{
+    \fixHoles{\selection_1\ophole}{\tile\selection_2}{\selection_1}{\tile\selection_2}
+  }\ \ \ \ \ \ \ \ \
+  \inferrule{
+    \rightTip{\tile} =\ \rtip
+  }{
+    \fixHoles{\selection_1\tile}{\ophole\selection_2}{\selection_1}{\tile\selection_2}
+  }\\
+  \inferrule{
+    \leftTip{\tile} =\ \rtip
+  }{
+    \fixHoles{\selection_1\binhole}{\tile\selection_2}{\selection_1}{\tile\selection_2}
+  }\ \ \ \ \ \ \ \ \
+  \inferrule{
+    \rightTip{\tile} = \ltip
+  }{
+    \fixHoles{\selection_1\tile}{\binhole\selection_2}{\selection_1}{\tile\selection_2}
+  }\\
+  \inferrule{
+    \tile_1\neq\ophole \\
+    \tile_2\neq\ophole \\
+    \rightTip{\tile_1} =\ \rtip \\
+    \leftTip{\tile_2} = \ltip
+  }{
+    \fixHoles{\selection_1\tile_1}{\tile_2\selection_2}{\selection_1\tile_1}{\binhole\tile_2\selection_2}
+  }\\
+  \inferrule{
+    \tile_1\neq\binhole \\
+    \tile_2\neq\binhole \\
+    \rightTip{\tile_1} = \ltip \\
+    \leftTip{\tile_2} =\ \rtip
+  }{
+    \fixHoles{\selection_1\tile_1}{\tile_2\selection_2}{\selection_1\tile_1}{\ophole\tile_2\selection_2}
+  }
+  \end{mathpar}
+  \vspace{-2px}
+  \CaptionLabel{Hole fixing}{fig:hole-fixing}
+  \vspace{-2px}
+  \end{figure}
