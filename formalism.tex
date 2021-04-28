@@ -33,13 +33,15 @@
   $\searrow^*$ is a partial order.
 \end{lemma}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:unique-parsed-selection}
   For every selection $\Psi$, there is a unique maximal
   element $\Psi'$ such that $\Psi'\searrow^*\Psi$.
 \end{lemma}
 
 \begin{definition}
-  \note{define function that returns unique maximal element of selection}
+  Let $parseSelection$ be the function that takes a selection
+  and returns the unique maximal selection guaranteed to exist
+  by Lemma \ref{lemma:unique-parsed-selection}.
 \end{definition}
 
 
@@ -67,6 +69,13 @@
   For every zipper $\zip^s_1 = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$, there exists
   a unique minimal element $\zip^s_2$ such that $\zip^s_2 \nearrow^* \zip^s_1$.
 \end{lemma}
+
+\begin{definition}
+  Let $parseZipper$ be the function that takes a selection
+  and returns the unique maximal selection guaranteed to exist
+  by Lemma \ref{lemma:unique-parsed-selection}.
+\end{definition}
+
 
 \input{action-syntax}
 \input{action-judgment}
