@@ -79,8 +79,8 @@
 \newcommand{\zipper}[2]{#1 \gtrdot #2}
 \newcommand{\subject}{\sigma}
 \newcommand{\pointing}[2]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}#2}
-\newcommand{\selecting}[3]{#1\overline{#2}#3}
-\newcommand{\restructuring}[3]{#1\widehat{#2}#3}
+\newcommand{\selecting}[3]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}\overline{#2}#3}
+\newcommand{\restructuring}[3]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}\widehat{#2}#3}
 
 \newcommand{\leftTip}[1]{\overleftarrow{#1}}
 \newcommand{\rightTip}[1]{\overrightarrow{#1}}
@@ -89,6 +89,9 @@
 \newcommand{\fixHolesEnd}[3]{#1\rightsquigarrow_{#2}#3}
 \newcommand{\fixHoles}[4]{\pointing{#1}{#2}\rightsquigarrow\pointing{#3}{#4}}
 \newcommand{\fixHolesFn}[2]{fixHoles(#1, #2)}
+
+\newcommand{\parseSelection}[1]{parseSelection(#1)}
+\newcommand{\parseZipper}[1]{parseZipper(#1)}
 
 \newcommand{\typ}{\texttt{typ}}
 \newcommand{\pat}{\texttt{pat}}

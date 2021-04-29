@@ -4,11 +4,11 @@
   \inferrule[MoveRightEnterTile]{
     \disassembleTile{\tile^s} = \token^{s}\selection\\
     parseZipper(
-      \zipper{\pointing{\tiles^s_1\token^{s}~}{~\selection\tiles^s_2}}{\tframe^s}
+      \zipper{\pointing{\tiles^s_1\token^{s}~}{~\selection\tiles^s_2}}{\tfrelem^s}
     ) = \zeta^{s'}
   }{
     \performAction{
-      \zipper{\pointing{\tiles^s_1}{\tile^s\tiles^s_2}}{\tframe^s}
+      \zipper{\pointing{\tiles^s_1}{\tile^s\tiles^s_2}}{\tfrelem^s}
     }{
       \actionlit{move}\ \texttt{right}
     }{
@@ -16,10 +16,10 @@
     }
   } \\
   \inferrule[MoveRightExitTile]{
-    \disassembleTileFrame{\zipper{\pointing{\tiles^s}{\cdot}}{\tfrelem^s}} =
+    \disassembleTileFrame{\zipper{\pointing{\cdot}{\cdot}}{\tfrelem^s}} =
     \zipper{\pointing{\selection_1}{\token^{s'}\selection_2}}{\tfrelem^{s'}}\\
     parseZipper(
-      \zipper{\pointing{\selection_1\token^{s'}}{\selection_2}}{\tfrelem^{s'}}
+      \zipper{\pointing{\selection_1\tiles^s\token^{s'}}{\selection_2}}{\tfrelem^{s'}}
     ) = \zeta^{s''}
   }{
     \performAction{
@@ -32,8 +32,8 @@
   } \\
   \inferrule[ConstructTileWithoutChild]{
     \disassembleTile{\tile^s} = \token^s \\\\
-    fixHoles(\selection_1, \tile^s) = (\selection'_1, \selection_3) \\
-    fixHoles(\selection_3, \selection_2) = (\selection'_3, \selection'_2) \\
+    \fixHolesFn{\selection_1}{\tile^s} = (\selection'_1, \selection_3) \\
+    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\
     parseZipper(
       \zipper{\pointing{\selection'_1\selection'_3}{\selection'_2}}{\tfrelem^{s}}
     ) = \zeta^{s'}
@@ -47,9 +47,10 @@
     }
   } \\
   \inferrule[ConstructTileWithChild]{
-    \disassembleTile{\tile^s} = \token^s\selection_3 \\\\
-    fixHoles(\selection_1, \token^s) = (\selection'_1, \selection_4) \\
-    fixHoles(\selection_3, \selection_2) = (\selection'_3, \selection'_2) \\
+    \disassembleTile{\tile^s} = \token^s\selection_3 \\
+    \selection_3\neq\cdot\\\\
+    \fixHolesFn{\selection_1}{\token^s} = (\selection'_1, \selection_4) \\
+    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\
     parseZipper(
       \zipper{\pointing{\selection'_1\selection_4}{\selection'_3\selection'_2}}{\tfrelem^{s}}
     ) = \zeta^{s'}
@@ -61,7 +62,65 @@
     }{
       \zeta^{s'}
     }
-  }
+  } \\
+  \inferrule[SelectLeftToken]{
+    \parseSelection{\token^s\selection_2} = \selection'_2
+  }{
+    \performAction{
+      \zipper{\selecting{\selection_1\token^s}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{move}\ \texttt{left}
+    }{
+      \zipper{\selecting{\selection_1}{\selection'_2}{\selection_3}}{\tfrelem^s}
+    }
+  } \\
+  \inferrule[SelectLeftTile]{
+    \disassembleTile{\tile^s} = \selection_4\token^s \\
+    \parseSelection{\token^s\selection_2} = \selection'_2
+  }{
+    \performAction{
+      \zipper{\selecting{\selection_1\tile^s}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{move}\ \texttt{left}
+    }{
+      \zipper{\selecting{\selection_1\selection_4}{\selection'_2}{\selection_3}}{\tfrelem^s}
+    }
+  } \\
+  \inferrule[SelectLeftExit]{
+    \disassembleTileFrame{\zipper{\pointing{\cdot}{\cdot}}{\tfrelem^s}} =
+    \zipper{\pointing{\selection_3\token^{s'}}{\selection_4}}{\tfrelem^{s'}}
+  }{
+    \performAction{
+      \zipper{\selecting{\cdot}{\selection_1}{\selection_2}}{\tfrelem^s}
+    }{
+      \actionlit{move}\ \texttt{left}
+    }{
+      \zipper{\selecting{\selection_3}{\selection_1\token^{s'}}{\selection_2\selection_4}}{\tfrelem^{s'}}
+    }
+  } \\
+  \inferrule[SelectRightToken]{
+    \parseZipper{\zipper{\pointing{\selection_1\token^s}{\selection_3}}{\tfrelem^s}} =
+      \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^{s'}}
+  }{
+    \performAction{
+      \zipper{\selecting{\selection_1}{\token^s\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{move}\ \texttt{right}
+    }{
+      \zipper{\selecting{\selection'_1}{\selection_2}{\selection'_3}}{\tfrelem^{s'}}
+    }
+  } \\
+  \inferrule[SelectRightTile]{
+    \disassembleTile{\tile^s} = \token^s\selection_4
+  }{
+    \performAction{
+      \zipper{\selecting{\selection_1}{\tile^s\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{move}\ \texttt{right}
+    }{
+      \zipper{\selecting{\selection_1\token^s}{\selection_4\selection_2}{\selection_3}}{\tfrelem^s}
+    }
+  } \\
   \end{mathpar}
 
   \vspace{-2px}
