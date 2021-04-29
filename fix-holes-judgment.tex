@@ -1,103 +1,31 @@
 \begin{figure}
+  \newcommand{\spacing}{\ \ \ \ \ }
   \[
   \setlength{\fboxsep}{1pt}
-  \arraycolsep=3pt\def\arraystretch{3}\begin{array}{rcl}
+  \arraycolsep=3pt\def\arraystretch{1.25}\begin{array}{lcll}
     % \fixHolesFn{\selection_1}{\selection_2} & = &
     %   \begin{cases}
     %     (~\cdot~, \ophole\selection_2) & \text{if } \selection_1 =~\cdot~ \text{ and } \leftTip{\selection_2} =\ \rtip
     %   \end{cases} \\
       \fixHolesFn{~\cdot~}{\selem\selection} & = &
-      \begin{cases}
-        (~\cdot~, \selem\selection) & \text{if } \leftTip{\selem} = \ltip \\
-        (~\cdot~, \ophole\selem\selection) & \text{else}
-     \end{cases} \\
+        (~\cdot~, \ophole\selem\selection) & \text{\spacing if } \leftTip{\selem} =\ \rtip \\
      \fixHolesFn{\selection\selem}{~\cdot~} & = &
-     \begin{cases}
-       (\selection\selem, ~\cdot~) & \text{if } \rightTip{\selem} =\ \rtip \\
-       (\selection\selem\ophole, ~\cdot~) & \text{else}
-     \end{cases} \\
+       (\selection\selem\ophole, ~\cdot~) & \text{\spacing if } \rightTip{\selem} = \ltip \\
     \fixHolesFn{\selection\ophole}{\selem\selection'} & = &
-    \begin{cases}
-      (\selection\ophole, \selem\selection') & \text{if } \leftTip{\selem} =\ \rtip \\
-      (\selection, \selem\selection') & \text{else}
-   \end{cases} \\
+      (\selection, \selem\selection') & \text{\spacing if } \leftTip{\selem} = \ltip \\
    \fixHolesFn{\selection\selem}{\ophole\selection'} & = &
-   \begin{cases}
-     (\selection\selem, \ophole\selection') & \text{if } \rightTip{\selem} = \ltip \\
-     (\selection\selem, \selection') & \text{else}
-  \end{cases} \\
+     (\selection\selem, \selection') & \text{\spacing if } \rightTip{\selem} =\ \rtip \\
   \fixHolesFn{\selection\binhole}{\selem\selection'} & = &
-    \begin{cases}
-      (\selection\binhole, \selem\selection') & \text{if } \leftTip{\selem} = \ltip \\
-      (\selection, \selem\selection') & \text{else}
-  \end{cases} \\
+      (\selection, \selem\selection') & \text{\spacing if } \leftTip{\selem} =\ \rtip \\
   \fixHolesFn{\selection\selem}{\binhole\selection'} & = &
-  \begin{cases}
-    (\selection\selem, \binhole\selection') & \text{if } \rightTip{\selem} =\ \rtip \\
-    (\selection\selem, \selection') & \text{else}
-  \end{cases} \\
-
+    (\selection\selem, \selection') & \text{\spacing if } \rightTip{\selem} = \ltip \\
   \fixHolesFn{\selection\selem}{\selem'\selection'} & = &
-  \begin{cases}
-    (\selection\selem, \ophole\selem'\selection') & \text{if } \rightTip{\selem} = \ltip \text{ and }\leftTip{\selem'} =\ \rtip \\
-    (\selection\selem, \binhole\selem'\selection') & \text{if } \rightTip{\selem} =\ \rtip \text{ and }\leftTip{\selem'} = \ltip \\
-    (\selection\selem, \selem'\selection') & \text{else}
-  \end{cases}
+      (\selection\selem, \ophole\selem'\selection') & \text{\spacing if } \rightTip{\selem} = \ltip \text{ and }\leftTip{\selem'} =\ \rtip \\
+  \fixHolesFn{\selection\selem}{\selem'\selection'} & = &
+    (\selection\selem, \binhole\selem'\selection') & \text{\spacing if } \rightTip{\selem} =\ \rtip \text{ and }\leftTip{\selem'} = \ltip \\
+  \fixHolesFn{\selection}{\selection'} & = & (\selection, \selection') & \text{\spacing otherwise}
 \end{array}\]
-
-  \judgbox{\fixHoles{\selection_1}{\selection_2}{\selection_3}{\selection_4}}{$\selection_1$ and $\selection_2$ are hole-fixed in between to $\selection_3$ and $\selection_4$}
-  \begin{mathpar}
-  % \inferrule{
-  % }{
-  %   \fixHoles{\selection_1\ophole}{\binhole\selection_2}{\selection_1}{\selection_2}
-  % }\ \ \ \ \ \ \ \ \
-  % \inferrule{
-  % }{
-  %   \fixHoles{\selection_1\binhole}{\ophole\selection_2}{\selection_1}{\selection_2}
-  % } \\
-  \inferrule{
-    \leftTip{\tile} = \ltip
-  }{
-    \fixHoles{\cdot}{\tile\selection_2}{\selection_1}{\tile\selection_2}
-  }\\
-  \inferrule{
-    \leftTip{\tile} = \ltip
-  }{
-    \fixHoles{\selection_1\ophole}{\tile\selection_2}{\selection_1}{\tile\selection_2}
-  }\ \ \ \ \ \ \ \ \
-  \inferrule{
-    \rightTip{\tile} =\ \rtip
-  }{
-    \fixHoles{\selection_1\tile}{\ophole\selection_2}{\selection_1}{\tile\selection_2}
-  }\\
-  \inferrule{
-    \leftTip{\tile} =\ \rtip
-  }{
-    \fixHoles{\selection_1\binhole}{\tile\selection_2}{\selection_1}{\tile\selection_2}
-  }\ \ \ \ \ \ \ \ \
-  \inferrule{
-    \rightTip{\tile} = \ltip
-  }{
-    \fixHoles{\selection_1\tile}{\binhole\selection_2}{\selection_1}{\tile\selection_2}
-  }\\
-  \inferrule{
-    \tile_1\neq\ophole \\
-    \tile_2\neq\ophole \\
-    \rightTip{\tile_1} =\ \rtip \\
-    \leftTip{\tile_2} = \ltip
-  }{
-    \fixHoles{\selection_1\tile_1}{\tile_2\selection_2}{\selection_1\tile_1}{\binhole\tile_2\selection_2}
-  }\\
-  \inferrule{
-    \tile_1\neq\binhole \\
-    \tile_2\neq\binhole \\
-    \rightTip{\tile_1} = \ltip \\
-    \leftTip{\tile_2} =\ \rtip
-  }{
-    \fixHoles{\selection_1\tile_1}{\tile_2\selection_2}{\selection_1\tile_1}{\ophole\tile_2\selection_2}
-  }
-  \end{mathpar}
   \vspace{-2px}
-  \CaptionLabel{Hole fixing \note{need to handle empty cases, sort ambiguity}}{fig:hole-fixing}
+  \CaptionLabel{Hole fixing}{fig:hole-fixing}
   \vspace{-2px}
   \end{figure}
