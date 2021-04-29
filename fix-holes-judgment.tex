@@ -1,44 +1,65 @@
 \begin{figure}
-  \judgbox{\fixHolesEnd{\selection_1}{\direction}{\selection_2}}{$\selection_1$ is hole-fixed at $\direction$ end to $\selection_2$}
-  \begin{mathpar}
-  \inferrule{
-  }{
-    \fixHolesEnd{\cdot}{\direction}{\ophole}
-  }\\
-  \inferrule{
-    \fixHolesEnd{\selection}{\texttt{left}}{\selection'}
-  }{
-    \fixHolesEnd{\binhole\selection}{\texttt{left}}{\selection'}
-  }\ \ \ \ \ \ \ \ \
-  \inferrule{
-    \fixHolesEnd{\selection}{\texttt{right}}{\selection'}
-  }{
-    \fixHolesEnd{\selection\binhole}{\texttt{right}}{\selection'}
-  }\\
-  \inferrule{
-    \leftTip{\selem} =\ \rtip \\
-    \tile\neq\binhole
-  }{
-    \fixHolesEnd{\selem\selection}{\texttt{left}}{\ophole\selem\selection}
-  }\ \ \ \ \ \ \ \ \
-  \inferrule{
-    \rightTip{\selem} = \ltip \\
-    \tile\neq\binhole
-  }{
-    \fixHolesEnd{\selection\selem}{\texttt{right}}{\selection\selem\ophole}
-  }\\
-  \end{mathpar} \\
+  \[
+  \setlength{\fboxsep}{1pt}
+  \arraycolsep=3pt\def\arraystretch{3}\begin{array}{rcl}
+    % \fixHolesFn{\selection_1}{\selection_2} & = &
+    %   \begin{cases}
+    %     (~\cdot~, \ophole\selection_2) & \text{if } \selection_1 =~\cdot~ \text{ and } \leftTip{\selection_2} =\ \rtip
+    %   \end{cases} \\
+      \fixHolesFn{~\cdot~}{\selem\selection} & = &
+      \begin{cases}
+        (~\cdot~, \selem\selection) & \text{if } \leftTip{\selem} = \ltip \\
+        (~\cdot~, \ophole\selem\selection) & \text{else}
+     \end{cases} \\
+     \fixHolesFn{\selection\selem}{~\cdot~} & = &
+     \begin{cases}
+       (\selection\selem, ~\cdot~) & \text{if } \rightTip{\selem} =\ \rtip \\
+       (\selection\selem\ophole, ~\cdot~) & \text{else}
+     \end{cases} \\
+    \fixHolesFn{\selection\ophole}{\selem\selection'} & = &
+    \begin{cases}
+      (\selection\ophole, \selem\selection') & \text{if } \leftTip{\selem} =\ \rtip \\
+      (\selection, \selem\selection') & \text{else}
+   \end{cases} \\
+   \fixHolesFn{\selection\selem}{\ophole\selection'} & = &
+   \begin{cases}
+     (\selection\selem, \ophole\selection') & \text{if } \rightTip{\selem} = \ltip \\
+     (\selection\selem, \selection') & \text{else}
+  \end{cases} \\
+  \fixHolesFn{\selection\binhole}{\selem\selection'} & = &
+    \begin{cases}
+      (\selection\binhole, \selem\selection') & \text{if } \leftTip{\selem} = \ltip \\
+      (\selection, \selem\selection') & \text{else}
+  \end{cases} \\
+  \fixHolesFn{\selection\selem}{\binhole\selection'} & = &
+  \begin{cases}
+    (\selection\selem, \binhole\selection') & \text{if } \rightTip{\selem} =\ \rtip \\
+    (\selection\selem, \selection') & \text{else}
+  \end{cases} \\
+
+  \fixHolesFn{\selection\selem}{\selem'\selection'} & = &
+  \begin{cases}
+    (\selection\selem, \ophole\selem'\selection') & \text{if } \rightTip{\selem} = \ltip \text{ and }\leftTip{\selem'} =\ \rtip \\
+    (\selection\selem, \binhole\selem'\selection') & \text{if } \rightTip{\selem} =\ \rtip \text{ and }\leftTip{\selem'} = \ltip \\
+    (\selection\selem, \selem'\selection') & \text{else}
+  \end{cases}
+\end{array}\]
 
   \judgbox{\fixHoles{\selection_1}{\selection_2}{\selection_3}{\selection_4}}{$\selection_1$ and $\selection_2$ are hole-fixed in between to $\selection_3$ and $\selection_4$}
   \begin{mathpar}
+  % \inferrule{
+  % }{
+  %   \fixHoles{\selection_1\ophole}{\binhole\selection_2}{\selection_1}{\selection_2}
+  % }\ \ \ \ \ \ \ \ \
+  % \inferrule{
+  % }{
+  %   \fixHoles{\selection_1\binhole}{\ophole\selection_2}{\selection_1}{\selection_2}
+  % } \\
   \inferrule{
+    \leftTip{\tile} = \ltip
   }{
-    \fixHoles{\selection_1\ophole}{\binhole\selection_2}{\selection_1}{\selection_2}
-  }\ \ \ \ \ \ \ \ \
-  \inferrule{
-  }{
-    \fixHoles{\selection_1\binhole}{\ophole\selection_2}{\selection_1}{\selection_2}
-  } \\
+    \fixHoles{\cdot}{\tile\selection_2}{\selection_1}{\tile\selection_2}
+  }\\
   \inferrule{
     \leftTip{\tile} = \ltip
   }{
