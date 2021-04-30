@@ -1,4 +1,4 @@
-\begin{figure}
+\begin{figure*}
   \judgbox{\performAction{\editState_1}{\action}{\editState_2}}{$\editState_1$ transitions via $\alpha$ to $\editState_2$}
   \begin{mathpar}
   \inferrule[MoveRightEnterTile]{
@@ -14,7 +14,7 @@
     }{
       \zeta^{s'}
     }
-  } \\
+  } \ \ \ \ \ \
   \inferrule[MoveRightExitTile]{
     \disassembleTileFrame{\zipper{\pointing{\cdot}{\cdot}}{\tfrelem^s}} =
     \zipper{\pointing{\selection_1}{\token^{s'}\selection_2}}{\tfrelem^{s'}}\\
@@ -33,7 +33,7 @@
   \inferrule[ConstructTileWithoutChild]{
     \disassembleTile{\tile^s} = \token^s \\\\
     \fixHolesFn{\selection_1}{\tile^s} = (\selection'_1, \selection_3) \\
-    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\
+    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\\\
     parseZipper(
       \zipper{\pointing{\selection'_1\selection'_3}{\selection'_2}}{\tfrelem^{s}}
     ) = \zeta^{s'}
@@ -45,12 +45,12 @@
     }{
       \zeta^{s'}
     }
-  } \\
+  } \ \ \ \ \
   \inferrule[ConstructTileWithChild]{
     \disassembleTile{\tile^s} = \token^s\selection_3 \\
     \selection_3\neq\cdot\\\\
     \fixHolesFn{\selection_1}{\token^s} = (\selection'_1, \selection_4) \\
-    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\
+    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\\\
     parseZipper(
       \zipper{\pointing{\selection'_1\selection_4}{\selection'_3\selection'_2}}{\tfrelem^{s}}
     ) = \zeta^{s'}
@@ -83,7 +83,7 @@
     }{
       \zipper{\selecting{\selection_1}{\selection'_2}{\selection_3}}{\tfrelem^s}
     }
-  } \\
+  } \ \ \
   \inferrule[SelectLeftTile]{
     \disassembleTile{\tile^s} = \selection_4\token^s \\
     \parseSelection{\token^s\selection_2} = \selection'_2
@@ -95,7 +95,7 @@
     }{
       \zipper{\selecting{\selection_1\selection_4}{\selection'_2}{\selection_3}}{\tfrelem^s}
     }
-  } \\
+  } \ \ \
   \inferrule[SelectLeftExit]{
     \disassembleTileFrame{\zipper{\pointing{\cdot}{\cdot}}{\tfrelem^s}} =
     \zipper{\pointing{\selection_3\token^{s'}}{\selection_4}}{\tfrelem^{s'}}
@@ -119,7 +119,7 @@
     }{
       \zipper{\selecting{\selection'_1}{\selection_2}{\selection'_3}}{\tfrelem^{s'}}
     }
-  } \\
+  } \ \ \ \ \ \ \ \
   \inferrule[SelectRightTile]{
     \disassembleTile{\tile^s} = \token^s\selection_4
   }{
@@ -132,7 +132,9 @@
     }
   } \\
   \inferrule[MarkSelecting]{
-    \leftSort{\selection_2} = \rightSort{\selection_2}
+    \leftSort{\selection_2} = \rightSort{\selection_2} \\
+    \text{\note{todo define sort tip}} \\
+    \text{\note{todo fix holes}}
   }{
     \performAction{
       \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
@@ -141,10 +143,31 @@
     }{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }
+  } \\
+  \inferrule[MoveRightRestructuring]{
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^{s'}\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{move}\ \texttt{right}
+    }{
+      \zipper{\restructuring{\selection_1\tile^{s'}}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }
+  } \\
+  \inferrule[Delete]{
+    filterTiles_s(\selection_1)
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{delete}
+    }{
+      \zipper{\restructuring{\selection_1\tile^{s'}}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }
   }
   \end{mathpar}
 
   \vspace{-2px}
   \CaptionLabel{Action performing \note{prevent empty hole tile construction}}{fig:perform-action}
   \vspace{-2px}
-  \end{figure}
+  \end{figure*}
