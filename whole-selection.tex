@@ -1,0 +1,23 @@
+\begin{figure}
+  \vspace{-3px}
+  \judgbox{
+    \wholeSelection{s}{\selection}
+  }{
+    $\selection$ consists of tiles of sort $s$
+  }
+  \begin{mathpar}
+    \inferrule[]{
+    }{
+      \wholeSelection{s}{\cdot}
+    } \ \ \ \ \ \ \ \ \ \
+    \inferrule[]{
+      \wholeSelection{s}{\selection}
+    }{
+      \wholeSelection{s}{\tile^s\selection}
+    }
+  \end{mathpar}
+  \caption{
+    Whole selections
+  }
+  \label{fig:whole-selection}
+\end{figure}
