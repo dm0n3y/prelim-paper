@@ -145,6 +145,18 @@
     }{
       \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^s}
     }
+  } \\
+  \inferrule[MarkRestructuring]{
+    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5} \\
+    \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}} = \zipper^{s'}
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{mark}
+    }{
+      \zipper^{s'}
+    }
   }
   \end{mathpar}
 
