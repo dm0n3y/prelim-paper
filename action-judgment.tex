@@ -16,7 +16,7 @@
     }
   } \ \ \ \ \ \
   \inferrule[MoveRightExitTile]{
-    \disassembleTileFrame{\zipper{\pointing{\cdot}{\cdot}}{\tfrelem^s}} =
+    \disassembleTileFrame{\tfrelem^s} =
     \zipper{\pointing{\selection_1}{\token^{s'}\selection_2}}{\tfrelem^{s'}}\\
     parseZipper(
       \zipper{\pointing{\selection_1\tiles^s\token^{s'}}{\selection_2}}{\tfrelem^{s'}}
@@ -79,7 +79,7 @@
     }
   } \ \ \
   \inferrule[SelectLeftExit]{
-    \disassembleTileFrame{\zipper{\pointing{\cdot}{\cdot}}{\tfrelem^s}} =
+    \disassembleTileFrame{\tfrelem^s} =
     \zipper{\pointing{\selection_3\token^{s'}}{\selection_4}}{\tfrelem^{s'}}
   }{
     \performAction{
@@ -161,6 +161,6 @@
   \end{mathpar}
 
   \vspace{-2px}
-  \CaptionLabel{Action performing \note{prevent empty hole tile construction}}{fig:perform-action}
+  \CaptionLabel{Action performing \note{prevent empty hole tile construction, add justification for constructing tiles rather than tokens}}{fig:perform-action}
   \vspace{-2px}
   \end{figure*}
