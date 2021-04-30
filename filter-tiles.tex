@@ -1,0 +1,21 @@
+\begin{figure}
+  \newcommand{\spacing}{\ \ \ \ \ }
+  \[
+  \setlength{\fboxsep}{1pt}
+  \arraycolsep=3pt\def\arraystretch{1.25}\begin{array}{lcl}
+    % \fixHolesFn{\selection_1}{\selection_2} & = &
+    %   \begin{cases}
+    %     (~\cdot~, \ophole\selection_2) & \text{if } \selection_1 =~\cdot~ \text{ and } \leftTip{\selection_2} =\ \rtip
+    %   \end{cases} \\
+      \filterTiles{s}{\cdot} & = & \cdot \\
+      \filterTiles{s}{\token^{s'}\selection} & = & \filterTiles(\selection) \\
+      \filterTiles{s}{\tile^{s'}\selection} & = &
+        \begin{cases}
+          \tile^{s'}\filterTiles{s}{\selection} & \text{ if } s = s' \\
+          \filterTiles{s}{\selection} & \text{ else }
+        \end{cases}
+\end{array}\]
+  \vspace{-2px}
+  \CaptionLabel{Filtering tiles}{fig:filter-tiles}
+  \vspace{-2px}
+  \end{figure}

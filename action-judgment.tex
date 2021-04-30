@@ -136,14 +136,14 @@
     }
   } \\
   \inferrule[Delete]{
-    filterTiles_s(\selection_1)
+    \fixHolesSelections{\rtipconc{s}}{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{\ltipconc{s}}{\selection'_1}{\selection'_3}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{delete}
     }{
-      \zipper{\restructuring{\selection_1\tile^{s'}}{\selection_2}{\selection_3}}{\tfrelem^s}
+      \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^s}
     }
   }
   \end{mathpar}
