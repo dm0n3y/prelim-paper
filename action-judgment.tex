@@ -30,29 +30,11 @@
       \zeta^{s''}
     }
   } \\
-  \inferrule[ConstructTileWithoutChild]{
-    \disassembleTile{\tile^s} = \token^s \\\\
-    \fixHolesFn{\selection_1}{\tile^s} = (\selection'_1, \selection_3) \\
-    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\\\
-    parseZipper(
-      \zipper{\pointing{\selection'_1\selection'_3}{\selection'_2}}{\tfrelem^{s}}
-    ) = \zeta^{s'}
-  }{
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
-    }{
-      \actionlit{construct}\ \tile^s
-    }{
-      \zeta^{s'}
-    }
-  } \ \ \ \ \
-  \inferrule[ConstructTileWithChild]{
+  \inferrule[ConstructTile]{
     \disassembleTile{\tile^s} = \token^s\selection_3 \\
-    \selection_3\neq\cdot\\\\
-    \fixHolesFn{\selection_1}{\token^s} = (\selection'_1, \selection_4) \\
-    \fixHolesFn{\selection_3}{\selection_2} = (\selection'_3, \selection'_2) \\\\
+    \fixHolesSelections{\rtipconc{s}}{\selection_1\token^s}{\selection_3\selection_2}{\ltipconc{s}}{\selection_4}{\selection_5} \\\\
     parseZipper(
-      \zipper{\pointing{\selection'_1\selection_4}{\selection'_3\selection'_2}}{\tfrelem^{s}}
+      \zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^{s}}
     ) = \zeta^{s'}
   }{
     \performAction{
@@ -62,7 +44,7 @@
     }{
       \zeta^{s'}
     }
-  } \\
+  } \ \ \ \ \ \ \ \
   \inferrule[MarkPointing]{
   }{
     \performAction{
