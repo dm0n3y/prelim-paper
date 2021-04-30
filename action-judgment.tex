@@ -114,16 +114,15 @@
     }
   } \\
   \inferrule[MarkSelecting]{
-    \leftSort{\selection_2} = \rightSort{\selection_2} \\
-    \text{\note{todo define sort tip}} \\
-    \text{\note{todo fix holes}}
+    \matchesSort{\leftTip{\selection_2}}{\rightTip{\selection_2}} \\
+    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_3}{\ltipconc{s}}{\selection'_1}{\selection'_3}
   }{
     \performAction{
       \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{mark}
     }{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\tfrelem^s}
     }
   } \\
   \inferrule[MoveRightRestructuring]{

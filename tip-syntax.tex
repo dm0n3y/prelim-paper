@@ -7,6 +7,30 @@
   \end{array}\]
 
   \judgbox{
+    \matchesSort{\lTip}{\rTip}
+  }{
+    Left tip $\lTip$ expects the same sort as right tip $\rTip$
+  }
+  \begin{mathpar}
+    \inferrule[]{
+    }{
+      \matchesSort{\ltipconc{s}}{\rtipconv{s}}
+    } \ \ \ \ \ \ \ \ \ \
+    \inferrule[]{
+    }{
+      \matchesSort{\ltipconc{s}}{\rtipconc{s}}
+    } \\
+    \inferrule[]{
+    }{
+      \matchesSort{\ltipconv{s}}{\rtipconc{s}}
+    } \ \ \ \ \ \ \ \ \ \
+    \inferrule[]{
+    }{
+      \matchesSort{\ltipconv{s}}{\rtipconv{s}}
+    }
+  \end{mathpar}
+
+  \judgbox{
     \fits{\rTip}{\lTip}
   }{
     Right tip $\rTip$ fits with left tip $\lTip$
