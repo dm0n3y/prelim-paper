@@ -1,0 +1,68 @@
+\begin{figure}
+  \judgbox{
+    \fixHolesSelection{\rTip_1}{\selection_1}{\selection_2}{\rTip_2}
+  }{
+    $\selection_1$ is hole fixed under tip constraint $\rTip_1$ \\
+    to produce $\selection_2$ and new tip constraint $\rTip_2$
+  }
+  \begin{mathpar}
+    \inferrule[]{
+    }{
+      \fixHolesSelection{r}{\cdot}{\cdot}{r}
+    } \\
+    \inferrule[]{
+      \text{\note{$\psi$ is a hole}} \\
+      \fixHolesSelection{r}{\selection}{\selection'}{r'}
+    }{
+      \fixHolesSelection{r}{\selem\selection}{\selection'}{r'}
+    } \\
+    \inferrule[]{
+      \text{\note{$\psi$ not a hole}} \\
+      \fits{r}{\leftTip{\selem}} \\
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{r'}
+    }{
+      \fixHolesSelection{r}{\selem\selection}{\selection'}{r'}
+    } \\
+    \inferrule[]{
+      \text{\note{$\psi$ not a hole}} \\
+      \leftTip{\selem} = \ltipconc{s} \\
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{r'}
+    }{
+      \fixHolesSelection{\rtipconc{s}}{\selem\selection}{\ophole^s\selem\selection'}{r'}
+    } \\
+    \inferrule[]{
+      \text{\note{$\psi$ not a hole}} \\
+      \leftTip{\selem} = \ltipconv{s} \\
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{r'}
+    }{
+      \fixHolesSelection{\rtipconv{s}}{\selem\selection}{\binhole^s\selem\selection'}{r'}
+    } \\
+  \end{mathpar}
+
+  \judgbox{
+    \fixHolesSelections{\rTip}{\selection_1}{\selection_2}{\lTip}{\selection_3}{\selection_4}
+  }{$\selection_1$ and $\selection_2$ are hole fixed under \\
+    tip constraints $\rTip$ and $\lTip$ \\
+    to produce $\selection_3$ and $\selection_4$
+  }
+  \vspace{10pt}
+  \begin{mathpar}
+    \inferrule[]{
+      \fixHolesSelection{r}{\selection_1}{\selection'_1}{r'} \\
+      \fixHolesSelection{r'}{\selection_2}{\selection'_2}{r''} \\
+      \fits{r''}{l}
+    }{
+      \fixHolesSelections{r}{\selection_1}{\selection_2}{l}{\selection'_1}{\selection'_2}
+    } \\
+    \inferrule[]{
+      \fixHolesSelection{r}{\selection_1}{\selection'_1}{r'} \\
+      \fixHolesSelection{r'}{\selection_2}{\selection'_2}{\rtipconc{s}}
+    }{
+      \fixHolesSelections{r}{\selection_1}{\selection_2}{\ltipconc{s}}{\selection'_1}{\selection'_2\ophole^s}
+    }
+  \end{mathpar}
+  \caption{
+    Hole fixing
+  }
+  \label{fig:fixholes-2}
+  \end{figure}

@@ -1,0 +1,29 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+      \mathsf{LeftTip} & \lTip & ::= & \ltipconv{s} ~\vert~ \ltipconc{s} \\
+      \mathsf{RightTip} & \rTip & ::= & \rtipconv{s} ~\vert~ \rtipconc{s}
+  \end{array}\]
+
+  \judgbox{
+    \fits{\rTip}{\lTip}
+  }{
+    Right tip $\rTip$ fits with left tip $\lTip$
+  }
+  \begin{mathpar}
+    \inferrule[]{
+    }{
+      \fits{\rtipconc{s}}{\ltipconv{s}}
+    } \\
+    \inferrule[]{
+    }{
+      \fits{\rtipconv{s}}{\ltipconc{s}}
+    }
+  \end{mathpar}
+
+  \caption{
+    Syntax of tile and token tips
+  }
+  \label{fig:tip-syntax}
+\end{figure}
