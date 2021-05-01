@@ -53,9 +53,10 @@ and the tile's children tiles.
 % edit states internal to the action semantics.
 
 The second mode, called \emph{selecting mode},
-consists of a user-selected selection in between
+consists of a user-specified selection in between
 the unselected prefix and suffix selections.
-Selecting mode models the user making a selection by dropping
+Selecting mode models the user making a selection by
+having dropped
 an anchor at the selection's right end and moving
 the cursor left to mark the left end.
 For brevity, we ignore the mirror case.
@@ -74,6 +75,51 @@ prefix and suffix selections.
 % in Section \note{ref} how \ty's actions ensure that,
 % in any reachable edit state in pointing mode, the subject
 % selections consist entirely of tiles of the same sort.
+
+Selections have a permissive syntax, e.g., both
+a singleton tile and its disassembly form valid selections.
+Such a permissive syntax makes it possible to define
+\ty's linear editing operations generically with
+respect to the underlying language's tile grammar,
+by flattening hierarchies into linear sequences and
+operating directly on the flattened structures.
+Between edits, however, we would like to ensure
+that selections remain ``maximally assembled'' in order
+to inform the user of the top-level structures they
+are manipulating.
+Hence, we need to define an appropriate parsing function
+on selections that restores maximal structure as needed.
+
+Tile disassembly induces a natural ordering relation
+on selections.
+We can lift tile disassembly to a step-disassembly relation
+$\stepDisassembleSelection{\selection_1}{\selection_2}$
+on selections, defined
+in Figure \note{ref}.
+This relation chooses a tile in $\selection_1$, disassembles
+it, and splices it back in to produce $\selection_2$.
+We can show that the reflexive transitive closure
+$\searrow^*$ of $\searrow$ is a partial order in
+which every selection has a unique maximal element
+that diassembles to it.
+
+\begin{lemma}
+  $\searrow^*$ is a partial order.
+\end{lemma}
+
+\begin{lemma}\label{lemma:unique-parsed-selection}
+  For every selection $\Psi$, there is a unique maximal
+  element $\Psi'$ such that $\Psi'\searrow^*\Psi$.
+\end{lemma}
+
+Lemma \ref{lemma:unique-parsed-selection} makes it
+possible to well-define a parsing function
+on selections:
+\begin{definition}
+  Let $\parseSelection{\selection}$ be
+  the unique maximal selection $\selection'$ that disassembles
+  to $\selection$.
+\end{definition}
 
 
 % The subject may be in one of three
@@ -94,10 +140,6 @@ prefix and suffix selections.
 % a selection consisting of the tile's tokens
 % and the tile's children tiles.
 
-Such a disassembly function can be lifted to a disassembly
-relation $\stepDisassembleSelection{}{}$ between selections, show in Figure \note{ref}.
-Taking t
-
 
 \input{token-syntax}
 \input{selection-syntax}
@@ -105,41 +147,6 @@ Taking t
 \input{disassemble-selection}
 
 \note{make clear parallel between CFG derivation and disassembly}
-
-\note{
-  discuss the syntax of
-  tiles (Fig \ref{fig:tile-syntax}),
-  tokens (Fig \ref{fig:token-syntax}),
-  selections (Fig \ref{fig:selection-syntax})
-}
-
-\note{
-  discuss
-    disassembly of tiles (Fig \ref{fig:disassemble-tile}),
-    disassembly of selections (Fig \ref{fig:disassemble-selection}),
-    $\succeq$ partial order and parsing function
-}
-
-\begin{definition}
-  $\searrow^*$ is the reflexive transitive
-  closure of $\searrow$.
-\end{definition}
-
-\begin{lemma}
-  $\searrow^*$ is a partial order.
-\end{lemma}
-
-\begin{lemma}\label{lemma:unique-parsed-selection}
-  For every selection $\Psi$, there is a unique maximal
-  element $\Psi'$ such that $\Psi'\searrow^*\Psi$.
-\end{lemma}
-
-\begin{definition}
-  Let $parseSelection$ be the function that takes a selection
-  and returns the unique maximal selection guaranteed to exist
-  by Lemma \ref{lemma:unique-parsed-selection}.
-\end{definition}
-
 
 \subsection{Frames \& zippers}
 \input{frame-syntax}
