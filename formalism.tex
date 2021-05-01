@@ -38,19 +38,24 @@ We defer higher-level discussion regarding their roles in
 editing to Section \note{ref}, where we define \ty's editing
 operations, and focus now on the structures that constitute them.
 
-The first mode, called \emph{pointing mode}, consists of
-a pair of tiles of the sort expected by the frame.
-We described the syntax of tiles
+% The first mode, called \emph{pointing mode}, consists of
+% a pair of tiles of the sort expected by the frame.
+% We described the syntax of tiles
+% in Section \ref{sec:overview};
+% the same syntax that was presented in Figure \note{ref}
+% is presented again in Figure \note{ref} in context.
+
+% The second and third modes, called \emph{selecting mode}
+% and \emph{restructuring mode}, each consist of a trio of
+% \emph{selections}.
+All three modes consist of two or more \emph{selections}.
+A selection is a linear sequence of heterogeneously
+sorted \emph{tiles} and \emph{tokens}.
+We described the syntax of tiles $\tile^s$
 in Section \ref{sec:overview};
 the same syntax that was presented in Figure \note{ref}
 is presented again in Figure \note{ref} in context.
-
-The second and third modes, called \emph{selecting mode}
-and \emph{restructuring mode}, each consist of a trio of
-\emph{selections}.
-A selection is a linear sequence of heterogeneously
-sorted tiles and \emph{tokens}.
-Tokens are the lexical components of tiles, forming either
+Tokens $\token^s$ are the lexical components of tiles, forming either
 the substance of childless tiles or the delimiters of parent
 tiles' children.
 Tokens are generated from tiles via the \emph{tile disassembly} function
@@ -115,17 +120,15 @@ to the imaginary appendix.
 \input{disassemble-tile}
 \input{disassemble-selection}
 
-
-\subsection{Frames \& zippers}
-Now we turn to the syntax of \emph{frames}, presented
-in Figure \note{ref}.
-Given a subject of focus in a \ty~ edit state, the frame
-represents the surrounding context making up the rest of the program.
-Frames are structured in a bottom-up fashion, starting
+\subsubsection{Frames \& zippers}
+The sort-indexed frame $\tfrelem^s$ of a zipper
+$\zipper{\subject}{\tfrelem^s}$ models the rest of
+the program surrounding the subject $\subject$,
+the sort indexing specifying what sort is expected
+of the subject.
+Frames are nested in bottom-up fashion, starting
 with the nearest containing structure and concluding
 with the program root.
-Each frame specifies the sort of tiles with which it is
-expected to be filled.
 For example, if the edit subject is located at $\Box$
 in the program \texttt{let x = ( $\Box$ ) + 1 in x + 2},
 then the frame is modeled by our syntax as
@@ -149,16 +152,21 @@ then the frame is modeled by our syntax as
   }
 \]
 Notice that frames alternate between \emph{tile
-frames} that form bidelimited containers and
-\emph{sequence frames} consisting of the tiles
+frames} $\tfrelem^s$ that form bidelimited containers and
+\emph{sequence frames} $\tframe^s$ consisting of the tiles
 surrounding each tile frame.
 
-Having defined subjects and frames, we may now
-define the syntax of edit states,
-shown in Figure \note{ref}.
-An edit state consists of a sort-indexed \emph{zipper},
-each consisting of a subject and a frame of the
-specified sort.
+% Having defined subjects and frames, we may now
+% define the syntax of edit states,
+% shown in Figure \note{ref}.
+% An edit state consists of a sort-indexed \emph{zipper},
+% each consisting of a subject and a frame of the
+% specified sort.
+
+% \input{frame-syntax}
+% \input{zipper-syntax}
+\input{disassemble-frame-tile}
+\input{step-disassemble-zipper}
 
 Like tiles, frames may be decomposed into their
 lexically constituent tiles and tokens via the
@@ -166,33 +174,31 @@ lexically constituent tiles and tokens via the
 defined in Figure \note{ref}.
 Similar to how we lift tile disassembly to selection
 disassembly, we can lift frame disassembly to
-\emph{edit state disassembly}, defined in Figure \note{ref}.
+\emph{edit state step-disassembly}, defined in Figure \note{ref}.
 We can show that the reflexive transitive closure
-$\nearrow^*$ of $\nearrow$ is a partial order in
+$\nearrow^*$ of $\nearrow$, which we call \emph{edit state disassembly},
+is a partial order in
 which every edit state with a subject in pointing mode
 has a unique minimal element that disassembles to it:
 \begin{lemma}
   $\nearrow^*$ is a partial order.
 \end{lemma}
 \begin{lemma}\label{lemma:unique-parsed-editstate}
-  For every zipper $\zip^s_1 = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$, there exists
-  a unique minimal element $\zip^s_2$ such that $\zip^s_2 \nearrow^* \zip^s_1$.
+  For every edit state $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
+  there exists a unique $\editState' = \zipper{\pointing{\selection'_1}{\selection'_2}}{\tfrelem^{s'}}$ such that
+  \begin{itemize}
+  \item $\editState' \nearrow^* \editState$, and
+  \item if $\editState'' \nearrow^* \editState'$ then $\editState'' = \editState'$.
+  \end{itemize}
 \end{lemma}
-
-Lemma \note{ref} makes it
-possible to give a well-defined parsing function
-on edit states with a pointing mode subject:
-
+Lemma \ref{lemma:unique-parsed-editstate} makes it
+possible to specify a well-defined parsing function
+on edit states in pointing mode:
 \begin{definition}
   Given an edit state $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
   let $\parseZipper{\editState}$ be the unique minimal edit state
   that disassembles to $\editState$.
 \end{definition}
-
-% \input{frame-syntax}
-% \input{zipper-syntax}
-\input{disassemble-frame-tile}
-\input{step-disassemble-zipper}
 
 % \begin{definition}
 %   $\zeta^s_1\nearrow\zeta^s_2$ if $\disassembleTileFrame{\zeta^s_1} = \zeta^s_2$.
