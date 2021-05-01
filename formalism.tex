@@ -2,11 +2,103 @@
 
 \section{Tile-based Editor Calculus}\label{sec:formalism}
 
-We now present a precise specification of tile-based structure
-editing in the form of a core editor calculus called \ty.
+We now present a precise specification of tile-based
+editing in the form of a core calculus called \ty.
 
+Edit states in \ty~ follow a variant
+of the zipper pattern first described by Huet.
+In particular, \ty~ edit states have a \emph{bottom-up}
+zipper structure \note{cite}---consisting of a focused substructure
+and, separately, its surrounding ``inside-out'' context---unlike
+the top-down structure adopted in other work \note{cite}.
+In this work, we call the focused substructure the \emph{subject} of
+the zipper and its surrounding context the \emph{frame}.
+Sections \note{ref} and \note{ref} present the syntax of
+\ty~ subjects and frames as well as methods of disassembling
+and reassembling these structures as needed for editing.
+
+The punchline of \ty~ is the action judgment
+$\performAction{\editState_1}{\action}{\editState_2}$ \note{section ref},
+which sends edit state $\editState_1$ to $\editState_2$
+via action $\alpha$.
+These actions are governed by a syntactic sensibility theorem \note{ref},
+which states that every action-reachable edit state can
+be parsed into a language term.
+Section \note{ref} presents the action judgment and characterizes
+its metatheory.
 
 \subsection{Tiles, tokens, \& selections}
+We start with the syntax of the subject of a \ty~ edit state,
+shown in Figure \note{ref}.
+The subject may be in one of three \emph{modes}.
+The first mode, called \emph{pointing mode}, models
+a cursor sitting between a pair of \emph{selections},
+each of which is a linear sequence of heterogeneously
+sorted \emph{tiles} and \emph{tokens}.
+We described the syntax of tiles
+in the previous section (Figure \note{ref}).
+Tokens are the lexical components of tiles, forming either
+the substance of childless tiles or the delimiters of parent
+tiles' children.
+Tokens are generated from tiles via the \emph{tile disassembly} function
+$\disassembleTile{\cdot}$, defined in Figure \note{ref},
+which takes a tile and produces
+a selection consisting of the tile's tokens
+and the tile's children tiles.
+% Such a permissive syntactic structure is not strictly necessary
+% for modeling pointing mode, as \ty ensures that,
+% in any action-reachable edit state in pointing mode,
+% the selections consist entirely of tiles of the same sort;
+% however, it is also useful for modeling intermediate
+% edit states internal to the action semantics.
+
+The second mode, called \emph{selecting mode},
+consists of a user-selected selection in between
+the unselected prefix and suffix selections.
+Selecting mode models the user making a selection by dropping
+an anchor at the selection's right end and moving
+the cursor left to mark the left end.
+For brevity, we ignore the mirror case.
+% For the sake of brevity, we restrict our attention to selections
+% specified by dropping an anchor at the right
+% end of the selection and moving left to specify the
+% left end; modeling the opposite case yields no new insights.
+
+The third mode, called \emph{restructuring mode},
+has the same structure as selecting mode.
+It models the user having ``picked up'' a selection
+and moving it to different target location within the
+prefix and suffix selections.
+
+% Selections may be arbitrarily structured, but we show
+% in Section \note{ref} how \ty's actions ensure that,
+% in any reachable edit state in pointing mode, the subject
+% selections consist entirely of tiles of the same sort.
+
+
+% The subject may be in one of three
+% modes: \emph{pointing}, \emph{selecting}, and \emph{restructuring}.
+% Each mode is made up of two or three \emph{selections}, each
+% of which is a linear sequence of heterogeneously sorted
+% \emph{tiles} and \emph{tokens}.
+% Recall that the syntax of tiles was presented in Figure \note{ref}
+% of the previous section.
+% Tokens are the lexical components of tiles, forming either
+% the substance of childless tiles or the delimiters of parent
+% tiles' children.
+% % Under \ty's actions, they appear in the subject
+% % as untethered delimiters of tiles divided by a selection boundary.
+% Tokens are generated from tiles via the \emph{tile disassembly} function
+% $\disassembleTile{\cdot}$, defined in Figure \note{ref},
+% which takes a tile and produces
+% a selection consisting of the tile's tokens
+% and the tile's children tiles.
+
+Such a disassembly function can be lifted to a disassembly
+relation $\stepDisassembleSelection{}{}$ between selections, show in Figure \note{ref}.
+Taking t
+
+
 \input{token-syntax}
 \input{selection-syntax}
 \input{disassemble-tile}
