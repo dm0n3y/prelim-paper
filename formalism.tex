@@ -101,7 +101,7 @@ it, and splices it back in to produce $\selection_2$.
 We can show that the reflexive transitive closure
 $\searrow^*$ of $\searrow$ is a partial order in
 which every selection has a unique maximal element
-that diassembles to it.
+that disassembles to it.
 
 \begin{lemma}
   $\searrow^*$ is a partial order.
@@ -113,11 +113,11 @@ that diassembles to it.
 \end{lemma}
 
 Lemma \ref{lemma:unique-parsed-selection} makes it
-possible to well-define a parsing function
+possible to give a well-defined parsing function
 on selections:
 \begin{definition}
-  Let $\parseSelection{\selection}$ be
-  the unique maximal selection $\selection'$ that disassembles
+  Given a selection $\selection$, let $\parseSelection{\selection}$ be
+  the unique maximal selection that disassembles
   to $\selection$.
 \end{definition}
 
@@ -149,36 +149,91 @@ on selections:
 \note{make clear parallel between CFG derivation and disassembly}
 
 \subsection{Frames \& zippers}
-\input{frame-syntax}
-\input{zipper-syntax}
-\input{disassemble-frame-tile}
+Now we turn to the syntax of \emph{frames}, presented
+in Figure \note{ref}.
+Given a subject of focus in a \ty~ edit state, the frame
+represents the surrounding context making up the rest of the program.
+Frames are structured in a bottom-up fashion, starting
+with the nearest containing structure and concluding
+with the program root.
+Each frame specifies the sort of tiles with which it is
+expected to be filled.
+For example, if the edit subject is located at $\Box$
+in the program \texttt{let x = ( $\Box$ ) + 1 in x + 2},
+then the frame is modeled by our syntax as
+\[
+  \tframelit{
+    \sparen{\_}
+  }{
+    \tframelit{
+      \_\splus{}{\texttt{1}}
+    }{
+      \tframelit{
+        \slet{\texttt{x}}{\_}{}
+      }{
+        \tframelit{
+          \_\ \splus{\texttt{x}}{\texttt{2}}
+        }{
+          \note{root}
+        }
+      }
+    }
+  }
+\]
+Notice that frames alternate between \emph{tile
+frames} that form bidelimited containers and
+\emph{sequence frames} consisting of the tiles
+surrounding each tile frame.
 
-\note{give an example of a frame to clarify what's going on}
+Having defined subjects and frames, we may now
+define the syntax of edit states,
+shown in Figure \note{ref}.
+An edit state consists of a sort-indexed \emph{zipper},
+each consisting of a subject and a frame of the
+specified sort.
 
-\begin{definition}
-  $\zeta^s_1\nearrow\zeta^s_2$ if $\disassembleTileFrame{\zeta^s_1} = \zeta^s_2$.
-  \note{defined this for symmetry with diassembling of tiles}
-\end{definition}
-
-\begin{definition}
-  $\nearrow^*$ is the reflexive transitive closure of $\nearrow$.
-\end{definition}
-
+Like tiles, frames may be decomposed into their
+lexically constituent tiles and tokens via the
+\emph{frame disassembly} function $\disassembleTileFrame{\cdot}$,
+defined in Figure \note{ref}.
+Similar to how we lift tile disassembly to selection
+disassembly, we can lift frame disassembly to
+\emph{edit state disassembly}, defined in Figure \note{ref}.
+We can show that the reflexive transitive closure
+$\nearrow^*$ of $\nearrow$ is a partial order in
+which every edit state with a subject in pointing mode
+has a unique minimal element that disassembles to it:
 \begin{lemma}
   $\nearrow^*$ is a partial order.
 \end{lemma}
-
-\begin{lemma}
+\begin{lemma}\label{lemma:unique-parsed-editstate}
   For every zipper $\zip^s_1 = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$, there exists
   a unique minimal element $\zip^s_2$ such that $\zip^s_2 \nearrow^* \zip^s_1$.
 \end{lemma}
 
+Lemma \ref{lemma:unique-parsed-editstate} makes it
+possible to give a well-defined parsing function
+on edit states with a pointing mode subject:
+
 \begin{definition}
-  Let $parseZipper$ be the function that takes a pointing mode
-  zipper
-  and returns the unique minimal pointing mode zipper guaranteed to exist
-  by Lemma \ref{lemma:unique-parsed-selection}.
+  Given an edit state $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
+  let $\parseZipper{\editState}$ be the unique minimal edit state
+  that disassembles to $\editState$.
 \end{definition}
+
+\input{frame-syntax}
+\input{zipper-syntax}
+\input{disassemble-frame-tile}
+\input{step-disassemble-zipper}
+
+% \begin{definition}
+%   $\zeta^s_1\nearrow\zeta^s_2$ if $\disassembleTileFrame{\zeta^s_1} = \zeta^s_2$.
+%   \note{defined this for symmetry with diassembling of tiles}
+% \end{definition}
+
+% \begin{definition}
+%   $\nearrow^*$ is the reflexive transitive closure of $\nearrow$.
+% \end{definition}
 
 \input{tip-syntax}
 % \input{fix-holes-judgment}
