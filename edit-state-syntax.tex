@@ -1,0 +1,89 @@
+\begin{figure}
+  \vspace{-3px}
+  \[
+  \arraycolsep=3pt\begin{array}{rlrl}
+    \mathsf{EditState} & \editState & ::= & \zip^{\pat} ~\vert~ \zip^{\expr} \\
+    \mathsf{Zipper} & \zip^s & ::= & \zipper{\subject}{\tfrelem^s} \\\\
+
+    \mathsf{TileSeqFrame} & \tframe^s & ::= & \tframelit{\tiles^s\_\tiles^s}{\tfrelem^s} \\
+    \mathsf{PatTileFrame} & \tfrelem^{\pat} & ::= &
+      \tframelit{\sparen{\_}}{\tframe^{\pat}} \\
+    & & \vert &
+      \tframelit{\slam{\_}{}}{\tframe^{\expr}} \\
+    & & \vert &
+      \tframelit{\slet{\_}{\tiles^{\expr}}{}}{\tframe^{\expr}} \\
+    \mathsf{ExpTileFrame} & \tfrelem^{\expr} & ::= &
+      \tframelit{\sparen{\_}}{\tframe^{\expr}} \\
+    & & \vert &
+      \tframelit{\slet{\tiles^{\pat}}{\_}{}}{\tframe^{\expr}} \\\\
+      % \scond{}{\tiles^{\expr}}{}
+
+    \mathsf{Subject} & \subject & ::= &
+    \pointing{\selection}{\selection} ~\vert~
+    \selecting{\selection}{\selection}{\selection} ~\vert~
+    \restructuring{\selection}{\selection}{\selection} \\\\
+
+    \mathsf{Selection} & \selection & ::= &
+    \selem_1\dots\selem_n \\
+    \mathsf{SelectedElement} & \selem & ::= &
+      \tile^{\pat} ~\vert~
+      \tile^{\expr} ~\vert~
+      \token^{\pat} ~\vert~
+      \token^{\expr} \\\\
+
+
+    \mathsf{TileSeq} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
+    \mathsf{PatTile} & \tile^{\pat} & ::= &
+      \ophole ~\vert~
+      \svar{x} ~\vert~
+      % \sann{}{\tiles^{\typ}} ~\vert~
+      \binhole ~\vert~
+      \sprod{}{} ~\vert~
+      \sparen{\tiles^{\pat}}\\
+    \mathsf{ExpTile} & \tile^{\expr} & ::= &
+      \ophole ~\vert~
+      % \sboollit{b} ~\vert~
+      \snumlit{n} ~\vert~
+      \svar{x} ~\vert~
+      % \sap{}{} ~\vert~
+      \binhole ~\vert~
+      \sprod{}{} ~\vert~
+      \splus{}{} ~\vert~
+      \smult{}{} ~\vert~
+      % \sequals{}{} ~\vert~
+      \sparen{\tiles^{\expr}} \\
+    & & \vert &
+      \slam{\tiles^{\pat}}{} ~\vert~
+      \slet{\tiles^{\pat}}{\tiles^{\expr}}{}\\\\ % ~\vert~
+      % \scond{}{\tiles^{\expr}}{}
+
+      \mathsf{PatToken} & \token^{\pat} & ::= &
+        \tokenLit{\ophole} ~\vert~
+        \tokenLit{\svar{x}} ~\vert~
+        \tokenLit{\binhole} ~\vert~
+        \tokenLit{\sprod{}{}} ~\vert~
+        \tokenLit{\texttt{(}} ~\vert~
+        \tokenLit{\texttt{)}} \\
+      \mathsf{ExpToken} & \token^{\expr} & ::= &
+        \tokenLit{\ophole} ~\vert~
+        \tokenLit{\sboollit{b}} ~\vert~
+        \tokenLit{\snumlit{n}} ~\vert~
+        \tokenLit{\svar{x}} ~\vert~
+        \tokenLit{\binhole} ~\vert~
+        \tokenLit{\sprod{}{}} ~\vert~
+        \tokenLit{\splus{}{}} ~\vert~
+        \tokenLit{\smult{}{}} \\
+      & & \vert &
+        \tokenLit{\texttt{(}} ~\vert~
+        \tokenLit{\texttt{)}} ~\vert~
+        \tokenLit{\lambda} ~\vert~
+        \tokenLit{\texttt{.}} ~\vert~
+        \tokenLit{\texttt{let}} ~\vert~
+        \tokenLit{\texttt{=}} ~\vert~
+        \tokenLit{\texttt{in}}
+  \end{array}\]
+  \caption{
+    Syntax of edit states
+  }
+  \label{fig:edit-state-syntax}
+\end{figure}
