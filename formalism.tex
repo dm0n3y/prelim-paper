@@ -19,7 +19,7 @@ editing in the form of a core calculus called \ty.
 \input{edit-state-syntax}
 
 We start with an overview of the syntax of \ty~ edit states,
-presented altogether in Figure \note{ref}.
+presented altogether in Figure \ref{fig:edit-state-syntax}.
 Edit states in \ty~ are sort-indexed structures
 $\zipper{\subject}{\tfrelem^s}$ that follow a variant
 of the zipper pattern first described by Huet.
@@ -53,13 +53,13 @@ A selection is a linear sequence of heterogeneously
 sorted \emph{tiles} and \emph{tokens}.
 We described the syntax of tiles $\tile^s$
 in Section \ref{sec:overview};
-the same syntax that was presented in Figure \note{ref}
-is presented again in Figure \note{ref} in context.
+the same syntax that was presented in Figure \ref{fig:tile-syntax}
+is presented again in Figure \ref{fig:edit-state-syntax} in context.
 Tokens $\token^s$ are the lexical components of tiles, forming either
 the substance of childless tiles or the delimiters of parent
 tiles' children.
 Tokens are generated from tiles via the \emph{tile disassembly} function
-$\disassembleTile{\cdot}$, defined in Figure \note{ref},
+$\disassembleTile{\cdot}$, defined in Figure \ref{fig:disassemble-tile},
 which takes a tile and produces
 a selection consisting of the tile's tokens
 and the tile's children tiles.
@@ -87,7 +87,7 @@ Much as a CFG-based parser identifies a derivation from
 the CFG's start symbol to the input string,
 our selection parser identifies an analogous ``disassembly'' from
 a maximally structured selection to the input selection.
-Figure \note{ref} defines the step-disassembly relation $\selection_1\searrow\selection_2$,
+Figure \ref{fig:disassemble-selection} defines the step-disassembly relation $\selection_1\searrow\selection_2$,
 which chooses a tile in $\selection_1$ and replaces it with the
 result of its disassembly.
 We can show that the reflexive transitive
@@ -114,7 +114,7 @@ function:
   the unique maximal selection that disassembles
   to $\selection$.
 \end{definition}
-We defer presenting a constructive definition of this function
+We defer presenting a constructive implementation of this function
 to the imaginary appendix.
 
 \input{disassemble-tile}
@@ -124,7 +124,7 @@ to the imaginary appendix.
 The sort-indexed frame $\tfrelem^s$ of a zipper
 $\zipper{\subject}{\tfrelem^s}$ models the rest of
 the program surrounding the subject $\subject$,
-the sort indexing specifying what sort is expected
+the sort index specifying what sort is expected
 of the subject.
 Frames are nested in bottom-up fashion, starting
 with the nearest containing structure and concluding
@@ -209,15 +209,56 @@ on edit states in pointing mode:
 %   $\nearrow^*$ is the reflexive transitive closure of $\nearrow$.
 % \end{definition}
 
+\subsubsection{Terms, tips, \& hole fixing}
+\input{term-flattening}
 \input{tip-syntax}
 % \input{fix-holes-judgment}
 \input{hole-fixing-judgment}
+
+Finally we establish the connection between
+\ty~ edit states and \emph{terms} of the
+underlying language, as are typically defined
+with a strictly tree-structured abstract syntax.
+Figure \note{ref} shows the abstract syntax of
+\ty~ language terms;
+this syntax coincides with that in Figure \note{ref}
+except for the inclusion of a new operator hole term
+to account for operator holes in the tile syntax.
+
+Figure \note{ref} defines the judgments
+$\flattenTerm{p}{\tiles^{\pat}}$
+and
+$\flattenTerm{e}{\tiles^{\expr}}$,
+which specify how to ``flatten'' a tree-structured
+term into a corresponding sequence of tiles.
+We consider a tile sequence $\tiles^s$ to be well-formed
+with respect to the underlying language if there exists
+a language term that flattens to $\tiles^s$.
+
+Showing the existence of such a language term
+is equivalent to showing the tiles in $\tiles^s$
+form a valid operator sequence.
+Each tile may be interpreted as a component
+of an operator sequence, taking one of four
+different shapes: operand, unary prefix,
+unary suffix, and binary infix...
+
+
+\subsection{Actions}
+We now present \ty's central action judgment
+$\performAction{\editState_1}{\action}{\editState_2}$,
+which sends edit state $\editState_1$ to $\editState_2$
+via action $\alpha$.
+The action judgment is governed by a syntactic sensibility
+theorem (Theorem \note{ref}) that ensures that
+the subject of every action-reachable edit state can
+be parsed into language term.
+
 \input{filter-tiles}
 \input{whole-selection}
 \input{action-syntax}
 \input{action-judgment}
 
-\subsection{Actions}
 \note{
   Define actions more generally than \tylr~ implementation,
   such that delimiters are assigned sorts to their ends,

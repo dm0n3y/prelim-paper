@@ -1,0 +1,57 @@
+\begin{figure}
+  \judgbox{\flattenTerm{p}{\tiles^{\pat}}}{$p$ flattens to $\tiles^{\pat}$}
+  \begin{mathpar}
+    \inferrule[]{
+    }{
+      \flattenTerm{\ophole}{\ophole}
+    }\hspace{40pt}
+    \inferrule[]{
+    }{
+      \flattenTerm{\svar{x}}{\svar{x}}
+    }\\
+    \inferrule[]{
+      \flattenTerm{p_1}{\tiles^{\pat}_1} \\
+      \flattenTerm{p_2}{\tiles^{\pat}_2}
+    }{
+      \flattenTerm{\sprod{p_1}{p_2}}{\sprod{\tiles^{\pat}_1}{\tiles^{\pat}_2}}
+    }\hspace{40pt}
+    \inferrule[]{
+      \flattenTerm{p}{\tiles^{\pat}}
+    }{
+      \flattenTerm{p}{\sparen{\tiles^{\pat}}}
+    }
+  \end{mathpar}
+
+  \vspace{10pt}
+  \judgbox{\flattenTerm{e}{\tiles^{\expr}}}{$e$ flattens to $\tiles^{\expr}$}
+  \begin{mathpar}
+    \inferrule[]{
+    }{
+      \flattenTerm{\ophole}{\ophole}
+    }\hspace{40pt}
+    \inferrule[]{
+    }{
+      \flattenTerm{\snumlit{n}}{\snumlit{n}}
+    }\hspace{40pt}
+    \inferrule[]{
+    }{
+      \flattenTerm{\svar{x}}{\svar{x}}
+    }\\
+    \inferrule[]{
+      \flattenTerm{e_1}{\tiles^{\expr}_1} \\
+      \flattenTerm{e_2}{\tiles^{\expr}_2}
+    }{
+      \flattenTerm{\sprod{e_1}{e_2}}{\sprod{\tiles^{\expr}_1}{\tiles^{\expr}_2}}
+    }\hspace{40pt}
+    \inferrule[]{
+      \flattenTerm{e}{\tiles^{\expr}}
+    }{
+      \flattenTerm{e}{\sparen{\tiles^{\expr}}}
+    }
+  \end{mathpar}
+
+  \caption{
+    Term flattening
+  }
+  \label{fig:flatten-term}
+  \end{figure}
