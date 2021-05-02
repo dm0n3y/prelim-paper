@@ -124,14 +124,14 @@ to the imaginary appendix.
 The sort-indexed frame $\tfrelem^s$ of a zipper
 $\zipper{\subject}{\tfrelem^s}$ models the rest of
 the program surrounding the subject $\subject$,
-the sort index specifying what sort is expected
+the sort index $s$ specifying what sort is expected
 of the subject.
 Frames are nested in bottom-up fashion, starting
 with the nearest containing structure and concluding
 with the program root.
 For example, if the edit subject is located at $\Box$
 in the program \texttt{let x = ( $\Box$ ) + 1 in x + 2},
-then the frame is modeled by our syntax as
+then the frame is represeted in our syntax as
 \[
   \tframelit{
     \sparen{\_}
