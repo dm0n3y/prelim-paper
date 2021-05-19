@@ -136,6 +136,42 @@
       \zipper{\restructuring{\selection_1\tile^{s'}}{\selection_2}{\selection_3}}{\tfrelem^s}
     }
   } \\
+  \inferrule[MoveRightRestructuringWholeSame]{
+    \wholeSelection{s}{\selection_2} \\
+    \stepDisassembleSelection{\tile^s}{\selem\selection_4} \\
+    \parseZipper{\zipper{\pointing{\selection_1\selem}{\selection_4\selection_3}}{\tfrelem^s_1}}
+      = \zipper{\pointing{\selection_5}{\selection_6}}{\tfrelem^s_2}
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^s\selection_3}}{\tfrelem^s_1}
+    }{
+      \actionlit{move}\ \texttt{right}
+    }{
+      \zipper{\restructuring{\selection_5}{\selection_2}{\selection_6}}{\tfrelem^s_2}
+    }
+  } \\
+  \inferrule[MoveRightRestructuringWholeDifferent]{
+    \wholeSelection{s}{\selection_2} \\
+    \stepDisassembleSelection{\tile^s}{\selem\selection_4} \\
+    \parseZipper{\zipper{\pointing{\selection_1\selem}{\selection_4\selection_3}}{\tfrelem^s_1}}
+      = \zipper{\pointing{\selection_5}{\selection_6}}{\tfrelem^{s'}_2} \\
+    s\neq s' \\
+    \performAction{
+      \zipper{\pointing{\selection_5}{\selection_6}}{\tfrelem^{s'}_2}
+    }{
+      \actionlit{move}\ \texttt{right}
+    }{
+      \zip^s
+    }
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^s\selection_3}}{\tfrelem^s_1}
+    }{
+      \actionlit{move}\ \texttt{right}
+    }{
+      \zip^s
+    }
+  } \\
   \inferrule[Delete]{
     \fixHolesSelections{\rtipconc{s}}{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{\ltipconc{s}}{\selection'_1}{\selection'_3}
   }{
