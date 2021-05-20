@@ -4,7 +4,7 @@
   \inferrule[MoveRightEnterTile]{
     \disassembleTile{\tile^s} = \token^{s}\selection\\
     parseZipper(
-      \zipper{\pointing{\tiles^s_1\token^{s}~}{~\selection\tiles^s_2}}{\tfrelem^s}
+      \zipper{\pointing{\tiles^s_1\token^{s}}{\selection\tiles^s_2}}{\tfrelem^s}
     ) = \zeta^{s'}
   }{
     \performAction{
@@ -52,7 +52,7 @@
     }{
       \actionlit{mark}
     }{
-      \zipper{\selecting{\selection_1}{\strut~\cdot~}{\selection_2}{\tfrelem^s}}
+      \zipper{\selecting{\selection_1}{\strut~\cdot~}{\selection_2}}{\tfrelem^s}
     }
   } \\
   \inferrule[SelectLeftToken]{
