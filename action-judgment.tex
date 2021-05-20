@@ -125,7 +125,7 @@
       \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\tfrelem^s}
     }
   } \\
-  \inferrule[MoveRightRestructuring]{
+  \inferrule[MoveRightRestructuringNotWhole]{
     \text{\note{not\ }}\wholeSelection{s'}{\selection_2}
   }{
     \performAction{
@@ -136,40 +136,22 @@
       \zipper{\restructuring{\selection_1\tile^{s'}}{\selection_2}{\selection_3}}{\tfrelem^s}
     }
   } \\
-  \inferrule[MoveRightRestructuringWholeSame]{
+  \inferrule[MoveRightRestructuringWhole]{
     \wholeSelection{s}{\selection_2} \\
-    \stepDisassembleSelection{\tile^s}{\selem\selection_4} \\
-    \parseZipper{\zipper{\pointing{\selection_1\selem}{\selection_4\selection_3}}{\tfrelem^s_1}}
-      = \zipper{\pointing{\selection_5}{\selection_6}}{\tfrelem^s_2}
-  }{
     \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^s\selection_3}}{\tfrelem^s_1}
+      \zipper{\pointing{\selection_1}{\selection_3}}{\tfrelem^s_1}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zipper{\restructuring{\selection_5}{\selection_2}{\selection_6}}{\tfrelem^s_2}
-    }
-  } \\
-  \inferrule[MoveRightRestructuringWholeDifferent]{
-    \wholeSelection{s}{\selection_2} \\
-    \stepDisassembleSelection{\tile^s}{\selem\selection_4} \\
-    \parseZipper{\zipper{\pointing{\selection_1\selem}{\selection_4\selection_3}}{\tfrelem^s_1}}
-      = \zipper{\pointing{\selection_5}{\selection_6}}{\tfrelem^{s'}_2} \\
-    s\neq s' \\
-    \performAction{
-      \zipper{\pointing{\selection_5}{\selection_6}}{\tfrelem^{s'}_2}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip^s
+      \zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^{s'}_2}
     }
   }{
     \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^s\selection_3}}{\tfrelem^s_1}
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s_1}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zip^s
+      \zipper{\restructuring{\selection_4}{\selection_2}{\selection_5}}{\tfrelem^{s'}_2}
     }
   } \\
   \inferrule[Delete]{
@@ -183,7 +165,8 @@
       \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^s}
     }
   } \\
-  \inferrule[MarkRestructuring]{
+  \inferrule[MarkRestructuringNotWhole]{
+    \text{\note{not\ }}\wholeSelection{s'}{\selection_2} \\
     \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5} \\
     \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}} = \zip^{s'}
   }{
@@ -193,6 +176,19 @@
       \actionlit{mark}
     }{
       \zip^{s'}
+    }
+  } \\
+  \inferrule[MarkRestructuringNotWhole]{
+    \wholeSelection{s}{\selection_2} \\
+    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5} \\
+    \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}} = \zip^{s}
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{mark}
+    }{
+      \zip^{s}
     }
   }
   \end{mathpar}
