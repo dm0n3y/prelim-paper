@@ -8,34 +8,34 @@
   \begin{mathpar}
     \inferrule[]{
     }{
-      \fixHolesSelection{r}{\cdot}{\cdot}{r}
+      \fixHolesSelection{\rTip}{\cdot}{\cdot}{\rTip}
     } \\
     \inferrule[]{
       \text{\note{$\psi$ is a hole}} \\
-      \fixHolesSelection{r}{\selection}{\selection'}{r'}
+      \fixHolesSelection{\rTip}{\selection}{\selection'}{\rTip'}
     }{
-      \fixHolesSelection{r}{\selem\selection}{\selection'}{r'}
+      \fixHolesSelection{\rTip}{\selem\selection}{\selection'}{\rTip'}
     } \\
     \inferrule[]{
       \text{\note{$\psi$ not a hole}} \\
-      \fits{r}{\leftTip{\selem}} \\
-      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{r'}
+      \fits{\rTip}{\leftTip{\selem}} \\
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
-      \fixHolesSelection{r}{\selem\selection}{\selection'}{r'}
+      \fixHolesSelection{r}{\selem\selection}{\selection'}{\rTip'}
     } \\
     \inferrule[]{
       \text{\note{$\psi$ not a hole}} \\
       \leftTip{\selem} = \ltipconc{s} \\
-      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{r'}
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
-      \fixHolesSelection{\rtipconc{s}}{\selem\selection}{\ophole^s\selem\selection'}{r'}
+      \fixHolesSelection{\rtipconc{s}}{\selem\selection}{\ophole^s\selem\selection'}{\rTip'}
     } \\
     \inferrule[]{
       \text{\note{$\psi$ not a hole}} \\
       \leftTip{\selem} = \ltipconv{s} \\
-      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{r'}
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
-      \fixHolesSelection{\rtipconv{s}}{\selem\selection}{\binhole^s\selem\selection'}{r'}
+      \fixHolesSelection{\rtipconv{s}}{\selem\selection}{\binhole^s\selem\selection'}{\rTip'}
     } \\
   \end{mathpar}
 
@@ -48,17 +48,17 @@
   \vspace{10pt}
   \begin{mathpar}
     \inferrule[]{
-      \fixHolesSelection{r}{\selection_1}{\selection'_1}{r'} \\
-      \fixHolesSelection{r'}{\selection_2}{\selection'_2}{r''} \\
-      \fits{r''}{l}
+      \fixHolesSelection{\rTip}{\selection_1}{\selection'_1}{\rTip'} \\
+      \fixHolesSelection{\rTip'}{\selection_2}{\selection'_2}{\rTip''} \\
+      \fits{\rTip''}{\lTip}
     }{
-      \fixHolesSelections{r}{\selection_1}{\selection_2}{l}{\selection'_1}{\selection'_2}
+      \fixHolesSelections{\rTip}{\selection_1}{\selection_2}{\lTip}{\selection'_1}{\selection'_2}
     } \\
     \inferrule[]{
-      \fixHolesSelection{r}{\selection_1}{\selection'_1}{r'} \\
-      \fixHolesSelection{r'}{\selection_2}{\selection'_2}{\rtipconc{s}}
+      \fixHolesSelection{\rTip}{\selection_1}{\selection'_1}{\rTip'} \\
+      \fixHolesSelection{\rTip'}{\selection_2}{\selection'_2}{\rtipconc{s}}
     }{
-      \fixHolesSelections{r}{\selection_1}{\selection_2}{\ltipconc{s}}{\selection'_1}{\selection'_2\ophole^s}
+      \fixHolesSelections{\rTip}{\selection_1}{\selection_2}{\ltipconc{s}}{\selection'_1}{\selection'_2\ophole^s}
     }
   \end{mathpar}
   \caption{
