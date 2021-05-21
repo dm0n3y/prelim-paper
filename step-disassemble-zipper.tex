@@ -1,8 +1,8 @@
 \begin{figure}
-  \judgbox{\disassembleZipper{\editState_1}{\editState_2}}{$\editState_1$ step-disassembles to $\editState_2$}
+  \judgbox{\disassembleZipper{\editState_1}{\editState_2}}{$\editState_1$ step-disassembles up to $\editState_2$}
   \begin{mathpar}
     \inferrule[]{
-      \disassembleTileFrame{\tfrelem^s} = \zipper{\pointing{\selection_3}{\selection_4}}{\tfrelem^{s'}}
+      \disassemblesUp{\tfrelem^s}{\zipper{\pointing{\selection_3}{\selection_4}}{\tfrelem^{s'}}}
     }{
       \disassembleZipper{
         \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}

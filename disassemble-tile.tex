@@ -1,17 +1,16 @@
 \begin{figure}
-  \vspace{-3px}
+  \newcommand{\dd}{\searrow}
+  \judgbox{\disassemblesDown{\selem}{\selection}}{$\selem$ disassembles down to $\selection$}
   \[
-  \setlength{\fboxsep}{1pt}
-  \arraycolsep=3pt\begin{array}{rcl}
-      \disassembleTile{\ophole} & = & \tokenLit{\ophole} \\
-      \disassembleTile{\binhole} & = & \tokenLit{\binhole} \\
-      \disassembleTile{\snumlit{n}} & = & \tokenLit{\snumlit{n}} \\
-      \disassembleTile{\sparen{\tile_1\dots\tile_n}}
-        & = & \tokenLit{\texttt{(}}\ \tile_1\dots\tile_n\ \tokenLit{\texttt{)}} \\
-      & \vdots &
+    \arraycolsep=3pt
+    \begin{array}{rcl}
+      \sparen{\tiles^s} & \dd & \tokenLit{\texttt{(}}~\tiles^s~\tokenLit{\texttt{)}} \\
+      \slam{\tiles^{\pat}} & \dd & \tokenLit{\lambda}~\tiles^{\pat}~\tokenLit{\texttt{.}} \\
+      \slet{\tiles^{\pat}}{\tiles^{\expr}}{} & \dd & \tokenLit{\texttt{let}}~\tiles^{\pat}~\tokenLit{\texttt{=}}~\tiles^{\expr}~\tokenLit{\texttt{in}}
   \end{array}\]
   \caption{
-    Disassembling a tile.
+    Disassembling a selected element $\selem$.
+    If $\selem$ has a syntactic form not listed, then we assume that $\disassemblesDown{\selem}{\cdot}$.
   }
   \label{fig:disassemble-tile}
 \end{figure}

@@ -2,47 +2,45 @@
   \judgbox{\performAction{\editState_1}{\action}{\editState_2}}{$\editState_1$ transitions via $\alpha$ to $\editState_2$}
   \begin{mathpar}
   \inferrule[MoveRightEnterTile]{
-    \disassembleTile{\tile^s} = \token^{s}\selection\\
-    parseZipper(
-      \zipper{\pointing{\tiles^s_1\token^{s}}{\selection\tiles^s_2}}{\tfrelem^s}
-    ) = \zeta^{s'}
+  \disassemblesDown{\tile^s}{\token^{s}\selection}
   }{
     \performAction{
       \zipper{\pointing{\tiles^s_1}{\tile^s\tiles^s_2}}{\tfrelem^s}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zeta^{s'}
+      \parseZipper{\zipper{\pointing{\tiles^s_1\token^{s}}{\selection\tiles^s_2}}{\tfrelem^s}}
     }
   } \ \ \ \ \ \
   \inferrule[MoveRightExitTile]{
-    \disassembleTileFrame{\tfrelem^s} =
-    \zipper{\pointing{\selection_1}{\token^{s'}\selection_2}}{\tfrelem^{s'}}\\
-    parseZipper(
-      \zipper{\pointing{\selection_1\tiles^s\token^{s'}}{\selection_2}}{\tfrelem^{s'}}
-    ) = \zeta^{s''}
+    \disassemblesUp{
+      \tfrelem^s
+    }{
+      \zipper{\pointing{\selection_1}{\token^{s'}\selection_2}}{\tfrelem^{s'}}
+    }
   }{
     \performAction{
       \zipper{\pointing{\tiles^s}{\cdot}}{\tfrelem^s}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zeta^{s''}
+      \parseZipper{
+        \zipper{\pointing{\selection_1\tiles^s\token^{s'}}{\selection_2}}{\tfrelem^{s'}}
+      }
     }
   } \\
   \inferrule[ConstructTile]{
-    \disassembleTile{\tile^s} = \token^s\selection_3 \\
-    \fixHolesSelections{\rtipconc{s}}{\selection_1\token^s}{\selection_3\selection_2}{\ltipconc{s}}{\selection_4}{\selection_5} \\\\
-    parseZipper(
-      \zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^{s}}
-    ) = \zeta^{s'}
+    \disassemblesDown{\tile^s}{\token^s\selection_3} \\
+    \fixHolesSelections{\rtipconc{s}}{\selection_1\token^s}{\selection_3\selection_2}{\ltipconc{s}}{\selection_4}{\selection_5}
   }{
     \performAction{
       \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
     }{
       \actionlit{construct}\ \tile^s
     }{
-      \zeta^{s'}
+      \parseZipper{
+        \zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^{s}}
+      }
     }
   } \ \ \ \ \ \ \ \
   \inferrule[MarkPointing]{
@@ -67,7 +65,7 @@
     }
   } \ \ \
   \inferrule[SelectLeftTile]{
-    \disassembleTile{\tile^s} = \selection_4\token^s \\
+    \disassemblesDown{\tile^s}{\selection_4\token^s} \\
     \parseSelection{\token^s\selection_2} = \selection'_2
   }{
     \performAction{
@@ -79,8 +77,11 @@
     }
   } \ \ \
   \inferrule[SelectLeftExit]{
-    \disassembleTileFrame{\tfrelem^s} =
-    \zipper{\pointing{\selection_3\token^{s'}}{\selection_4}}{\tfrelem^{s'}}
+    \disassemblesUp{
+      \tfrelem^s
+    }{
+      \zipper{\pointing{\selection_3\token^{s'}}{\selection_4}}{\tfrelem^{s'}}
+    }
   }{
     \performAction{
       \zipper{\selecting{\cdot}{\selection_1}{\selection_2}}{\tfrelem^s}
@@ -103,7 +104,7 @@
     }
   } \ \ \ \ \ \ \ \
   \inferrule[SelectRightTile]{
-    \disassembleTile{\tile^s} = \token^s\selection_4
+    \disassemblesDown{\tile^s}{\token^s\selection_4}
   }{
     \performAction{
       \zipper{\selecting{\selection_1}{\tile^s\selection_2}{\selection_3}}{\tfrelem^s}
@@ -167,28 +168,26 @@
   } \\
   \inferrule[MarkRestructuringNotWhole]{
     \text{\note{not\ }}\wholeSelection{s'}{\selection_2} \\
-    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5} \\
-    \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}} = \zip^{s'}
+    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{mark}
     }{
-      \zip^{s'}
+      \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}}
     }
   } \\
-  \inferrule[MarkRestructuringNotWhole]{
+  \inferrule[MarkRestructuringWhole]{
     \wholeSelection{s}{\selection_2} \\
-    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5} \\
-    \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}} = \zip^{s}
+    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{mark}
     }{
-      \zip^{s}
+      \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}}
     }
   }
   \end{mathpar}

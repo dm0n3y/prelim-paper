@@ -110,12 +110,15 @@
 \newcommand{\fixHolesSelection}[4]{#1~#2\rightsquigarrow#3~#4}
 \newcommand{\fixHolesSelections}[6]{#1~#2\mid#3~#4\rightsquigarrow#5\mid#6}
 
-\newcommand{\parseSelection}[1]{assembleSelection(#1)}
-\newcommand{\parseZipper}[1]{parseZipper(#1)}
+\newcommand{\parseSelection}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\parseZipper}[1]{\left\lfloor#1\right\rfloor}
 
 \newcommand{\typ}{\texttt{typ}}
 \newcommand{\pat}{\texttt{pat}}
 \newcommand{\expr}{\texttt{exp}}
+
+\newcommand{\disassemblesDown}[2]{#1 \searrow #2}
+\newcommand{\disassemblesUp}[2]{#1 \nearrow #2}
 
 \newcommand{\disassembleTile}[1]{\left\lfloor~#1~\right\rfloor}
 \newcommand{\disassembleTileFrame}[1]{\left\lceil~#1~\right\rceil}

@@ -128,7 +128,7 @@ possible to specify a well-defined \emph{selection assembly}
 function:
 \begin{definition}
   Given a selection $\selection$, let $\parseSelection{\selection}$ be
-  the unique maximal selection that disassembles
+  the unique maximal selection that disassembles down
   to $\selection$.
 \end{definition}
 We defer presenting a constructive implementation of this function
@@ -196,7 +196,7 @@ We can show that the reflexive transitive closure
 $\nearrow^*$ of $\nearrow$, which we call \emph{edit state disassembly},
 is a partial order in
 which every edit state with a subject in pointing mode
-has a unique minimal element that disassembles to it:
+has a unique minimal element that disassembles up to it:
 \begin{lemma}
   $\nearrow^*$ is a partial order.
 \end{lemma}
@@ -214,7 +214,7 @@ on edit states in pointing mode:
 \begin{definition}
   Given an edit state $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
   let $\parseZipper{\editState}$ be the unique minimal edit state
-  that disassembles to $\editState$.
+  that disassembles up to $\editState$.
 \end{definition}
 
 % \begin{definition}
