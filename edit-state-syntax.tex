@@ -58,22 +58,9 @@
       % \scond{}{\tiles^{\expr}}{}
 
       \mathsf{PatToken} & \token^{\pat} & ::= &
-        \tokenLit{\ophole} ~\vert~
-        \tokenLit{\svar{x}} ~\vert~
-        \tokenLit{\binhole} ~\vert~
-        \tokenLit{\sprod{}{}} ~\vert~
         \tokenLit{\texttt{(}} ~\vert~
         \tokenLit{\texttt{)}} \\
       \mathsf{ExpToken} & \token^{\expr} & ::= &
-        \tokenLit{\ophole} ~\vert~
-        \tokenLit{\sboollit{b}} ~\vert~
-        \tokenLit{\snumlit{n}} ~\vert~
-        \tokenLit{\svar{x}} ~\vert~
-        \tokenLit{\binhole} ~\vert~
-        \tokenLit{\sprod{}{}} ~\vert~
-        \tokenLit{\splus{}{}} ~\vert~
-        \tokenLit{\smult{}{}} \\
-      & & \vert &
         \tokenLit{\texttt{(}} ~\vert~
         \tokenLit{\texttt{)}} ~\vert~
         \tokenLit{\lambda} ~\vert~
