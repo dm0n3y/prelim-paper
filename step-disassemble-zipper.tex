@@ -2,12 +2,12 @@
   \judgbox{\disassembleZipper{\editState_1}{\editState_2}}{$\editState_1$ step-disassembles up to $\editState_2$}
   \begin{mathpar}
     \inferrule[]{
-      \disassemblesUp{\tfrelem^s}{\zipper{\pointing{\selection_3}{\selection_4}}{\tfrelem^{s'}}}
+      \disassemblesUp{\zframe}{\zipper{\pointing{\selection_3}{\selection_4}}{\zframe'}}
     }{
       \disassembleZipper{
-        \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
+        \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
       }{
-        \zipper{\pointing{\selection_3\selection_1}{\selection_2\selection_4}}{\tfrelem^{s'}}
+        \zipper{\pointing{\selection_3\selection_1}{\selection_2\selection_4}}{\zframe'}
       }
     }
   \end{mathpar}
