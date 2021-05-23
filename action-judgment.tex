@@ -132,11 +132,11 @@
     \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_3}{\ltipconc{s}}{\selection'_1}{\selection'_3}
   }{
     \performAction{
-      \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}
+      \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{mark}
     }{
-      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe}
+      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\tfrelem^s}
     }
   } \\
   \inferrule[MoveRightRestructuringNotWhole]{
@@ -153,19 +153,19 @@
   \inferrule[MoveRightRestructuringWhole]{
     \wholeSelection{s}{\selection_2} \\
     \performAction{
-      \zipper{\pointing{\selection_1}{\selection_3}}{\zframe}
+      \zipper{\pointing{\selection_1}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
+      \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe}
     }
   }{
     \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
+      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe}
     }
   } \\
   \inferrule[Delete]{
