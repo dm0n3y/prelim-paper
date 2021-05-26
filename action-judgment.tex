@@ -193,14 +193,14 @@
   } \\\\\\
 
   \inferrule[MoveRightRestructuringNotWhole]{
-    \text{\note{not\ }}\wholeSelection{s'}{\selection_2}
+    \text{\note{not\ }}\wholeSelection{s}{\selection_2}
   }{
     \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^{s'}\selection_3}}{\zframe}
+      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^{s}\selection_3}}{\zframe}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zipper{\restructuring{\selection_1\tile^{s'}}{\selection_2}{\selection_3}}{\zframe}
+      \zipper{\restructuring{\selection_1\tile^{s}}{\selection_2}{\selection_3}}{\zframe}
     }
   }
 
