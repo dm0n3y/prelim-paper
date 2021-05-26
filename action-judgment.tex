@@ -162,6 +162,7 @@
 
   \inferrule[SelectRightDisassembles]{
     \disassemblesDown{\selem}{\selection_4} \\
+    \selection_4\neq\cdot \\
     \performAction{
       \zipper{\selecting{\selection_1}{\selection_4\selection_2}{\selection_3}}{\zframe}
     }{
