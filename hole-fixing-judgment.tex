@@ -11,27 +11,27 @@
       \fixHolesSelection{\rTip}{\cdot}{\cdot}{\rTip}
     } \\
     \inferrule[]{
-      \text{\note{$\psi$ is a hole}} \\
+      \text{\note{$\selem$ is a hole}} \\
       \fixHolesSelection{\rTip}{\selection}{\selection'}{\rTip'}
     }{
       \fixHolesSelection{\rTip}{\selem\selection}{\selection'}{\rTip'}
     } \\
     \inferrule[]{
-      \text{\note{$\psi$ not a hole}} \\
+      \text{\note{$\selem$ not a hole}} \\
       \fits{\rTip}{\leftTip{\selem}} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
       \fixHolesSelection{r}{\selem\selection}{\selection'}{\rTip'}
     } \\
     \inferrule[]{
-      \text{\note{$\psi$ not a hole}} \\
+      \text{\note{$\selem$ not a hole}} \\
       \leftTip{\selem} = \ltipconc{s} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
       \fixHolesSelection{\rtipconc{s}}{\selem\selection}{\ophole^s\selem\selection'}{\rTip'}
     } \\
     \inferrule[]{
-      \text{\note{$\psi$ not a hole}} \\
+      \text{\note{$\selem$ not a hole}} \\
       \leftTip{\selem} = \ltipconv{s} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
