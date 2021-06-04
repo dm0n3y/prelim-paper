@@ -116,7 +116,14 @@
     \disassemblesUp{
       \zframe
     }{
-      \zipper{\pointing{\selection_3\selem}{\selection_4}}{\zframe'}
+      \zipper{\pointing{\selection_3}{\selection_4}}{\zframe'}
+    } \\
+    \performAction{
+      \zipper{\selecting{\selection_3}{\selection_1}{\selection_2\selection_4}}{\zframe'}
+    }{
+      \actionlit{move}\ \texttt{left}
+    }{
+      \zip
     }
   }{
     \performAction{
@@ -124,11 +131,11 @@
     }{
       \actionlit{move}\ \texttt{left}
     }{
-      \zipper{\selecting{\selection_3}{\selem\selection_1}{\selection_2\selection_4}}{\zframe'}
+      \zip
     }
   } \\
 
-  \inferrule[SelectRightAtom]{
+  \inferrule[SelectRightAtomic]{
     \disassemblesDown{\selem}{\cdot} \\
     \parseZipper{\zipper{\pointing{\selection_1\selem}{\selection_3}}{\zframe}} =
       \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
@@ -148,7 +155,7 @@
     \performAction{
       \zipper{\selecting{\selection_1}{\selection_4\selection_2}{\selection_3}}{\zframe}
     }{
-      \actionlit{move}\ \texttt{left}
+      \actionlit{move}\ \texttt{right}
     }{
       \zip
     }
@@ -190,19 +197,19 @@
   \inferrule[MoveRightRestructuringWhole]{
     \wholeSelection{s}{\selection_2} \\
     \performAction{
-      \zipper{\pointing{\selection_1}{\selection_3}}{\tfrelem^s}
+      \zipper{\pointing{\selection_1}{\selection_3}}{\zframe}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe}
+      \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
     }
   }{
     \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}
     }{
       \actionlit{move}\ \texttt{right}
     }{
-      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe}
+      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
     }
   } \\
 
