@@ -137,7 +137,7 @@
 
   \inferrule[SelectRightAtomic]{
     \disassemblesDown{\selem}{\cdot} \\
-    \parseZipper{\zipper{\pointing{\selection_1\selem}{\selection_3}}{\zframe}} =
+    \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_3}}{\zframe}} =
       \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
   }{
     \performAction{
