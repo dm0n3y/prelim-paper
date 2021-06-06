@@ -225,8 +225,9 @@
     }
   } \\
 
-  \inferrule[MarkRestructuringNotWhole]{
-    \text{\note{not\ }}\wholeSelection{s'}{\selection_2} \\
+  \inferrule[MarkRestructuring]{
+    \text{\note{not\ }}\wholeSelection{s'}{\selection_2}
+    \vee \wholeSelection{s}{\selection_2} \\
     \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5}
   }{
     \performAction{
@@ -234,22 +235,10 @@
     }{
       \actionlit{mark}
     }{
-      \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}}
+      \parseZipper{\zipper{\pointing{\selection_4}{\parseSelection{\selection_5}}}{\tfrelem^s}}
     }
   }
 
-  \inferrule[MarkRestructuringWhole]{
-    \wholeSelection{s}{\selection_2} \\
-    \fixHolesSelections{\rtipconc{s}}{\selection_1}{\selection_2\selection_3}{\ltipconc{s}}{\selection_4}{\selection_5}
-  }{
-    \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
-    }{
-      \actionlit{mark}
-    }{
-      \parseZipper{\zipper{\pointing{\selection_4}{\selection_5}}{\tfrelem^s}}
-    }
-  }
   \end{mathpar}
 
   \vspace{-2px}
