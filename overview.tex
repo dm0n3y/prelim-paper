@@ -1,7 +1,7 @@
 \section{Overview}\label{sec:overview}
 
 \note{
-  some high level discussion of tile-based structure editing
+  some high level discussion of tile-based editing
   compared to traditional structure editing
 }
 
@@ -11,7 +11,16 @@
 \input{tile-syntax}
 
 We now present an example-driven overview of tile-based
-structure editing as implemented in \tylr.
+editing as implemented in \tylr.
+
+\note{consider a parens teaser example in the intro}
+
+\note{consider having some explanation why I'm not starting from hole}
+\note{maybe just edit the following sentence so I'm editing given function, not defining afresh}
+
+\note{try splitting section into subsections by features}
+
+\note{make clear the invariant of syntactic sensibility at the start, use it as a guide}
 
 Suppose you are using \tylr~ to define a function that gets called by a
 generative drawing application \note{cite Sketch n Sketch}.
@@ -27,97 +36,148 @@ the abstract syntax of \tylr, the relevant subset of which
 is shown in Figure \ref{fig:language-syntax}.
 \note{consider talking adding bin holes to abstract syntax}
 \begin{align*}
-  & \texttt{|$\lambda$ n . n , n , 1} \\
-  & \texttt{\ $\lambda$|n . n , n , 1} \\
-  & \texttt{\ $\lambda$ n|. n , n , 1} \\
-  & \texttt{\ $\lambda$ n .|n , n , 1} \\
-  & \texttt{\ $\lambda$ n . n|, n , 1} \\
-  & \texttt{\ $\lambda$ n . n ,|n , 1} \\
-  & \texttt{\ $\lambda$ n . n , n|, 1} \\
-  & \texttt{\ $\lambda$ n . n , n ,|1} \\
-  & \texttt{\ $\lambda$ n . n , n , 1|}
+  & \texttt{|$\lambda$ n . ( n , n ) , 1} \\
+  & \texttt{\ $\lambda$|n . ( n , n ) , 1} \\
+  & \texttt{\ $\lambda$ n|. ( n , n ) , 1} \\
+  & \texttt{\ $\lambda$ n .|( n , n ) , 1} \\
+  & \texttt{\ $\lambda$ n . (|n , n ) , 1} \\
+  & \texttt{\ $\lambda$ n . ( n|, n ) , 1} \\
+  & \texttt{\ $\lambda$ n . ( n ,|n ) , 1} \\
+  & \texttt{\ $\lambda$ n . ( n , n|) , 1} \\
+  & \texttt{\ $\lambda$ n . ( n , n )|, 1} \\
+  & \texttt{\ $\lambda$ n . ( n , n ) ,|1} \\
+  & \texttt{\ $\lambda$ n . ( n , n ) , 1|}
 \end{align*}
-You observe that \tylr~ features left-associative binary
-products rather than n-tuples, meaning the default function
-has the expected return type despite the lack of parentheses.
+% You observe that \tylr~ features left-associative binary
+% products rather than n-tuples, meaning the default function
+% has the expected return type despite the lack of parentheses.
 
-You decide to update the function to draw circles along the
-line $y = 2x + 1$.
+Highlighted at the root of every term is a structure called
+a \emph{tile}.
+\note{say more about tiles, color-coded by sort, shaped at ends
+to form operator sequences, how they encompass all delimiters
+of a given term, something about tile syntax only preserving
+bidelimited children, reference figure with syntax}
+Holding Alt/Option at any time reveals the local tile sequence
+housing the cursor.
+
+\note{add figure of panning cursor over same program but with tile view on}
+
+Where other structure editors model their edit states
+using the term syntax, \tylr~ instead models its edit state
+using the parallel tile syntax, parsing the tile structure
+as needed to produce the term structure.
+Indeed, the apparent term structure shown in Figure ?? is simply a
+decoration overlaid atop the actual tile structure shown in
+Figure ??.
+
+By having the programmer edit the tile structure, and only
+indirectly propagate those edits to the term structure,
+\tylr~ recovers many of the flexible editing affordances to
+which we are accustomed in text editors.
+For example, suppose you decide to update the function to
+draw circles along the line $y = 2x + 1$, which you
+could accomplish in \tylr~ with the following edit sequence:
 \begin{align*}
-  & \texttt{$\lambda$ n . n , n|, 1} \\
-  & \texttt{$\lambda$ n . n , n *|\_ , 1} \\
-  & \texttt{$\lambda$ n . n , n * 2|, 1} \\
-  & \texttt{$\lambda$ n . n , n * 2 +|\_ , 1} \\
-  & \texttt{$\lambda$ n . n , n * 2 + 1|, 1}
+  & \texttt{$\lambda$ n . ( n , n|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n *|\_ ) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * 2|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * 2 +|\_ ) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * 2 + 1|) , 1}
 \end{align*}
-Notice that you were able to construct this operator sequence
-linearly, as you might in a text editor, without any
+You were able to construct the operator sequence \texttt{n * 2 + 1}
+left-to-right, as you might in a text editor, without any
 required consideration for its tree structure.
 Such an affordance is not trivial
 in traditional structure editors because,
 from the perspective of the AST, linear construction of
 operator sequences is a complex, context-sensitive operation.
-Existing structure editors ignore the problem \note{eg Scratch, clarify},
-avoid it by deferring to text editing at the leaves,
-or solve it at the cost of complexity.
-\note{might wanna reorganize this stuff to overview intro before example}
+Existing structure editors either embrace strictly tree-based
+construction of operator sequences;
+defer to text at the expression level,
+recovering linearity at the cost of structure;
+or solve the problem at the cost of complexity
+(e.g. side transforms in MPS).
+Tiles enable linear editing of operator sequences,
+while continuously maintaining structure and
+relying on simple precedence parsing
+to update the operator sequence's associative structure
+as you type.
+\note{figure out way to say wholesale but not being whole program}
+\note{insert a comment somewhere about no performance claims}
+\note{review side transforms and make sure I'm not BSing}
 
-\note{talk about hole insertion for linear entry, talk about tips noting
-that hole fixing is necessary on construction, then return to this idea
-in restructuring}
 
-\tylr~ takes a different approach to this problem.
-Where traditional structure editors simply expose editing
-operations acting directly on the abstract syntactic struture
-of a program, \tylr~ presents the program in a separate
-concrete syntax with its own syntax-directed editing operations.
-\note{
-  talk about tile syntax show in Figure \ref{fig:tile-syntax},
-  note linearity
-}
-Like text, \tylr's concrete syntax gives you ``flattened''
-representation of your program that can be edited in a linear fashion.
-Unlike text, the concrete syntax maintains hierarchies of
-bidelimited children and can always be parsed into
-the abstract syntax, provided that the structure first undergoes
-a hole fixing pass in which holes are inserted and removed
-as needed. \note{need more context about tiles + bidelimited, bring
-back some old words about abstract syntactic structural units
-as opposed to concrete syntactic structural units}
+\note{figure out where to talk about hole insertion based on tips
+somewhere here}
 
-\note{perhaps go back to editor syntax terminology}
+% \tylr~ takes a different approach to this problem.
+% Where traditional structure editors simply expose editing
+% operations acting directly on the abstract syntactic struture
+% of a program, \tylr~ presents the program in a separate
+% concrete syntax with its own syntax-directed editing operations.
+% \note{
+%   talk about tile syntax show in Figure \ref{fig:tile-syntax},
+%   note linearity
+% }
+% Like text, \tylr's concrete syntax gives you ``flattened''
+% representation of your program that can be edited in a linear fashion.
+% Unlike text, the concrete syntax maintains hierarchies of
+% bidelimited children and can always be parsed into
+% the abstract syntax, provided that the structure first undergoes
+% a hole fixing pass in which holes are inserted and removed
+% as needed. \note{need more context about tiles + bidelimited, bring
+% back some old words about abstract syntactic structural units
+% as opposed to concrete syntactic structural units}
 
-Within the linearized concrete syntax, it is possible to
-select and manipulate sub- and cross-tree portions of the program,
-much like in a text editor. For example, suppose you'd like
-to update your circle drawing to its transposition,
-i.e., draw the circles along the line $x = 2y + 1$.
-You hold Shift to enter \emph{selecting mode}, which exposes
-the concrete syntactic structure of your program, and select
-the tiles \texttt{* 2 + 1}.
+% \note{perhaps go back to editor syntax terminology}
+
+Tiles not only simplify linear \emph{insertion} in a structured
+context but also enable text-like \emph{selection}
+and \emph{restructuring} (e.g. cut and paste) of existing code.
+While the former problem is relatively well-studied
+\note{cite MPS, modeless structure editing},
+almost no attention has been paid to the latter;
+in particular, all prior structure editors restrict
+structured selections to complete abstract syntactic terms,
+a severe limitation compared to the arbitrary range
+selections of text editors.
+\tylr~ recovers much of this flexibility, supporting
+arbitrary range selections up to token boundaries.
+% Within the linearized concrete syntax, it is possible to
+% select and manipulate sub- and cross-tree portions of the program,
+% much like in a text editor.
+For example, suppose you update your circle drawing
+to its transposition, i.e., draw the circles along
+the line $x = 2y + 1$.
+You hold Shift and move the cursor to enter \emph{selecting mode}:
 \begin{align*}
-  & \texttt{$\lambda$ n . n , n * 2 + 1|, 1} \\
-  & \texttt{$\lambda$ n . n , n * 2 +|1|, 1} \\
-  & \texttt{$\lambda$ n . n , n * 2|+ 1|, 1} \\
-  & \texttt{$\lambda$ n . n , n *|2 + 1|, 1} \\
-  & \texttt{$\lambda$ n . n , n|* 2 + 1|, 1}
+  & \texttt{$\lambda$ n . ( n , n * 2 + 1|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * 2 +|1|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * 2|+ 1|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n *|2 + 1|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n|* 2 + 1|) , 1}
 \end{align*}
-\note{rewrite this so that I am invoking the option to
-restructure rather than just delete.}
-\note{make sure to emphasize the selection part}
-You hit Backspace to enter \emph{restructuring mode}, which
-allows you to move selections to other parts of the program,
-and use it to move the operator sequence fragment to the
-$x$ coordinate.
+Such a selection is impossible in prior designs.
+
+Having made this selection, you may then pick it up
+into your \emph{backpack} to enter \emph{restructuring mode}.
+Moving left to the $x$-coordinate and putting down
+your backpack's contents completes the desired transformation.
 \begin{align*}
-  & \texttt{$\lambda$ n . n , n[* 2 + 1], 1} \\
-  & \texttt{$\lambda$ n . n ,[* 2 + 1]n , 1} \\
-  & \texttt{$\lambda$ n . n[* 2 + 1], n , 1} \\
-  & \texttt{$\lambda$ n . n|* 2 + 1 , n , 1}
+  & \texttt{$\lambda$ n . ( n , n[* 2 + 1]) , 1} \\
+  & \texttt{$\lambda$ n . ( n ,[* 2 + 1]n ) , 1} \\
+  & \texttt{$\lambda$ n . ( n[* 2 + 1], n ) , 1} \\
+  & \texttt{$\lambda$ n . ( n|* 2 + 1 , n ) , 1}
 \end{align*}
+Your backpack is a visible, structure-aware clipboard
+accompanying your cursor.
+\note{compare to cut and paste more broadly here to tie up}
 
 \note{consider adding example of parenthesizing first pair, discussing
 restructuring mode... or maybe find an example for precedence issue}
+
+\note{add example parenthesizing x , y pattern}
 
 You decide now to see what happens when you let the
 radius depend on the origin coordinates.
@@ -126,11 +186,11 @@ Your plan is to bind the coordinates to variables
 You begin by constructing a let expression at the start
 of the function body and constructing the pattern variables.
 \begin{align*}
-  & \texttt{$\lambda$ n .|n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let|\_ = \_ in n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x|= \_ in n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x ,|\_ = \_ in n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y|= \_ in n * 2 + 1 , n , 1}
+  & \texttt{$\lambda$ n .|( n * 2 + 1 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let|\_ = \_ in ( n * 2 + 1 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x|= \_ in ( n * 2 + 1 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x ,|\_ = \_ in ( n * 2 + 1 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y|= \_ in ( n * 2 + 1 , n ) , 1}
 \end{align*}
 Now you wish to bind \texttt{x , y} to the coordinates
 \texttt{n * 2 + 1 , n} already in the body.
@@ -141,17 +201,17 @@ Alternatively, you could select the \texttt{in} delimiter
 of the \texttt{let} expression and move it to wrap
 \texttt{n * 2 + 1 , n}.
 \begin{align*}
-  & \texttt{$\lambda$ n . let x , y = \_ in|n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_|in|n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_[in]n * 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n[in]* 2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n *[in]2 + 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n * 2[in]+ 1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n * 2 +[in]1 , n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1[in], n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 ,[in]n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 , n[in], 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 , n|in , 1}
+  & \texttt{$\lambda$ n . let x , y = \_ in|( n * 2 + 1 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_|in|( n * 2 + 1 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y = [in]( n * 2 + 1 , n ) , 1} \\
+  % & \texttt{$\lambda$ n . let x , y = \_ n[in]* 2 + 1 , n , 1} \\
+  % & \texttt{$\lambda$ n . let x , y = \_ n *[in]2 + 1 , n , 1} \\
+  % & \texttt{$\lambda$ n . let x , y = \_ n * 2[in]+ 1 , n , 1} \\
+  % & \texttt{$\lambda$ n . let x , y = \_ n * 2 +[in]1 , n , 1} \\
+  % & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1[in], n , 1} \\
+  % & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 ,[in]n , 1} \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n )[in], 1} \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n )|in \_ , 1}
 \end{align*}
 \note{
   take a step back here and note that selections are not restricted
@@ -159,6 +219,16 @@ of the \texttt{let} expression and move it to wrap
   the general idea being that selections with same-sort ends are
   the ones that can be moved around
 }
+
+\note{talk about restructuring on construction}
+\begin{align*}
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in|x , y , x * y } \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ([)]x , y , x * y } \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x[)], y , x * y } \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x ,[)]y , x * y } \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x , y[)], x * y } \\
+  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x , y|) , x * y }
+\end{align*}
 
 You decide now that you liked the last drawing better
 and aim to undo your recent changes
