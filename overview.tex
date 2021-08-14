@@ -165,19 +165,18 @@ draw circles along the parabola $y = x^2/9$, which you
 accomplish in \tylr~ with the following edit sequence:
 
 \noindent
-\begin{tabular}{cp{7cm}}
-\includegraphics[width=2cm]{img/circles-parabola.png}%
-&
-{
-  \begin{align*}
-  & \texttt{$\lambda$ n . ( n , n|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n *|\_ ) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * n|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * n /|\_ ) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * n / 9|) , 1}
-  \end{align*}
-}
-\end{tabular}
+\begin{minipage}[t]{0.2\columnwidth}
+  \includegraphics[width=\textwidth]{img/circles-parabola.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.65\columnwidth}
+  \includegraphics[width=\textwidth]{img/linear-insertion-0.png}
+  \includegraphics[width=\textwidth]{img/linear-insertion-1.png}
+  \includegraphics[width=\textwidth]{img/linear-insertion-2.png}
+  \includegraphics[width=\textwidth]{img/linear-insertion-3.png}
+  \includegraphics[width=\textwidth]{img/linear-insertion-4.png}
+\end{minipage}
+
 You constructed the operator sequence \texttt{n * n / 9}
 by typing left-to-right, as you might in a text editor, without any
 required consideration for its tree structure.
@@ -246,20 +245,20 @@ the parabola $x = y^2/9$.
 You hold Shift and move the cursor to enter \emph{selecting mode}:
 
 \noindent
-\begin{tabular}{cp{7cm}}
-\includegraphics[width=2cm]{img/circles-parabola-transpose.png}
-&
-{
-\begin{align*}
-  & \texttt{$\lambda$ n . ( n , n * n / 9|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * n /|9|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * n|/ 9|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n *|n / 9|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n|* n / 9|) , 1}
-\end{align*}
-}
-\end{tabular}
-Such a selection is impossible in prior designs.
+\begin{minipage}[t]{0.2\columnwidth}
+  \includegraphics[width=\textwidth]{img/circles-parabola-transpose.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.65\columnwidth}
+  \includegraphics[width=\textwidth]{img/selection-whole-0.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-1.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-2.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-3.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-4.png}
+\end{minipage}
+
+\noindent
+Such a selection would be impossible in other structure editors.
 
 Having made this selection, you may then pick it up
 into your \emph{backpack} to enter \emph{restructuring mode}.
