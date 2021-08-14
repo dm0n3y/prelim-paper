@@ -2,38 +2,35 @@
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{TileSeq} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
-      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
-      %     % \tnum ~\vert~
-      %     \shole ~\vert~
-      %     \sbool ~\vert~
-      %     \snum ~\vert~
-      %     \sarr{}{} ~\vert~
-      %     \sprod{}{} ~\vert~
-      %     \sparen{\tiles^{\typ}}\\
-      \mathsf{PatTile} & \tile^{\pat} & ::= &
-        \ophole ~\vert~
-        \svar{x} ~\vert~
-        % \sann{}{\tiles^{\typ}} ~\vert~
-        \binhole ~\vert~
-        \sprod{}{} ~\vert~
-        \sparen{\tiles^{\pat}}\\
-      \mathsf{ExpTile} & \tile^{\expr} & ::= &
-        \ophole ~\vert~
-        % \sboollit{b} ~\vert~
-        \snumlit{n} ~\vert~
-        \svar{x} ~\vert~
-        % \sap{}{} ~\vert~
-        \binhole ~\vert~
-        \sprod{}{} ~\vert~
-        \splus{}{} ~\vert~
-        \smult{}{} ~\vert~
-        % \sequals{}{} ~\vert~
-        \sparen{\tiles^{\expr}} \\
-      & & \vert &
-        \slam{\tiles^{\pat}}{} ~\vert~
-        \slet{\tiles^{\pat}}{\tiles^{\expr}}{} % ~\vert~
-        % \scond{}{\tiles^{\expr}}{}
+    \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
+    \text{pattern tile} & \tile^{\pat} & ::= &
+      \ophole ~\vert~
+      \svar{x} \\
+    & & \vert &
+      % \sann{}{\tiles^{\typ}} ~\vert~
+      \binhole ~\vert~
+      \sprod{}{} \\
+    & & \vert &
+      \sparen{\tiles^{\pat}} \\
+    \text{expression tile} & \tile^{\expr} & ::= &
+      \ophole ~\vert~
+      % \sboollit{b} ~\vert~
+      \snumlit{n} ~\vert~
+      \svar{x} \\
+    & & \vert &
+      \sparen{\tiles^{\expr}} \\
+    & & \vert &
+      \binhole ~\vert~
+      % \sap{}{} ~\vert~
+      \sprod{}{} ~\vert~
+      \splus{}{} ~\vert~
+      \smult{}{} \\
+      % \sequals{}{} ~\vert~
+    & & \vert &
+      \slam{\tiles^{\pat}}{} \\
+    & & \vert &
+      \slet{\tiles^{\pat}}{\tiles^{\expr}}{}\\\\ % ~\vert~
+      % \scond{}{\tiles^{\expr}}{}
   \end{array}\]
   \caption{
     Syntax of pattern and expression tiles.

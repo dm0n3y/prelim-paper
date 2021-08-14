@@ -1,17 +1,114 @@
 \section{Overview}\label{sec:overview}
 
-\note{
-  some high level discussion of tile-based editing
-  compared to traditional structure editing
-}
 
-\note{use terminology of term syntax vs tile syntax}
+\begin{figure*}
+  \centering
+  % \begin{minipage}{0.25\textwidth}
+  %   \begin{subfigure}[t]{\textwidth}
+  %     \includegraphics[width=\textwidth]{img/circles-n-n-1.png}
+  %   \end{subfigure}
+  % \end{minipage}
+  % \hfill
+  % \begin{minipage}{0.35\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
+      \[
+    \arraycolsep=3pt\begin{array}{rlrl}
+        \text{pattern} & \spat & ::= &
+          \shole ~\vert~
+          \svar{x} ~\vert~
+          \sprod{\spat}{\spat}\\
+        \text{expression} & \sexp & ::= &
+          \shole ~\vert~
+          \snumlit{n} ~\vert~
+          \svar{x} \\
+        & & \vert &
+          % \sap{\sexp}{\sexp} ~\vert~
+          \sprod{\sexp}{\sexp} ~\vert~
+          \splus{\sexp}{\sexp} ~\vert~
+          \smult{\sexp}{\sexp} \\
+        & & \vert &
+          \slam{\spat}{\sexp} ~\vert~
+          \slet{\spat}{\sexp}{\sexp}
+    \end{array}\]
+    \caption{}
+    \label{fig:term-syntax}
+  \end{subfigure}
+  \hspace{1cm}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \centering
+    \[\arraycolsep=3pt\begin{array}{rlrl}
+        \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
+        \text{pattern tile} & \tile^{\pat} & ::= &
+          \ophole ~\vert~
+          \svar{x} ~\vert~
+          \sparen{\tiles^{\pat}} ~\vert~
+          \binhole ~\vert~
+          \sprod{}{} \\
+        \text{expression tile} & \tile^{\expr} & ::= &
+          \ophole ~\vert~
+          \snumlit{n} ~\vert~
+          \svar{x} ~\vert~
+          \sparen{\tiles^{\expr}} ~\vert~
+          \binhole ~\vert~
+          % \sap{}{} ~\vert~
+          \sprod{}{} ~\vert~
+          \splus{}{} ~\vert~
+          \smult{}{} \\
+        & & \vert &
+          \slam{\tiles^{\pat}}{} ~\vert~
+          \slet{\tiles^{\pat}}{\tiles^{\expr}}{}
+      \end{array}\]
+      \caption{}
+      \label{fig:tile-syntax}
+    \end{subfigure}
+    \vspace{1cm}
 
-\input{term-syntax}
-\input{tile-syntax}
+   \begin{subfigure}[c]{0.25\textwidth}
+      \centering
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-0.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-1.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-2.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-3.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-4.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-5.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-6.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-7.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-8.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-9.png}
+      \includegraphics[width=0.9\textwidth]{img/pan-terms-10.png}
+      \caption{}
+      \label{fig:pan-term-view}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/circles-n-n-1.png}
+    \caption{}
+    \label{fig:default-circles}
+  \end{subfigure}
+  \begin{subfigure}[c]{0.25\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-0.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-1.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-2.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-3.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-4.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-5.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-6.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-7.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-8.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-9.png}
+    \includegraphics[width=0.9\textwidth]{img/pan-tiles-10.png}
+    \caption{}
+    \label{fig:pan-tile-view}
+  \end{subfigure}
+  % \end{minipage}
+\end{figure*}
+
+% \input{term-syntax}
+% \input{tile-syntax}
 
 We now present an example-driven overview of tile-based
-editing as implemented in \tylr.
+editing using \tylr.
 
 \note{consider a parens teaser example in the intro}
 
@@ -22,7 +119,7 @@ editing as implemented in \tylr.
 
 \note{make clear the invariant of syntactic sensibility at the start, use it as a guide}
 
-Suppose you are using \tylr~ to define a function that gets called by a
+Suppose you are using \tylr~ to edit a function that gets called by a
 generative drawing application \note{cite Sketch n Sketch}.
 \note{use word ``exploratory here''}
 The function should take an integer index and
@@ -35,19 +132,7 @@ Panning the cursor over the expression shows you terms of
 the abstract syntax of \tylr, the relevant subset of which
 is shown in Figure \ref{fig:language-syntax}.
 \note{consider talking adding bin holes to abstract syntax}
-\begin{align*}
-  & \texttt{|$\lambda$ n . ( n , n ) , 1} \\
-  & \texttt{\ $\lambda$|n . ( n , n ) , 1} \\
-  & \texttt{\ $\lambda$ n|. ( n , n ) , 1} \\
-  & \texttt{\ $\lambda$ n .|( n , n ) , 1} \\
-  & \texttt{\ $\lambda$ n . (|n , n ) , 1} \\
-  & \texttt{\ $\lambda$ n . ( n|, n ) , 1} \\
-  & \texttt{\ $\lambda$ n . ( n ,|n ) , 1} \\
-  & \texttt{\ $\lambda$ n . ( n , n|) , 1} \\
-  & \texttt{\ $\lambda$ n . ( n , n )|, 1} \\
-  & \texttt{\ $\lambda$ n . ( n , n ) ,|1} \\
-  & \texttt{\ $\lambda$ n . ( n , n ) , 1|}
-\end{align*}
+
 % You observe that \tylr~ features left-associative binary
 % products rather than n-tuples, meaning the default function
 % has the expected return type despite the lack of parentheses.
@@ -76,17 +161,25 @@ indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
 which we are accustomed in text editors.
 For example, suppose you decide to update the function to
-draw circles along the line $y = 2x + 1$, which you
-could accomplish in \tylr~ with the following edit sequence:
-\begin{align*}
+draw circles along the parabola $y = x^2/9$, which you
+accomplish in \tylr~ with the following edit sequence:
+
+\noindent
+\begin{tabular}{cp{7cm}}
+\includegraphics[width=2cm]{img/circles-parabola.png}%
+&
+{
+  \begin{align*}
   & \texttt{$\lambda$ n . ( n , n|) , 1} \\
   & \texttt{$\lambda$ n . ( n , n *|\_ ) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * 2|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * 2 +|\_ ) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * 2 + 1|) , 1}
-\end{align*}
-You were able to construct the operator sequence \texttt{n * 2 + 1}
-left-to-right, as you might in a text editor, without any
+  & \texttt{$\lambda$ n . ( n , n * n|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * n /|\_ ) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * n / 9|) , 1}
+  \end{align*}
+}
+\end{tabular}
+You constructed the operator sequence \texttt{n * n / 9}
+by typing left-to-right, as you might in a text editor, without any
 required consideration for its tree structure.
 Such an affordance is not trivial
 in traditional structure editors because,
@@ -149,27 +242,43 @@ arbitrary range selections up to token boundaries.
 % much like in a text editor.
 For example, suppose you update your circle drawing
 to its transposition, i.e., draw the circles along
-the line $x = 2y + 1$.
+the parabola $x = y^2/9$.
 You hold Shift and move the cursor to enter \emph{selecting mode}:
+
+\noindent
+\begin{tabular}{cp{7cm}}
+\includegraphics[width=2cm]{img/circles-parabola-transpose.png}
+&
+{
 \begin{align*}
-  & \texttt{$\lambda$ n . ( n , n * 2 + 1|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * 2 +|1|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n * 2|+ 1|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n *|2 + 1|) , 1} \\
-  & \texttt{$\lambda$ n . ( n , n|* 2 + 1|) , 1}
+  & \texttt{$\lambda$ n . ( n , n * n / 9|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * n /|9|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n * n|/ 9|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n *|n / 9|) , 1} \\
+  & \texttt{$\lambda$ n . ( n , n|* n / 9|) , 1}
 \end{align*}
+}
+\end{tabular}
 Such a selection is impossible in prior designs.
 
 Having made this selection, you may then pick it up
 into your \emph{backpack} to enter \emph{restructuring mode}.
 Moving left to the $x$-coordinate and putting down
 your backpack's contents completes the desired transformation.
+
+\noindent
+\begin{tabular}{cp{7cm}}
+\includegraphics[width=2cm]{img/circles-parabola-transpose.png}
+&
+{
 \begin{align*}
-  & \texttt{$\lambda$ n . ( n , n[* 2 + 1]) , 1} \\
-  & \texttt{$\lambda$ n . ( n ,[* 2 + 1]n ) , 1} \\
-  & \texttt{$\lambda$ n . ( n[* 2 + 1], n ) , 1} \\
-  & \texttt{$\lambda$ n . ( n|* 2 + 1 , n ) , 1}
+  & \texttt{$\lambda$ n . ( n , n[* n / 9]) , 1} \\
+  & \texttt{$\lambda$ n . ( n ,[* n / 9]n ) , 1} \\
+  & \texttt{$\lambda$ n . ( n[* n / 9], n ) , 1} \\
+  & \texttt{$\lambda$ n . ( n|* n / 9 , n ) , 1}
 \end{align*}
+}
+\end{tabular}
 Your backpack is a visible, structure-aware clipboard
 accompanying your cursor.
 \note{compare to cut and paste more broadly here to tie up}
@@ -177,20 +286,75 @@ accompanying your cursor.
 \note{consider adding example of parenthesizing first pair, discussing
 restructuring mode... or maybe find an example for precedence issue}
 
-\note{add example parenthesizing x , y pattern}
+\begin{figure*}
+  \begin{tabular}{cp{0.7\textwidth}}
+  \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-1.png}
+  &
+  {
+    \begin{align*}
+      & \texttt{$\lambda$ n .|( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let|\_ = \_ in ( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let x|= \_ in ( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let x ,|\_ = \_ in ( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let x , y|= \_ in ( n * n / 9 , n ) , 1} \\\\
+      & \texttt{$\lambda$ n . let x , y = \_|in ( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let x , y = \_|in|( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let x , y = [in]( n * n / 9 , n ) , 1} \\
+      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )[in], 1} \\
+      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )|in \_ , 1} \\\\
+      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|) in x , y , 1 } \\
+      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|)|in x , y , 1 } \\
+      & \texttt{$\lambda$ n . let x , y = |(|n * n / 9 , n[)]in x , y , 1 } \\
+      & \texttt{$\lambda$ n . let x , y = |(|[)]n * n / 9 , n in x , y , 1 } \\
+      & \texttt{$\lambda$ n . let x , y = [(][)]n * n / 9 , n in x , y , 1 } \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in [(][)]x , y , 1 } \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y[)], 1 } \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y|) , 1 } \\\\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|x + y } \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|(|[)]x + y } \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|(|x + y[)]} \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y|)} \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y )|} \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y ) /|\_} \\
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y ) / 4|}
+    \end{align*}
+  }
+  \end{tabular}
+\end{figure*}
+
+\begin{figure*}
+  \begin{tabular}{cp{0.7\textwidth}}
+  \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-1.png}
+  &
+  {
+    \begin{align*}
+      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n|in ( x , y ) , n / 3} \\
+      & \texttt{$\lambda$ n .|let x , y =|n * n / 9 , n[in] ( x , y ) , n / 3} \\
+      & \texttt{$\lambda$ n . n * n / 9 , n|\_ ( x , y ) , n / 3} \\
+      & \texttt{$\lambda$ n . n * n / 9 , n \_ (|x , y ) , n / 3} \\
+      & \texttt{$\lambda$ n . n * n / 9 , n \_ (|x , y|) , n / 3} \\
+      & \texttt{$\lambda$ n . n * n / 9 , n \_ (|\_ ) , n / 3} \\
+      & \texttt{$\lambda$ n . n * n / 9 , n [(]|)|, n / 3} \\
+      & \texttt{$\lambda$ n .[(]n * n / 9 , n|)|, n / 3} \\
+      & \texttt{$\lambda$ n .|( n * n / 9 , n ), n / 3}
+    \end{align*}
+  }
+  \end{tabular}
+\end{figure*}
+
 
 You decide now to see what happens when you let the
 radius depend on the origin coordinates.
 Your plan is to bind the coordinates to variables
-\texttt{x} and \texttt{y} and have the radius be their product.
+\texttt{x} and \texttt{y} and have the radius be their sum.
 You begin by constructing a let expression at the start
 of the function body and constructing the pattern variables.
 \begin{align*}
-  & \texttt{$\lambda$ n .|( n * 2 + 1 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let|\_ = \_ in ( n * 2 + 1 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x|= \_ in ( n * 2 + 1 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x ,|\_ = \_ in ( n * 2 + 1 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y|= \_ in ( n * 2 + 1 , n ) , 1}
+  & \texttt{$\lambda$ n .|( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let|\_ = \_ in ( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x|= \_ in ( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x ,|\_ = \_ in ( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y|= \_ in ( n * n / 9 , n ) , 1}
 \end{align*}
 Now you wish to bind \texttt{x , y} to the coordinates
 \texttt{n * 2 + 1 , n} already in the body.
@@ -201,17 +365,11 @@ Alternatively, you could select the \texttt{in} delimiter
 of the \texttt{let} expression and move it to wrap
 \texttt{n * 2 + 1 , n}.
 \begin{align*}
-  & \texttt{$\lambda$ n . let x , y = \_ in|( n * 2 + 1 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_|in|( n * 2 + 1 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y = [in]( n * 2 + 1 , n ) , 1} \\
-  % & \texttt{$\lambda$ n . let x , y = \_ n[in]* 2 + 1 , n , 1} \\
-  % & \texttt{$\lambda$ n . let x , y = \_ n *[in]2 + 1 , n , 1} \\
-  % & \texttt{$\lambda$ n . let x , y = \_ n * 2[in]+ 1 , n , 1} \\
-  % & \texttt{$\lambda$ n . let x , y = \_ n * 2 +[in]1 , n , 1} \\
-  % & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1[in], n , 1} \\
-  % & \texttt{$\lambda$ n . let x , y = \_ n * 2 + 1 ,[in]n , 1} \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n )[in], 1} \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n )|in \_ , 1}
+  & \texttt{$\lambda$ n . let x , y = \_|in ( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y = \_|in|( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y = [in]( n * n / 9 , n ) , 1} \\
+  & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )[in], 1} \\
+  & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )|in \_ , 1}
 \end{align*}
 \note{
   take a step back here and note that selections are not restricted
@@ -222,12 +380,14 @@ of the \texttt{let} expression and move it to wrap
 
 \note{talk about restructuring on construction}
 \begin{align*}
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in|x , y , x * y } \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ([)]x , y , x * y } \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x[)], y , x * y } \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x ,[)]y , x * y } \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x , y[)], x * y } \\
-  & \texttt{$\lambda$ n . let x , y = ( n * 2 + 1 , n ) in ( x , y|) , x * y }
+  & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|) in x , y , 1 } \\
+  & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|)|in x , y , 1 } \\
+  & \texttt{$\lambda$ n . let x , y = |(|n * n / 9 , n[)]in x , y , 1 } \\
+  & \texttt{$\lambda$ n . let x , y = |(|[)]n * n / 9 , n in x , y , 1 } \\
+  & \texttt{$\lambda$ n . let x , y = [(][)]n * n / 9 , n in x , y , 1 } \\
+  & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in [(][)]x , y , 1 } \\
+  & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y[)], 1 } \\
+  & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y|) , 1 }
 \end{align*}
 
 You decide now that you liked the last drawing better
