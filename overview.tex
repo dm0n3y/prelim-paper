@@ -124,12 +124,12 @@ generative drawing application \note{cite Sketch n Sketch}.
 \note{use word ``exploratory here''}
 The function takes an integer index and
 return a circle---represented as a pair comprising
-its center coordinates and radius---to be drawn in
+its center point and radius---to be drawn in
 the $xy$-plane for every index.
 The initial implementation, shown below, draws circles
 of radius \texttt{1} along the line $y = x$.
 
-\paragraph{Tiles}
+\subsection{Tiles}
 Panning your cursor over the program in \tylr ,
 as shown in Figure \ref{fig:pan-term-view},
 reveals outlined terms of \tylr's concrete syntax,
@@ -171,12 +171,16 @@ Indeed, the apparent term structure shown in Figure
 decoration overlaid atop the actual tile structure shown in
 Figure \ref{fig:pan-tile-view}.
 
-\note{add discussion of how maintaining tile well-formedness
-is sufficient to maintain term well-formedness}
+\note{add discussion of tile structure well-formedness,
+discuss sort-colored cursor positions}
 
-\note{add mention of sort-colored cursor positions for future reference}
+\note{need to define pointing mode}
 
-\paragraph{Linear insertion}
+% Tiles are closely related to nested words \note{cite} and
+% visibly pushdown languages \note{cite}, which we discuss
+% further in Section \ref{sec:related-work}.
+
+\subsection{Inserting tiles}
 By having you edit the tile structure, and only
 indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
@@ -245,79 +249,12 @@ somewhere here}
 
 % \note{perhaps go back to editor syntax terminology}
 
-\paragraph{Selecting and restructuring}
-Tiles not only simplify linear \emph{insertion} in a structured
-context but also enable text-like \emph{selection}
-and \emph{restructuring} (e.g. cut and paste) of existing code.
-While the former problem is relatively well-studied
-\note{cite MPS, modeless structure editing},
-almost no attention has been paid to the latter;
-in particular, all prior structure editors restrict
-structured selections to complete concrete syntactic terms,
-a severe limitation compared to the arbitrary range
-selections of text editors.
-\tylr~ recovers much of this flexibility, supporting
-arbitrary range selections up to token boundaries.
-% Within the linearized concrete syntax, it is possible to
-% select and manipulate sub- and cross-tree portions of the program,
-% much like in a text editor.
-For example, suppose you update your circle drawing
-to its transposition, i.e., draw the circles along
-the parabola $x = y^2/9$.
-You hold Shift and move the cursor to enter \emph{selecting mode}:
-
-\noindent
-\begin{minipage}[t]{0.2\columnwidth}
-  \includegraphics[width=\textwidth]{img/circles-parabola-transpose.png}
-\end{minipage}
-\hfill
-\begin{minipage}{0.65\columnwidth}
-  \includegraphics[width=\textwidth]{img/selection-whole-0.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-1.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-2.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-3.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-4.png}
-\end{minipage}
-
-\noindent
-Such a selection would be impossible in other structure editors.
-
-Having made this selection, you may then pick it up
-into your \emph{backpack} to enter \emph{restructuring mode}.
-Moving left to the $x$-coordinate and putting down
-your backpack's contents completes the desired transformation.
-
-\noindent
-\begin{tabular}{cp{7cm}}
-\includegraphics[width=2cm]{img/circles-parabola-transpose.png}
-&
-{
-\begin{align*}
-  & \texttt{$\lambda$ n . ( n , n[* n / 9]) , 1} \\
-  & \texttt{$\lambda$ n . ( n ,[* n / 9]n ) , 1} \\
-  & \texttt{$\lambda$ n . ( n[* n / 9], n ) , 1} \\
-  & \texttt{$\lambda$ n . ( n|* n / 9 , n ) , 1}
-\end{align*}
-}
-\end{tabular}
-Your backpack is a visible, structure-aware clipboard
-accompanying your cursor.
-\note{compare to cut and paste more broadly here to tie up}
-
-\note{consider adding example of parenthesizing first pair, discussing
-restructuring mode... or maybe find an example for precedence issue}
-
 \begin{figure*}
   \begin{tabular}{cp{0.7\textwidth}}
   \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-1.png}
   &
   {
     \begin{align*}
-      & \texttt{$\lambda$ n .|( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let|\_ = \_ in ( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let x|= \_ in ( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let x ,|\_ = \_ in ( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let x , y|= \_ in ( n * n / 9 , n ) , 1} \\\\
       & \texttt{$\lambda$ n . let x , y = \_|in ( n * n / 9 , n ) , 1} \\
       & \texttt{$\lambda$ n . let x , y = \_|in|( n * n / 9 , n ) , 1} \\
       & \texttt{$\lambda$ n . let x , y = [in]( n * n / 9 , n ) , 1} \\
@@ -345,7 +282,7 @@ restructuring mode... or maybe find an example for precedence issue}
 
 \begin{figure*}
   \begin{tabular}{cp{0.7\textwidth}}
-  \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-1.png}
+  \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-2.png}
   &
   {
     \begin{align*}
@@ -363,41 +300,121 @@ restructuring mode... or maybe find an example for precedence issue}
   \end{tabular}
 \end{figure*}
 
+\subsection{Selecting and restructuring tiles}
+Tiles not only simplify linear \emph{insertion} in a structured
+context but also enable text-like \emph{selecting}
+and \emph{restructuring} (e.g. cut and paste) of existing code.
+While the former problem is relatively well-studied
+\note{cite MPS, modeless structure editing},
+almost no attention has been paid to the latter;
+in particular, all prior structure editors restrict
+structured selections to complete concrete syntactic terms,
+a severe limitation compared to the arbitrary range
+selections of text editors.
+\tylr~ recovers much of this flexibility, letting you
+make arbitrary range selections up to token boundaries
+and manipulate them in a structure-preserving manner.
 
-You decide now to see what happens when you let the
-radius depend on the origin coordinates.
-Your plan is to bind the coordinates to variables
-\texttt{x} and \texttt{y} and have the radius be their sum.
-You begin by constructing a let expression at the start
-of the function body and constructing the pattern variables.
+For example, suppose you update your circle drawing
+to its transposition, i.e., draw the circles along
+the parabola $x = y^2/9$.
+You hold Shift and move the cursor to enter \emph{selecting mode}
+and select the tiles you just inserted in the $y$-coordinate,
+an impossible selection in other structure editors:
+
+\noindent
+\begin{minipage}[t]{0.2\columnwidth}
+  \includegraphics[width=\textwidth]{img/circles-parabola-transpose.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.65\columnwidth}
+  \includegraphics[width=\textwidth]{img/selection-whole-0.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-1.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-2.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-3.png}
+  \includegraphics[width=\textwidth]{img/selection-whole-4.png}
+\end{minipage}
+You then pick it up into your \emph{backpack} to enter
+\emph{restructuring mode}.
+Moving left to the $x$-coordinate and putting down
+the selection completes the desired transformation.
+
+\noindent
+\begin{tabular}{cp{7cm}}
+\includegraphics[width=2cm]{img/circles-parabola-transpose.png}
+&
+{
 \begin{align*}
-  & \texttt{$\lambda$ n .|( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let|\_ = \_ in ( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x|= \_ in ( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x ,|\_ = \_ in ( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y|= \_ in ( n * n / 9 , n ) , 1}
+  & \texttt{$\lambda$ n . ( n , n[* n / 9]) , 1} \\
+  & \texttt{$\lambda$ n . ( n ,[* n / 9]n ) , 1} \\
+  & \texttt{$\lambda$ n . ( n[* n / 9], n ) , 1} \\
+  & \texttt{$\lambda$ n . ( n|* n / 9 , n ) , 1}
 \end{align*}
-Now you wish to bind \texttt{x , y} to the coordinates
-\texttt{n * 2 + 1 , n} already in the body.
-One way you could do this is by selecting and moving
-\texttt{n * 2 + 1 , n} into the defining expression of
-the \texttt{let} expression.
-Alternatively, you could select the \texttt{in} delimiter
-of the \texttt{let} expression and move it to wrap
-\texttt{n * 2 + 1 , n}.
-\begin{align*}
-  & \texttt{$\lambda$ n . let x , y = \_|in ( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y = \_|in|( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y = [in]( n * n / 9 , n ) , 1} \\
-  & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )[in], 1} \\
-  & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )|in \_ , 1}
-\end{align*}
-\note{
-  take a step back here and note that selections are not restricted
-  to whole tiles but can decompose tiles into shards,
-  the general idea being that selections with same-sort ends are
-  the ones that can be moved around
 }
+\end{tabular}
+
+
+Your backpack is a structure-aware clipboard
+accompanying your cursor that ensures you
+put down its contents at reasonable cursor positions,
+\ie, the result has a well-formed tile structure
+after hole fixing.
+In the last example, because your selection consisted of
+whole expression tiles, any expression position would
+have been a valid restructuring target.
+Most selections, however, do not consist solely of whole
+tiles, in which case there are additional restrictions.
+
+For example, say you would like the circles' radii to grow
+with their origin coordinates; accordingly,
+as shown at the top of Figure ??,
+you have inserted
+a let tile introducing variables \texttt{x} and \texttt{y}
+in the function body.
+Your goal now is to restructure your code so that \texttt{x}
+and \texttt{y} are bound to the origin coordinates
+\texttt{( n * n / 9 , n )} in the body of the let term.
+You begin by selecting the \texttt{in} delimiter,
+which disassembles the \texttt{let}-tile into a pair of \emph{shards}.
+You then move right, once, and put down the \texttt{in}
+shard, upon which \tylr~ reassembles the \texttt{let}-tile
+and returns you to pointing mode.
+
+% Your editing workflow was similar to what you might
+% have done in a text editor---delete the \texttt{in}
+% delimiter, move right, re-type---except that \tylr~
+% skipped all cursor positions within the parentheses tile
+% when you moved right.
+Notice that \tylr~ skipped all cursor positions within
+the parentheses tile when you moved right.
+\tylr~ recognizes that the \texttt{in} shard in the
+backpack has a matching shard anchored within the current
+tile sequence, so it restricts your movement to cursor
+positions within the same sequence, as these are the only valid
+targets that preserve proper tile nesting
+on reassembly.
+% We hypothesize that such a restriction would lead to both greater
+% editing efficiency and reduced cognitive load compared to
+% text editing on similar tasks.
+
+% We hypothesize that such a restriction would easy to learn
+% given
+% \begin{itemize}
+% \item be easy to learn, given the workflow similarity to text editing;
+% \item lead to greater editing efficiency than text editing due to
+%     the fewer keypresses needed to reach valid paste/restructure targets; and
+% \item reduce cognitive load compared to text editing because you
+%     no longer need to count delimiters to ensure you have reached
+%     a valid paste/restructure target.
+% \end{itemize}
+
+\note{add back some discussion comparing to text editing
+and other structure editors;
+similarity with text workflow,
+while making it more efficient + less cognitive load;
+other structure editors would force you to translate
+edits into term-based selections, can be awkward or
+not the most efficient in terms of selection size}
 
 \note{talk about restructuring on construction}
 \begin{align*}
@@ -410,6 +427,8 @@ of the \texttt{let} expression and move it to wrap
   & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y[)], 1 } \\
   & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y|) , 1 }
 \end{align*}
+
+\subsection{Removing tiles}
 
 You decide now that you liked the last drawing better
 and aim to undo your recent changes
