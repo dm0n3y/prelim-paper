@@ -122,44 +122,65 @@ editing using \tylr.
 Suppose you are using \tylr~ to edit a function that gets called by a
 generative drawing application \note{cite Sketch n Sketch}.
 \note{use word ``exploratory here''}
-The function should take an integer index and
+The function takes an integer index and
 return a circle---represented as a pair comprising
 its center coordinates and radius---to be drawn in
 the $xy$-plane for every index.
-Its default implementation, shown below, draws circles
+The initial implementation, shown below, draws circles
 of radius \texttt{1} along the line $y = x$.
-Panning the cursor over the expression shows you terms of
-the abstract syntax of \tylr, the relevant subset of which
-is shown in Figure \ref{fig:language-syntax}.
-\note{consider talking adding bin holes to abstract syntax}
 
-% You observe that \tylr~ features left-associative binary
-% products rather than n-tuples, meaning the default function
-% has the expected return type despite the lack of parentheses.
+\paragraph{Tiles}
+Panning your cursor over the program in \tylr ,
+as shown in Figure \ref{fig:pan-term-view},
+reveals outlined terms of \tylr's concrete syntax,
+the relevant subset of which is shown in
+Figure \ref{fig:term-syntax}.
 
 Highlighted at the root of every term is a structure called
 a \emph{tile}.
-\note{say more about tiles, color-coded by sort, shaped at ends
-to form operator sequences, how they encompass all delimiters
-of a given term, something about tile syntax only preserving
-bidelimited children, reference figure with syntax}
+The tile encompasses all tokens and delimiters used to represent
+the root form of the term (e.g., \texttt{1} for a number literal,
+$\lambda$ and \texttt{.} for lambda terms,
+\texttt{(} and \texttt{)} for parenthesized terms) along with
+all children terms delimited on both sides (\eg,
+the bidelimited pattern child \texttt{n} of the lambda term,
+the bidelimited expression child \texttt{n , n} of
+the parenthesized term).
+Tiles are color-coded by sort---green for expressions, blue
+for patterns---and shaped such that they enclose bidelimited
+child terms of different sort and leave unenclosed bidelimited
+child terms of the same sort.
+
+Tiles are shaped at their ends to fit together sequentially
+into operator sequences.
+% \begin{align*}
+% \langle\overline{\underline{\text{operand}}}\rangle,
+% \langle\overline{\underline{\text{prefix operator}}}\langle, \\
+% \rangle\overline{\underline{\text{postfix operator}}}\rangle,
+% \rangle\text{infix operator}\langle.
+% \end{align*}
 Holding Alt/Option at any time reveals the local tile sequence
-housing the cursor.
-
-\note{add figure of panning cursor over same program but with tile view on}
-
+housing the cursor, as shown in Figure \ref{fig:pan-tile-view}.
 Where other structure editors model their edit states
-using the term syntax, \tylr~ instead models its edit state
-using the parallel tile syntax, parsing the tile structure
+using the strictly hierarchical term syntax,
+\tylr~ instead models its edit state
+using the flattened tile syntax, parsing the tile structure
 as needed to produce the term structure.
-Indeed, the apparent term structure shown in Figure ?? is simply a
+Indeed, the apparent term structure shown in Figure
+\ref{fig:pan-term-view} is simply a
 decoration overlaid atop the actual tile structure shown in
-Figure ??.
+Figure \ref{fig:pan-tile-view}.
 
-By having the programmer edit the tile structure, and only
+\note{add discussion of how maintaining tile well-formedness
+is sufficient to maintain term well-formedness}
+
+\note{add mention of sort-colored cursor positions for future reference}
+
+\paragraph{Linear insertion}
+By having you edit the tile structure, and only
 indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
-which we are accustomed in text editors.
+which you are accustomed in a text editor.
 For example, suppose you decide to update the function to
 draw circles along the parabola $y = x^2/9$, which you
 accomplish in \tylr~ with the following edit sequence:
@@ -224,6 +245,7 @@ somewhere here}
 
 % \note{perhaps go back to editor syntax terminology}
 
+\paragraph{Selecting and restructuring}
 Tiles not only simplify linear \emph{insertion} in a structured
 context but also enable text-like \emph{selection}
 and \emph{restructuring} (e.g. cut and paste) of existing code.
@@ -231,7 +253,7 @@ While the former problem is relatively well-studied
 \note{cite MPS, modeless structure editing},
 almost no attention has been paid to the latter;
 in particular, all prior structure editors restrict
-structured selections to complete abstract syntactic terms,
+structured selections to complete concrete syntactic terms,
 a severe limitation compared to the arbitrary range
 selections of text editors.
 \tylr~ recovers much of this flexibility, supporting
