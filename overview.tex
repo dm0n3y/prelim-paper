@@ -433,12 +433,12 @@ not the most efficient in terms of selection size}
 
 We call your backpack full or hungry as a way
 to narrativize its control of your movement.
-When your backpack is full, it is ``satisfied''
+When your backpack is full, it is satisfied
 and lets you move freely and leisurely through
 your code.
 When your backpack is hungry, it accelerates your
-movement through your code in its ``impatience''
-to end its hunger, which can happen in one of two ways.
+movement through the current tile sequence
+in a rush to end its hunger, which can happen in one of two ways.
 Either you can empty your backpack, like in the last example,
 freeing it of all earthly possessions
 and desires; or you may ``feed'' it.
@@ -521,12 +521,12 @@ and complete your desired transformation.
 \note{add discussion}
 
 
-\paragraph{Picky eating}
+\paragraph{Picky eater}
 We call the cursor positions marking the ends of a selection
 the selection's \emph{caps}.
 So far we have only encountered selections with caps
 of the same sort.
-Your backpack is a ``picky eater'' in the sense that
+Your backpack is a ``picky eater'' in that
 it will refuse to carry any selections with caps of
 different sort.
 
@@ -549,6 +549,41 @@ selection with caps of different sort}
 with pattern caps cutting across expressions}
 
 \subsection{Removing tiles}
+Finally, we examine how to remove tiles in \tylr.
+
+As with selection, term-based structure editors
+limit delete operations so they can only act on
+complete terms, which forces awkward and preemptive
+maneuvering to prevent excessive removal.
+For example, removing a block in a block-based editor
+removes all of its descendant blocks as well.
+If you intended only to delete a specific block
+while preserving its descendants, you are forced
+to save the children first by moving them elsewhere
+before you can actually delete the node.
+
+Meanwhile, it can be difficult to predict the
+effects of term-based deletion in text-like
+structure editors, such as JetBrains MPS, that
+provide less visual indication of the term
+structure.
+The impact is a delete operation can be much
+more destructive than expected, \eg,
+pressing Backspace on an individual token
+causes a large range to disappear.
+Indeed, a (controlled) user study of MPS revealed
+that even \emph{experts} feel that deletion in MPS
+is relatively inaccurate (compared to similar
+subjective assessments made by text editor users),
+which we interpret to mean that they have trouble
+predicting the effects of delete operations.
+
+
+Tile-based editing reduces the destructive effect of deletions
+compared to term-based editing; moreover \tylr~ explicitly
+highlights all code that will be removed upon your deletion
+so that you never have to guess.
+
 
 
 
