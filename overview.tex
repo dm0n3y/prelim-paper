@@ -220,8 +220,14 @@ while continuously maintaining structure and
 relying on simple precedence parsing
 to update the operator sequence's associative structure
 as you type.
+
+\note{note that this is insertion, not ``hole filling'' as
+it is traditionally conceived in structure editors}
+
 \note{figure out way to say wholesale but not being whole program}
+
 \note{insert a comment somewhere about no performance claims}
+
 \note{review side transforms and make sure I'm not BSing}
 
 
@@ -433,8 +439,8 @@ When your backpack is hungry, it accelerates your
 movement through your code in its ``impatience''
 to end its hunger, which can happen in one of two ways.
 Either you can empty your backpack, like in the last example,
-freeing it from the tethers of earthly posessions
-and desires; or you may feed it.
+freeing it of all earthly possessions
+and desires; or you may ``feed'' it.
 
 % We hypothesize that such a restriction would lead to both greater
 % editing efficiency and reduced cognitive load compared to
@@ -469,8 +475,8 @@ your movement to the tile sequence within the
 let definition.
 You could end its hunger by putting down
 the right parenthesis somewhere within that sequence;
-alternatively, you could move over to the
-left parenthesis and pick it up as well (Figure ??).
+alternatively, you could ``feed'' it by moving over to the
+left parenthesis and picking it up as well (Figure ??).
 
 Now your backpack is full, as it carries both shards
 needed to assemble a whole parenthesis tile,
@@ -479,12 +485,42 @@ You carry the parentheses over to the body of the
 let term and wrap \texttt{x , y} to complete your
 restructuring.
 
+\note{discuss how restructuring extends normal clipboard
+in its ability to carry multiple related selections,
+and extends selection ability of other structure editors
+in its ability to carry individual nodes and not be
+restricted to entire trees}
+
+\paragraph{Staging tile insertion and removal}
+\note{possibly add some connecting intro here}
+Say you have completed an initial draft of your goal program,
+where each circle's radius is the sum of its origin
+coordinates, as shown in Figure ??.
+You discover, however, that the circles are so large that
+they fill your viewport, so you would like to make them smaller.
+You begin by inserting a left parenthesis
+before \texttt{x + y}, your intention being to wrap
+the sum and divide it by a constant factor.
+Upon this insertion, \tylr~ automatically enters
+restructuring mode with the matching right parenthesis
+in your backpack.
+You move right, put down the right parenthesis,
+and complete your desired transformation.
+
+
+\paragraph{Picky eating}
+Your backpack is a ``picky eater'' in the sense that
+it will refuse to carry any selections with caps of
+different sort.
+
+\note{show small inline example of selecting
+selection with caps of different sort}
+
+\note{show small inline example of selection
+with pattern caps cutting across expressions}
+
 \subsection{Removing tiles}
 
-You decide now that you liked the last drawing better
-and aim to undo your recent changes
-You being by deleting the \texttt{let} expression.
-\note{show and discuss minimal deletions}
 
 
 % \subsection{\note{everything below this is old overview}}
