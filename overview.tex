@@ -475,9 +475,15 @@ At this point your backpack is hungry and restricts
 your movement to the tile sequence within the
 let definition.
 You could end its hunger by putting down
-the right parenthesis somewhere within that sequence;
-alternatively, you could ``feed'' it by moving over to the
+the right parenthesis somewhere within that sequence
+or, alternatively, by moving over to the
 left parenthesis and picking it up as well (Figure ??).
+
+% When your backpack carries multiple selections,
+% it dictates the order in which you can put them down.
+% Most of the time it behaves like a stack, putting
+% down first the last picked up selection; we discuss
+% deviations
 
 Now your backpack is full, as it carries both shards
 needed to assemble a whole parenthesis tile,
@@ -486,11 +492,15 @@ You carry the parentheses over to the body of the
 let term and wrap \texttt{x , y} to complete your
 restructuring.
 
-\note{discuss how restructuring extends normal clipboard
-in its ability to carry multiple related selections,
-and extends selection ability of other structure editors
-in its ability to carry individual nodes and not be
-restricted to entire trees}
+The last example showed how \tylr~ lets you carry \emph{multiple}
+related range selections in your backpack.
+This ability vastly improves your selecting precision
+compared to prior designs.
+From the perspective of the term syntax,
+where other structure editors force you to select
+complete subtrees, \tylr~ lets you select individual
+\emph{nodes} in the tree and splice them back in
+elsewhere.
 
 \paragraph{Staging tile insertion and removal}
 \note{possibly add some connecting intro here}
