@@ -503,7 +503,7 @@ complete subtrees, \tylr~ lets you select individual
 elsewhere.
 
 \paragraph{Staging tile insertion and removal}
-\note{possibly add some connecting intro here}
+\note{add connecting intro connecting to node-centric perspective}
 Say you have completed an initial draft of your goal program,
 where each circle's radius is the sum of its origin
 coordinates, as shown in Figure ??.
@@ -518,11 +518,29 @@ in your backpack.
 You move right, put down the right parenthesis,
 and complete your desired transformation.
 
+\note{add discussion}
+
 
 \paragraph{Picky eating}
+We call the cursor positions marking the ends of a selection
+the selection's \emph{caps}.
+So far we have only encountered selections with caps
+of the same sort.
 Your backpack is a ``picky eater'' in the sense that
 it will refuse to carry any selections with caps of
 different sort.
+
+Consider, for example, the following selection:
+
+\note{example fig}
+
+\noindent
+The left cap is pattern-sorted while the right cap
+is expression-sorted, as indicated by the two-toned
+broken overline.
+Picking up this selection would bring together
+tiles of different sort, violating \tylr's edit
+state well-formedness, so you are prevented from doing so.
 
 \note{show small inline example of selecting
 selection with caps of different sort}
