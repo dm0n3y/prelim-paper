@@ -107,6 +107,8 @@
 % \input{term-syntax}
 % \input{tile-syntax}
 
+\note{could use Alt as toggle indicator}
+
 We now present an example-driven overview of tile-based
 editing using \tylr.
 
@@ -130,15 +132,33 @@ The initial implementation, shown below, draws circles
 of radius \texttt{1} along the line $y = x$.
 
 \subsection{Tiles}
+\note{maybe forward reference alternative choices not skipping tokens}
+
 Panning your cursor over the program in \tylr ,
 as shown in Figure \ref{fig:pan-term-view},
 reveals outlined terms of \tylr's concrete syntax,
 the relevant subset of which is shown in
 Figure \ref{fig:term-syntax}.
+\note{for example, the term in the first line of 1c is...}
 
+\note{then transition visually, noting how the term has
+separate outline vs highlighted tile, point to tile syntax}
+
+\note{also mention right bias of term view (for simplicity)}
+
+\note{mention tips right away, note hexagon shape}
+
+\note{use lambda example to note how tile syntax is different
+from term syntax, noting how lambda tile is actually at
+same level of body tiles}
+
+\note{following sentence too vague, couch in concrete example,
+be more clear about highlighting the root vs the whole tile,
+probably refer explicitly to tile syntax earlier to make it
+more precise}
 Highlighted at the root of every term is a structure called
 a \emph{tile}.
-The tile encompasses all tokens and delimiters used to represent
+The tile encompasses all tokens used to represent
 the root form of the term (e.g., \texttt{1} for a number literal,
 $\lambda$ and \texttt{.} for lambda terms,
 \texttt{(} and \texttt{)} for parenthesized terms) along with
@@ -150,6 +170,9 @@ Tiles are color-coded by sort---green for expressions, blue
 for patterns---and shaped such that they enclose bidelimited
 child terms of different sort and leave unenclosed bidelimited
 child terms of the same sort.
+
+\note{need to define sort and bidelimited,
+couch this in examination of term syntax}
 
 Tiles are shaped at their ends to fit together sequentially
 into operator sequences.
@@ -175,6 +198,10 @@ Figure \ref{fig:pan-tile-view}.
 discuss sort-colored cursor positions}
 
 \note{need to define pointing mode}
+
+\note{mention holes, forward reference how these will
+be key players moving forward, explicitly mention
+the convex contiguity of well-formed opseqs}
 
 % Tiles are closely related to nested words \note{cite} and
 % visibly pushdown languages \note{cite}, which we discuss
@@ -203,6 +230,12 @@ accomplished via the following edit sequence:
   \includegraphics[width=\textwidth]{img/linear-insertion-3.png}
   \includegraphics[width=\textwidth]{img/linear-insertion-4.png}
 \end{minipage}
+
+\note{add one more final snapshot in term view, showing
+how tylr parses precedence/associativity}
+
+\note{pause after constructing the times and note how
+precedence is re-parsed}
 
 You constructed the operator sequence \texttt{n * n / 9}
 by typing left-to-right, as you might in a text editor, without any
@@ -334,6 +367,14 @@ movement toward valid paste targets, \ie,
 you can only put down your backpack's contents
 where the result can be reassembled into well-formed tiles.
 
+\note{add another paragraph header focused on selecting}
+
+\note{see if I can talk about intact vs cracked selections here,
+perhaps by changing the direction of the first selection and
+introducing shards when right parens get selected}
+
+\note{so far we have been in pointing mode...}
+
 \paragraph{Restructuring with a full backpack}
 Say you update your circle drawing
 to its transposition, i.e., draw the circles along
@@ -386,13 +427,16 @@ down your selection of expression tiles in a pattern
 position; we discuss sort conversions in Section ??.
 \note{awkward ending}
 
-\note{define fragmentary selections}
+\note{define cracked selections}
 
 Often, however, your backpack's contents are not whole
 tiles, nor can they be assembled into tiles.
 In that case, we say that your backpack is \emph{hungry}.
 
 \paragraph{Restructuring with a hungry backpack}
+
+\note{add back brief paragraph describing constructing let tile,
+compress into single row in edit sequence}
 
 Say now you would like the circles' radii to grow
 with their origin coordinates; accordingly,
@@ -409,6 +453,14 @@ You then pick up the \texttt{in} shard into your backpack,
 move right once, and put it down,
 upon which \tylr~ reassembles the \texttt{let}-tile
 and returns you to pointing mode.
+
+\note{figure out a way to introduce hole fixing, why operand hole
+disappears rather than operator hole being introduced, might be
+here or worked in before}
+
+\note{when discussing hole minimality, distinguish from other
+interfaces where you insert holes manually, so you shouldn't
+remove automatically}
 
 % Your editing workflow was similar to what you might
 % have done in a text editor---delete the \texttt{in}
@@ -449,6 +501,9 @@ Either, like in the last example, you can empty your backpack,
 freeing it of all earthly possessions and desires;
 or you may feed it.
 
+\note{add forward reference to discussing alternatives, eg,
+not skipping cursor positions}
+
 % We hypothesize that such a restriction would lead to both greater
 % editing efficiency and reduced cognitive load compared to
 % text editing on similar tasks.
@@ -472,6 +527,8 @@ Upon reviewing the term structure, however, you
 discover that pairs are right-associative in \tylr,
 so you need to wrap \texttt{x , y} in parentheses
 in order to satisfy the expected return type.
+\note{maybe just say we've created a triple but we
+really want a pair of a pair on left}
 You also notice that the parentheses in the definition
 of the \texttt{let} tile are now redundant
 and decide to recycle them.
@@ -480,10 +537,11 @@ select it, and pick it up into your backpack.
 At this point your backpack is hungry and restricts
 your movement to the tile sequence within the
 let definition.
-You could end its hunger by putting down
-the right parenthesis somewhere within that sequence
-or, alternatively, by moving over to the
-left parenthesis and picking it up as well (Figure ??).
+Instead of emptying your backpack like in the
+last example, this time you move over to the
+left parenthesis and pick it up as well (Figure ??).
+
+\note{make note of pattern not having parentheses}
 
 % When your backpack carries multiple selections,
 % it dictates the order in which you can put them down.
@@ -507,8 +565,12 @@ where other structure editors force you to select
 complete subtrees, \tylr~ lets you cut out individual
 \emph{nodes} of the tree and splice them back in
 elsewhere.
+\note{either remove this or rewrite when it's more as
+an emergent phenomenon}
 
 \paragraph{Staging tile insertion}
+\note{maybe just call restructuring on insertion}
+
 \note{add connecting intro connecting to node-centric perspective}
 Say you have completed an initial draft of your goal program,
 where each circle's radius is the sum of its origin
@@ -525,6 +587,9 @@ You move right, put down the right parenthesis,
 and complete your desired transformation.
 
 \note{add discussion}
+
+\note{note how other structure editors force you to select
+child first before constructing}
 
 
 \paragraph{Picky eater}
@@ -684,7 +749,16 @@ compared to term-based editing; moreover \tylr~ explicitly
 highlights everything that will be removed upon your deletion
 so that you never have to guess or reason through it.
 
+\note{discuss a bit following a text editing like flow as much
+as possible, but using restructuring to guide you in cases
+where you can't just do the text thing}
 
+\note{acknowledge sort-based limitations of tile structure
+in limitation section, possibly mention statements, lean into
+our philosophy but here are some thoughts}
+
+\note{consider doing insertion, selection, deletion, then
+restructuring as a better progression}
 
 
 % \subsection{\note{everything below this is old overview}}
