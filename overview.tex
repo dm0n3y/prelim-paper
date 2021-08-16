@@ -438,10 +438,10 @@ and lets you move freely and leisurely through
 your code.
 When your backpack is hungry, it accelerates your
 movement through the current tile sequence
-in a rush to end its hunger, which can happen in one of two ways.
-Either you can empty your backpack, like in the last example,
-freeing it of all earthly possessions
-and desires; or you may ``feed'' it.
+in impatience to end its hunger, which can happen in one of two ways.
+Either, like in the last example, you can empty your backpack,
+freeing it of all earthly possessions and desires;
+or you may feed it.
 
 % We hypothesize that such a restriction would lead to both greater
 % editing efficiency and reduced cognitive load compared to
@@ -468,7 +468,7 @@ so you need to wrap \texttt{x , y} in parentheses
 in order to satisfy the expected return type.
 You also notice that the parentheses in the definition
 of the \texttt{let} tile are now redundant
-and decide to ``recycle'' them.
+and decide to recycle them.
 You move your cursor to the right parenthesis,
 select it, and pick it up into your backpack.
 At this point your backpack is hungry and restricts
@@ -498,11 +498,11 @@ This ability vastly improves your selecting precision
 compared to prior designs.
 From the perspective of the term syntax,
 where other structure editors force you to select
-complete subtrees, \tylr~ lets you select individual
-\emph{nodes} in the tree and splice them back in
+complete subtrees, \tylr~ lets you cut out individual
+\emph{nodes} of the tree and splice them back in
 elsewhere.
 
-\paragraph{Staging tile insertion and removal}
+\paragraph{Staging tile insertion}
 \note{add connecting intro connecting to node-centric perspective}
 Say you have completed an initial draft of your goal program,
 where each circle's radius is the sum of its origin
@@ -549,40 +549,103 @@ selection with caps of different sort}
 with pattern caps cutting across expressions}
 
 \subsection{Removing tiles}
-Finally, we examine how to remove tiles in \tylr.
+Finally, we turn our attention to tile removal.
+If you have made a selection in \tylr, hitting Backspace
+will have one of two effects:
+\begin{enumerate}
+  \item[(1)] remove the selection if it is intact;
+  \item[(2)] otherwise, if it is fragmentary, pick up into your backpack
+    the smallest containing selection with same-sort caps.
+\end{enumerate}
+If your selection is fragmentary, then removing
+your selection would require also removing matching shards
+that you have not explicitly selected yourself.
+\tylr~ does not remove the implicit selections immediately
+but instead enters restructuring mode as a staging
+ground in which you may confirm the total removal
+by hitting Backspace again (or otherwise proceed
+with restructuring).
+\note{draw parallel with staged insertion}
+In sum: if your selection is intact then you can
+remove it with a single tap of Backspace; otherwise
+you need to double tap.
 
-As with selection, term-based structure editors
+\paragraph{Removing fragmentary selections}
+Say you fiddled some more with your last circle drawing
+and discovered a drawing you like a bit better,
+shown in Figure ??.
+Upon reviewing your code, you realize you no longer
+need to define variables \texttt{x} and \texttt{y},
+since they are each used only once, and can inline
+their definition.
+You select the \texttt{in} shard and hit
+Backspace, upon which \tylr~ puts you in
+restructuring mode, highlighting the matching \texttt{let}
+shard implicated in the removal of your selection.
+You confirm by hitting Backspace again, leaving behind
+the let definition and body expressions separated by
+an operator hole.
+
+\paragraph{Removing intact selections}
+Now you remove the uses of \texttt{x} and \texttt{y}.
+You select \texttt{x , y} and hit Backspace, upon
+which \tylr~ immediately removes your intact selection.
+
+\paragraph{Removing in pointing mode}
+Finally, it remains to restructure the parentheses
+so that they wrap the origin coordinates.
+This time, instead of first explicitly specifying a selection,
+you position your cursor after the left parenthesis
+and hit Backspace within pointing mode.
+\tylr~ treats this input simply as a shortcut for selecting the
+token immediately to your left and then hitting Backspace.
+In this case, the token to your left is a parenthesis
+shard that forms a fragmentary selection, so you
+enter restructuring mode with the parenthesis in tow.
+You move left to the other side of the origin coordinates;
+then put down the parenthesis to complete the transformation.
+
+
+
+which warrants first a preliminary critique of how it
+works in existing term-based editors.
+
+As with selection, term-based editors typically
 limit delete operations so they can only act on
-complete terms, which forces awkward and preemptive
+complete terms, which can force preemptive and tedious
 maneuvering to prevent excessive removal.
 For example, removing a block in a block-based editor
 removes all of its descendant blocks as well.
 If you intended only to delete a specific block
 while preserving its descendants, you are forced
-to save the children first by moving them elsewhere
-before you can actually delete the node.
+to save its children first by moving them elsewhere
+before you can actually delete the block.
+JetBrains MPS, a mature text-like structure editor,
+mitigates this by preserving the first child of a deleted term
+if they happen to share the same sort,
+but cannot preserve more than one child in a generic
+structure-preserving way.
 
 Meanwhile, it can be difficult to predict the
-effects of term-based deletion in text-like
-structure editors, such as JetBrains MPS, that
-provide less visual indication of the term
-structure.
-The impact is a delete operation can be much
+effects of term-based deletion in a text-like
+interface, like MPS, that provides less visual
+indication of term structure than a block-based editor.
+Consequently a delete operation can be much
 more destructive than expected, \eg,
-pressing Backspace on an individual token
-causes a large range to disappear.
+pressing Backspace on a token
+causes a large containing range to disappear.
 Indeed, a (controlled) user study of MPS revealed
 that even \emph{experts} feel that deletion in MPS
-is relatively inaccurate (compared to similar
+is relatively inaccurate (compared to corresponding
 subjective assessments made by text editor users),
-which we interpret to mean that they have trouble
-predicting the effects of delete operations.
+which we interpret to mean they have difficulty
+predicting its behavior.
 
 
 Tile-based editing reduces the destructive effect of deletions
 compared to term-based editing; moreover \tylr~ explicitly
-highlights all code that will be removed upon your deletion
-so that you never have to guess.
+highlights everything that will be removed upon your deletion
+so that you never have to guess or reason through it.
 
 
 
