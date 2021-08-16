@@ -554,29 +554,12 @@ selection with caps of different sort}
 \note{show small inline example of selection
 with pattern caps cutting across expressions}
 
-\subsection{Removing tiles}
-Finally, we turn our attention to tile removal.
-If you have made a selection in \tylr, hitting Backspace
-will have one of two effects:
-\begin{enumerate}
-  \item[(1)] remove the selection if it is intact;
-  \item[(2)] otherwise, if it is fragmentary, pick up into your backpack
-    the smallest containing selection with same-sort caps.
-\end{enumerate}
-If your selection is fragmentary, then removing
-your selection would require also removing matching shards
-that you have not explicitly selected yourself.
-\tylr~ does not remove the implicit selections immediately
-but instead enters restructuring mode as a staging
-ground in which you may confirm the total removal
-by hitting Backspace again (or otherwise proceed
-with restructuring).
-\note{draw parallel with staged insertion}
-In sum: if your selection is intact then you can
-remove it with a single tap of Backspace; otherwise
-you need to double tap.
+\subsection{Removing selections}
+Finally, we turn our attention to removal.
+Removing a selection works in one of two ways,
+depending on whether your selection is intact or fragmentary.
 
-\paragraph{Removing fragmentary selections}
+\paragraph{Removing intact selections}
 Say you fiddled some more with your last circle drawing
 and discovered a similar drawing you like a bit better,
 shown in Figure ??.
@@ -584,18 +567,62 @@ Upon reviewing your code, you realize you no longer
 need to define variables \texttt{x} and \texttt{y},
 since they are each used only once, and can inline
 their definition.
-You select the \texttt{in} shard and hit
-Backspace, upon which \tylr~ puts you in
-restructuring mode, highlighting the matching \texttt{let}
-shard implicated in the removal of your selection.
-You confirm by hitting Backspace again, leaving behind
-the let definition and body expressions separated by
-an operator hole.
+You begin by removing the uses of \texttt{x} and \texttt{y},
+selecting \texttt{x , y} in the body of the \texttt{let}
+term and hitting Backspace.
+In this case, because your selection is intact, \tylr~
+immediately removes your selection, as you might
+expect from your experience with text editors.
 
-\paragraph{Removing intact selections}
-Now you remove the uses of \texttt{x} and \texttt{y}.
-You select \texttt{x , y} and hit Backspace, upon
-which \tylr~ immediately removes your intact selection.
+\paragraph{Removing fragmentary selections}
+Now you would like to remove the \texttt{let} tile,
+but you want to preserve its definition so you
+can inline it.
+You select the \texttt{in} shard and hit Backspace.
+Because your selection is fragmentary, removing
+your selection would require also removing the
+matching \texttt{let} shard that you have not
+explicitly selected yourself.
+\note{something about removal at a distance, also
+mention prior designs here}
+\tylr~ does not remove both shards immediately, but
+instead enters restructuring mode as a staging ground
+in which you are shown explicitly the affected
+selections.
+\note{referencing back to restructuring we've already seen,
+which then gives you the option to...}
+You confirm the total removal by hitting Backspace again,
+leaving behind the let definition and body expressions
+separated by an operator hole.
+
+In general, pressing Backspace on a selection
+has one of two effects:
+\begin{enumerate}
+  \item[(1)] remove the selection if it is intact
+    and return to pointing mode;
+  \item[(2)] otherwise entering restructuring mode with
+    the smallest containing selection with same-sort caps
+    in your backpack.
+\end{enumerate}
+Pressing Backspace again in restructuring mode
+removes all highlighted tiles and selections.
+In sum: if your selection is intact then you can
+remove it with a single tap of Backspace; otherwise
+you need to double tap.
+
+% If your selection is fragmentary, then removing
+% your selection would require also removing matching shards
+% that you have not explicitly selected yourself.
+% \tylr~ does not remove the implicit selections immediately
+% but instead enters restructuring mode as a staging
+% ground in which you may confirm the total removal
+% by hitting Backspace again (or otherwise proceed
+% with restructuring).
+\note{draw parallel with staged insertion}
+% In sum: if your selection is intact then you can
+% remove it with a single tap of Backspace; otherwise
+% you need to double tap.
+
 
 \paragraph{Removing in pointing mode}
 Finally, it remains to restructure the parentheses
