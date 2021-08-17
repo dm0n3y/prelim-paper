@@ -16,52 +16,70 @@ editing using \tylr.
 
   \includegraphics[width=0.43\columnwidth]{img/circles-n-n-1.png}
 \end{wrapfigure}
-Suppose you are using \tylr~ to edit a function that gets called by a
-generative drawing application \cite{sns-pldi}.
-\note{use word ``exploratory here''}
+
+Say we are using \tylr~ to edit a function that gets called by a
+generative drawing application \cite{Processing,sns-pldi}.
 The function takes an integer index and
 returns a circle---represented as a pair comprising
 its center point and radius---to be drawn in
 the $xy$-plane for every index.
-The initial implementation, shown on the right, draws circles
-of radius \texttt{1} along the line $y = x$.
+Shown above, the initial implementation draws unit circles
+along the line $y = x$.
 
-\subsection{Tiles}
+\subsection{Terms versus tiles}
 
 % \note{maybe forward reference alternative choices not skipping tokens}
-
-Panning your cursor over the program in \tylr ,
+Panning the cursor over the program in \tylr,
 as shown in Figure \ref{fig:pan-term-view},
-reveals outlined terms of \tylr's concrete syntax,
+reveals the program structure as
+governed by \tylr's \emph{term syntax},
 the relevant subset of which is shown in
 Figure \ref{fig:term-syntax}.
-\note{for example, the term in the first line of 1c is...}
+For example, the first edit state in Figure \ref{fig:pan-term-view}
+shows the top-level function expression binding the index \code{n}
+and returning an indexed circle.
+Notice how every term has a convex hexagonal shape.
 
-\note{then transition visually, noting how the term has
-separate outline vs highlighted tile, point to tile syntax}
+Highlighted within each term is a substructure called a \emph{tile}.
+Each term's highlighted tile encompasses all root-level tokens used to
+represent the term, along with children of the term that the tokens
+delimit on both sides---we call such children \emph{bidelimited}.
+For example, in the first edit state of
+Figure \ref{fig:pan-term-view}, observe how the function's highlighted
+tile spans the function's tokens \code{$\boldsymbol{\lambda}$}
+and \code{\textbf{.}\vphantom{$\boldsymbol{\lambda}$}}
+as well as the bidelimited pattern child, but does not
+extend to the \emph{unidelimited} body.
 
-\note{also mention right bias of term view (for simplicity)}
+Holding Alt/Option while panning the cursor, this time in
+Figure \ref{fig:pan-tile-view}, reveals the program structure
+as governed by \tylr's \emph{tile syntax},
+shown in Figure \ref{fig:tile-syntax}.
+Tiles enjoy a more linear structure compared to the
+strictly hierarchical terms.
+Notice in the first edit state of Figure \ref{fig:pan-term-view},
+for example, how the tiles comprising the function body are siblings
+with the function term's root tile.
 
-\note{mention tips right away, note hexagon shape}
+\note{talk about tips and well-formedness}
 
-\note{use lambda example to note how tile syntax is different
-from term syntax, noting how lambda tile is actually at
-same level of body tiles}
+% \note{also mention right bias of term view (for simplicity)}
 
-\note{following sentence too vague, couch in concrete example,
-be more clear about highlighting the root vs the whole tile,
-probably refer explicitly to tile syntax earlier to make it
-more precise}
-Highlighted at the root of every term is a structure called
-a \emph{tile}.
-The tile encompasses all tokens used to represent
-the root form of the term (e.g., \texttt{1} for a number literal,
-$\lambda$ and \texttt{.} for lambda terms,
-\texttt{(} and \texttt{)} for parenthesized terms) along with
-all children terms delimited on both sides (\eg,
-the bidelimited pattern child \texttt{n} of the lambda term,
-the bidelimited expression child \texttt{n , n} of
-the parenthesized term).
+% \note{following sentence too vague, couch in concrete example,
+% be more clear about highlighting the root vs the whole tile,
+% probably refer explicitly to tile syntax earlier to make it
+% more precise}
+% Highlighted at the root of every term is a structure called
+% a \emph{tile}.
+% The tile encompasses all tokens used to represent
+% the root form of the term (e.g., \texttt{1} for a number literal,
+% $\lambda$ and \texttt{.} for lambda terms,
+% \texttt{(} and \texttt{)} for parenthesized terms) along with
+% all children terms delimited on both sides (\eg,
+% the bidelimited pattern child \texttt{n} of the lambda term,
+% the bidelimited expression child \texttt{n , n} of
+% the parenthesized term).
+
 Tiles are color-coded by sort---green for expressions, blue
 for patterns---and shaped such that they enclose bidelimited
 child terms of different sort and leave unenclosed bidelimited
@@ -72,7 +90,7 @@ couch this in examination of term syntax}
 
 \input{terms-vs-tiles}
 \input{term-syntax}
-\input{tile-syntax}
+% \input{tile-syntax}
 
 Tiles are shaped at their ends to fit together sequentially
 into operator sequences.

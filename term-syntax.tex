@@ -1,15 +1,15 @@
 \begin{figure}
-  \vspace{-3px}
+  \begin{subfigure}[c]{\columnwidth}
   \[
     \arraycolsep=3pt\begin{array}{rlrl}
-        \text{pattern} & \spat & ::= &
+        \text{pattern term} & \spat & ::= &
           \ophole ~\vert~
           \svar{x} ~\vert~
           \sparen{\spat} \\
         & & \vert &
           \spat~\binhole~\spat ~\vert~
           \sprod{\spat}{\spat} \\
-        \text{expression} & \sexp & ::= &
+        \text{expression term} & \sexp & ::= &
           \ophole ~\vert~
           \snumlit{n} ~\vert~
           \svar{x} ~\vert~
@@ -25,14 +25,47 @@
           \slam{\spat}{\sexp} ~\vert~
           \slet{\spat}{\sexp}{\sexp}
     \end{array}\]
-    \caption{
-      Term syntax
-      for patterns and expressions.
-    Here,
+    \caption{}
+    \label{fig:term-syntax}
+  \end{subfigure}
+  \vspace{0.4cm}
+
+  \begin{subfigure}[c]{\columnwidth}
+    \[\arraycolsep=3pt\begin{array}{rlrl}
+      \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
+      \text{pattern tile} & \tile^{\pat} & ::= &
+        \ophole ~\vert~
+        \svar{x} ~\vert~
+        \sparen{\tiles^{\pat}} \\
+      & & \vert &
+        \binhole ~\vert~
+        \sprod{}{} \\
+      \text{expression tile} & \tile^{\expr} & ::= &
+        \ophole ~\vert~
+        \snumlit{n} ~\vert~
+        \svar{x} ~\vert~
+        \sparen{\tiles^{\expr}} \\
+      & & \vert &
+        \binhole ~\vert~
+        % \sap{}{} ~\vert~
+        \splus{}{} ~\vert~
+        \smult{}{} ~\vert~
+        \sdiv{}{} ~\vert~
+        \sprod{}{} \\
+      & & \vert &
+        \slam{\tiles^{\pat}}{} ~\vert~
+        \slet{\tiles^{\pat}}{\tiles^{\expr}}{}
+    \end{array}\]
+    \caption{}
+    \label{fig:tile-syntax}
+  \end{subfigure}
+  \vspace{0.4cm}
+  \caption{
+      Term syntax \protect\subref{fig:term-syntax} and tile syntax \protect\subref{fig:tile-syntax}
+      for patterns and expressions,
+      where
       $x$ ranges over variables
       % $b$ over boolean values,
-      and $n$ over natural numbers.
-      \note{need to add op hole and ap}
-    }
-    \label{fig:term-syntax}
+      and $n$ over number literals.
+  }
 \end{figure}
