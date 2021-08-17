@@ -3,18 +3,24 @@
   \[
     \arraycolsep=3pt\begin{array}{rlrl}
         \text{pattern} & \spat & ::= &
-          \shole ~\vert~
+          \ophole ~\vert~
           \svar{x} ~\vert~
-          \sprod{\spat}{\spat}\\
+          \sparen{\spat} \\
+        & & \vert &
+          \spat~\binhole~\spat ~\vert~
+          \sprod{\spat}{\spat} \\
         \text{expression} & \sexp & ::= &
-          \shole ~\vert~
+          \ophole ~\vert~
           \snumlit{n} ~\vert~
-          \svar{x} \\
+          \svar{x} ~\vert~
+          \sparen{\sexp} \\
         & & \vert &
           % \sap{\sexp}{\sexp} ~\vert~
-          \sprod{\sexp}{\sexp} ~\vert~
+          \sexp~\binhole~\sexp ~\vert~
           \splus{\sexp}{\sexp} ~\vert~
-          \smult{\sexp}{\sexp} \\
+          \smult{\sexp}{\sexp} ~\vert~
+          \sdiv{\sexp}{\sexp} ~\vert~
+          \sprod{\sexp}{\sexp} \\
         & & \vert &
           \slam{\spat}{\sexp} ~\vert~
           \slet{\spat}{\sexp}{\sexp}

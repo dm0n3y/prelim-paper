@@ -5,7 +5,8 @@
     \text{pattern tile} & \tile^{\pat} & ::= &
       \ophole ~\vert~
       \svar{x} ~\vert~
-      \sparen{\tiles^{\pat}} ~\vert~
+      \sparen{\tiles^{\pat}} \\
+    & & \vert &
       \binhole ~\vert~
       \sprod{}{} \\
     \text{expression tile} & \tile^{\expr} & ::= &
@@ -16,9 +17,10 @@
     & & \vert &
       \binhole ~\vert~
       % \sap{}{} ~\vert~
-      \sprod{}{} ~\vert~
       \splus{}{} ~\vert~
-      \smult{}{} \\
+      \smult{}{} ~\vert~
+      \sdiv{}{} ~\vert~
+      \sprod{}{} \\
     & & \vert &
       \slam{\tiles^{\pat}}{} ~\vert~
       \slet{\tiles^{\pat}}{\tiles^{\expr}}{}
