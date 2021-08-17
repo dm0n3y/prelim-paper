@@ -3,36 +3,32 @@
 % \input{term-syntax}
 % \input{tile-syntax}
 
-\note{could use Alt as toggle indicator}
+%\note{could use Alt as toggle indicator}
 
 We now present an example-driven overview of tile-based
 editing using \tylr.
 
-\note{consider a parens teaser example in the intro}
+\setlength\intextsep{0pt}
+\begin{wrapfigure}{r}{0.5\columnwidth}
+  \centering
+  \texttt{$\boldsymbol{\lambda}$ n \textbf{.} \textbf{(} n , n \textbf{)} , 1}
+  \vspace{0.1cm}
 
-\note{consider having some explanation why I'm not starting from hole}
-\note{maybe just edit the following sentence so I'm editing given function, not defining afresh}
-
-\note{try splitting section into subsections by features}
-
-\note{make clear the invariant of syntactic sensibility at the start, use it as a guide}
-
+  \includegraphics[width=0.5\columnwidth]{img/circles-n-n-1.png}
+\end{wrapfigure}
 Suppose you are using \tylr~ to edit a function that gets called by a
-generative drawing application \note{cite Sketch n Sketch}.
+generative drawing application \cite{sns-pldi}.
 \note{use word ``exploratory here''}
 The function takes an integer index and
 return a circle---represented as a pair comprising
 its center point and radius---to be drawn in
 the $xy$-plane for every index.
-The initial implementation, shown below, draws circles
+The initial implementation, shown on the right, draws circles
 of radius \texttt{1} along the line $y = x$.
 
-\begin{center}
-  \includegraphics[width=0.5\columnwidth]{img/circles-n-n-1.png}
-\end{center}
-
 \subsection{Tiles}
-\note{maybe forward reference alternative choices not skipping tokens}
+
+% \note{maybe forward reference alternative choices not skipping tokens}
 
 Panning your cursor over the program in \tylr ,
 as shown in Figure \ref{fig:pan-term-view},
