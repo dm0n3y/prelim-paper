@@ -1,7 +1,7 @@
 \section{Overview}\label{sec:overview}
 
 
-\begin{figure*}
+\begin{figure}
   \centering
   % \begin{minipage}{0.25\textwidth}
   %   \begin{subfigure}[t]{\textwidth}
@@ -63,7 +63,7 @@
     \end{subfigure}
     \vspace{1cm}
 
-   \begin{subfigure}[c]{0.25\textwidth}
+   \begin{subfigure}[c]{0.49\columnwidth}
       \centering
       \includegraphics[width=0.9\textwidth]{img/pan-terms-0.png}
       \includegraphics[width=0.9\textwidth]{img/pan-terms-1.png}
@@ -79,13 +79,7 @@
       \caption{}
       \label{fig:pan-term-view}
   \end{subfigure}
-  \begin{subfigure}[c]{0.45\textwidth}
-    \centering
-    \includegraphics[width=0.75\textwidth]{img/circles-n-n-1.png}
-    \caption{}
-    \label{fig:default-circles}
-  \end{subfigure}
-  \begin{subfigure}[c]{0.25\textwidth}
+  \begin{subfigure}[c]{0.49\columnwidth}
     \centering
     \includegraphics[width=0.9\textwidth]{img/pan-tiles-0.png}
     \includegraphics[width=0.9\textwidth]{img/pan-tiles-1.png}
@@ -102,7 +96,7 @@
     \label{fig:pan-tile-view}
   \end{subfigure}
   % \end{minipage}
-\end{figure*}
+\end{figure}
 
 % \input{term-syntax}
 % \input{tile-syntax}
@@ -130,6 +124,10 @@ its center point and radius---to be drawn in
 the $xy$-plane for every index.
 The initial implementation, shown below, draws circles
 of radius \texttt{1} along the line $y = x$.
+
+\begin{center}
+  \includegraphics[width=0.5\columnwidth]{img/circles-n-n-1.png}
+\end{center}
 
 \subsection{Tiles}
 \note{maybe forward reference alternative choices not skipping tokens}
@@ -757,8 +755,8 @@ where you can't just do the text thing}
 in limitation section, possibly mention statements, lean into
 our philosophy but here are some thoughts}
 
-\note{consider doing insertion, selection, deletion, then
-restructuring as a better progression}
+%\note{consider doing insertion, selection, deletion, then
+%restructuring as a better progression}
 
 
 % \subsection{\note{everything below this is old overview}}
