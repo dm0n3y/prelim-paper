@@ -1,103 +1,5 @@
 \section{Overview}\label{sec:overview}
 
-
-\begin{figure}
-  \centering
-  % \begin{minipage}{0.25\textwidth}
-  %   \begin{subfigure}[t]{\textwidth}
-  %     \includegraphics[width=\textwidth]{img/circles-n-n-1.png}
-  %   \end{subfigure}
-  % \end{minipage}
-  % \hfill
-  % \begin{minipage}{0.35\textwidth}
-    \begin{subfigure}[b]{0.35\textwidth}
-      \[
-    \arraycolsep=3pt\begin{array}{rlrl}
-        \text{pattern} & \spat & ::= &
-          \shole ~\vert~
-          \svar{x} ~\vert~
-          \sprod{\spat}{\spat}\\
-        \text{expression} & \sexp & ::= &
-          \shole ~\vert~
-          \snumlit{n} ~\vert~
-          \svar{x} \\
-        & & \vert &
-          % \sap{\sexp}{\sexp} ~\vert~
-          \sprod{\sexp}{\sexp} ~\vert~
-          \splus{\sexp}{\sexp} ~\vert~
-          \smult{\sexp}{\sexp} \\
-        & & \vert &
-          \slam{\spat}{\sexp} ~\vert~
-          \slet{\spat}{\sexp}{\sexp}
-    \end{array}\]
-    \caption{}
-    \label{fig:term-syntax}
-  \end{subfigure}
-  \hspace{1cm}
-  \begin{subfigure}[b]{0.35\textwidth}
-    \centering
-    \[\arraycolsep=3pt\begin{array}{rlrl}
-        \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
-        \text{pattern tile} & \tile^{\pat} & ::= &
-          \ophole ~\vert~
-          \svar{x} ~\vert~
-          \sparen{\tiles^{\pat}} ~\vert~
-          \binhole ~\vert~
-          \sprod{}{} \\
-        \text{expression tile} & \tile^{\expr} & ::= &
-          \ophole ~\vert~
-          \snumlit{n} ~\vert~
-          \svar{x} ~\vert~
-          \sparen{\tiles^{\expr}} ~\vert~
-          \binhole ~\vert~
-          % \sap{}{} ~\vert~
-          \sprod{}{} ~\vert~
-          \splus{}{} ~\vert~
-          \smult{}{} \\
-        & & \vert &
-          \slam{\tiles^{\pat}}{} ~\vert~
-          \slet{\tiles^{\pat}}{\tiles^{\expr}}{}
-      \end{array}\]
-      \caption{}
-      \label{fig:tile-syntax}
-    \end{subfigure}
-    \vspace{1cm}
-
-   \begin{subfigure}[c]{0.49\columnwidth}
-      \centering
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-0.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-1.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-2.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-3.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-4.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-5.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-6.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-7.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-8.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-9.png}
-      \includegraphics[width=0.9\textwidth]{img/pan-terms-10.png}
-      \caption{}
-      \label{fig:pan-term-view}
-  \end{subfigure}
-  \begin{subfigure}[c]{0.49\columnwidth}
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-0.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-1.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-2.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-3.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-4.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-5.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-6.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-7.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-8.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-9.png}
-    \includegraphics[width=0.9\textwidth]{img/pan-tiles-10.png}
-    \caption{}
-    \label{fig:pan-tile-view}
-  \end{subfigure}
-  % \end{minipage}
-\end{figure}
-
 % \input{term-syntax}
 % \input{tile-syntax}
 
@@ -171,6 +73,8 @@ child terms of the same sort.
 
 \note{need to define sort and bidelimited,
 couch this in examination of term syntax}
+
+\input{terms-vs-tiles}
 
 Tiles are shaped at their ends to fit together sequentially
 into operator sequences.
