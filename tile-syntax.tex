@@ -1,23 +1,17 @@
 \begin{figure}
   \vspace{-3px}
-  \[
-  \arraycolsep=3pt\begin{array}{rlrl}
+  \[\arraycolsep=3pt\begin{array}{rlrl}
     \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
     \text{pattern tile} & \tile^{\pat} & ::= &
       \ophole ~\vert~
-      \svar{x} \\
-    & & \vert &
-      % \sann{}{\tiles^{\typ}} ~\vert~
+      \svar{x} ~\vert~
+      \sparen{\tiles^{\pat}} ~\vert~
       \binhole ~\vert~
       \sprod{}{} \\
-    & & \vert &
-      \sparen{\tiles^{\pat}} \\
     \text{expression tile} & \tile^{\expr} & ::= &
       \ophole ~\vert~
-      % \sboollit{b} ~\vert~
       \snumlit{n} ~\vert~
-      \svar{x} \\
-    & & \vert &
+      \svar{x} ~\vert~
       \sparen{\tiles^{\expr}} \\
     & & \vert &
       \binhole ~\vert~
@@ -25,17 +19,10 @@
       \sprod{}{} ~\vert~
       \splus{}{} ~\vert~
       \smult{}{} \\
-      % \sequals{}{} ~\vert~
     & & \vert &
-      \slam{\tiles^{\pat}}{} \\
-    & & \vert &
-      \slet{\tiles^{\pat}}{\tiles^{\expr}}{}\\\\ % ~\vert~
-      % \scond{}{\tiles^{\expr}}{}
+      \slam{\tiles^{\pat}}{} ~\vert~
+      \slet{\tiles^{\pat}}{\tiles^{\expr}}{}
   \end{array}\]
-  \caption{
-    Syntax of pattern and expression tiles.
-    \note{add operator holes, add shapes, show shapes but note informal,
-    maybe consider adding a fake postfix op}
-  }
+  \caption{Tile syntax for patterns and expressions.}
   \label{fig:tile-syntax}
 \end{figure}

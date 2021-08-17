@@ -1,43 +1,32 @@
 \begin{figure}
   \vspace{-3px}
   \[
-  \arraycolsep=3pt\begin{array}{rlrl}
-      % \mathsf{Token} & \styp & ::= &
-      %     % \tnum ~\vert~
-      %     \shole ~\vert~
-      %     \sbool ~\vert~
-      %     \snum ~\vert~
-      %     \sarr{\styp}{\styp} ~\vert~
-      %     \sprod{\styp}{\styp}\\
-      \mathsf{Pat} & \spat & ::= &
-        \shole ~\vert~
-        \svar{x} ~\vert~
-        % \sann{p}{\styp} ~\vert~
-        \sprod{\spat}{\spat}\\
-      \mathsf{Exp} & \sexp & ::= &
-        \shole ~\vert~
-        % \sboollit{b} ~\vert~
-        \snumlit{n} ~\vert~
-        \svar{x} \\
-      & & \vert &
-        \slam{\spat}{\sexp} ~\vert~
-        \slet{\spat}{\sexp}{\sexp}\\
-      & & \vert &
-        % \sap{\sexp}{\sexp} ~\vert~
-        \sprod{\sexp}{\sexp} ~\vert~
-        \splus{\sexp}{\sexp} ~\vert~
-        \smult{\sexp}{\sexp}
-        % \sequals{\sexp}{\sexp} ~\vert~
-        % \scond{\sexp}{\sexp}{\sexp}
-  \end{array}\]
-  \caption{
-    Abstract syntax of patterns $\spat$ and expressions $\sexp$.
+    \arraycolsep=3pt\begin{array}{rlrl}
+        \text{pattern} & \spat & ::= &
+          \shole ~\vert~
+          \svar{x} ~\vert~
+          \sprod{\spat}{\spat}\\
+        \text{expression} & \sexp & ::= &
+          \shole ~\vert~
+          \snumlit{n} ~\vert~
+          \svar{x} \\
+        & & \vert &
+          % \sap{\sexp}{\sexp} ~\vert~
+          \sprod{\sexp}{\sexp} ~\vert~
+          \splus{\sexp}{\sexp} ~\vert~
+          \smult{\sexp}{\sexp} \\
+        & & \vert &
+          \slam{\spat}{\sexp} ~\vert~
+          \slet{\spat}{\sexp}{\sexp}
+    \end{array}\]
+    \caption{
+      Term syntax
+      for patterns and expressions.
     Here,
       $x$ ranges over variables
       % $b$ over boolean values,
       and $n$ over natural numbers.
-    \note{note no need for precedence because abstract syntax
-    that we happen to call term syntax, consider using different font from typewriter}
-  }
-  \label{fig:language-syntax}
+      \note{need to add op hole and ap}
+    }
+    \label{fig:term-syntax}
 \end{figure}
