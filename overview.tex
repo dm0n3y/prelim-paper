@@ -71,7 +71,7 @@ role in the tile sequence as a(n):
 \optile{operand}, \pretile{prefix operator},
 \posttile{postfix operator}, or \bintile{infix operator}.
 
-Where other structure editors model their edit states
+Where traditional structure editors model their edit states
 using the strictly hierarchical term syntax,\footnote{Technically,
 most other structure editors model their edit states
 in terms of the language's abstract syntax, whereas the
@@ -83,6 +83,7 @@ as needed to produce the term structure.
 Indeed, the term structure shown in Figure \ref{fig:pan-term-view}
 is simply a decoration overlaid atop the actual tile
 structure shown in Figure \ref{fig:pan-tile-view}.
+Moving forward, we refer to
 
 
 \subsection{Opseqs \& holes}
@@ -107,7 +108,7 @@ The generic sequential structure of tile sequences
 simplifies how we define edit operations, but
 does not guarantee that the tiles represent a well-formed
 \emph{operator sequence}, or \emph{opseq} for short.
-The conditions for being an opseq
+The qualifications for a tile sequence to an opseq
 enjoy a simple physical metaphor:
 \begin{enumerate}
 \item[(1)] every tile \emph{fits} its siblings:
@@ -129,7 +130,7 @@ There are two kinds of holes:
 and \emph{operator holes} \bintile{\binhole}.
 We will soon see a number of examples of
 automatic hole fixing as we turn our attention
-to editing tiles.
+to editing.
 
 % \note{also mention right bias of term view (for simplicity)}
 
@@ -153,15 +154,15 @@ to editing tiles.
 % further in Section \ref{sec:related-work}.
 
 \subsection{Inserting tiles}
-By having you edit the tile structure, and only
+By having us edit the tile structure, and only
 indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
-which you are accustomed in a text editor.
+which we are accustomed in text editors.
 
-\paragraph{Linear construction of operator sequences}
-For example, say you update the function to
-draw circles along the parabola $y = x^2/9$,
-accomplished via the following edit sequence:
+\paragraph{Constructing left-to-right}
+We update the function to
+draw circles along the parabola $y = x^2/9$
+using the following edit sequence:
 
 \noindent
 \begin{minipage}[t]{0.2\columnwidth}
@@ -182,11 +183,11 @@ how tylr parses precedence/associativity}
 \note{pause after constructing the times and note how
 precedence is re-parsed}
 
-You constructed the operator sequence \texttt{n * n / 9}
-by typing left-to-right, as you might in a text editor, without any
-required consideration for its tree structure.
+We constructed the arithmetic expression \code{n * n / 9}
+by typing left-to-right, like in a text editor, without any
+required consideration for its term structure.
 Such an affordance is not trivial
-in traditional structure editors because,
+in traditional term-based structure editors because,
 from the perspective of the AST, linear construction of
 operator sequences is a complex, context-sensitive operation.
 Existing structure editors either embrace strictly tree-based

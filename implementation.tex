@@ -1,28 +1,52 @@
-\section{Design \& Implementation of \tylr}\label{sec:implementation}
+\section{Implementation}\label{sec:implementation}
 
-\note{
-  Talk about \texttt{tylr} design/implementation choices that deviate
-  from and apply restrictions to formalism.
-  Avoid major screenshots, show these instead in Section 2.
-  See if it's possible to avoid Design in section title.
-  Include details about coding details.
-}
-\begin{itemize}
-  \item showing tree structure in pointing mode
-  \begin{itemize}
-    \item parsing as you go
-  \end{itemize}
-  \item no sort dependency cycle
-  \begin{itemize}
-    \item greedy selection
-    \item tile design: same-sort vs diff-sort children
-  \end{itemize}
-  \item picking up multiple matching selections in restructuring mode
-  \begin{itemize}
-    \item copy and pasting of root nodes rather than whole terms
-    \item just as a whole selection can be moved anywhere, matching selections
-      can be moved anywhere as a group
-  \end{itemize}
-  \item enabling restructuring across sorts by unsorting selections
-  \item entering restructuring mode automatically on deletion/construction
-\end{itemize}
+\tylr~ is implemented in ReasonML using \texttt{Incr\_dom} \cite{incr-dom},
+a model-view-update library, and compiled to JavaScript using
+\texttt{Js\_of\_ocaml} \cite{DBLP:conf/aplas/RadanneVB16}.
+The total implementation comes out to roughly 6000 lines
+of ReasonML code.
+The core editing semantics contributes about 1700 lines;
+a majority, about 3800 lines, is responsible for frontend
+concerns such as measuring and visually decorating code
+elements; and the rest are utilities.
+
+We have also implemented a version of \tylr~ that closely adheres
+to the restricted calculus sketched in Section \ref{sec:formalism}.
+In that implementation, the editing logic reduces in size to
+about 1200 lines.
+
+The implementation is publicly available at
+\url{https://github.com/hazelgrove/tylr}.
+Interested readers may visit \url{tylr.fun} to play with a
+running instance of the code.
+
+
+
+
+
+% \note{
+%   Talk about \texttt{tylr} design/implementation choices that deviate
+%   from and apply restrictions to formalism.
+%   Avoid major screenshots, show these instead in Section 2.
+%   See if it's possible to avoid Design in section title.
+%   Include details about coding details.
+% }
+% \begin{itemize}
+%   \item showing tree structure in pointing mode
+%   \begin{itemize}
+%     \item parsing as you go
+%   \end{itemize}
+%   \item no sort dependency cycle
+%   \begin{itemize}
+%     \item greedy selection
+%     \item tile design: same-sort vs diff-sort children
+%   \end{itemize}
+%   \item picking up multiple matching selections in restructuring mode
+%   \begin{itemize}
+%     \item copy and pasting of root nodes rather than whole terms
+%     \item just as a whole selection can be moved anywhere, matching selections
+%       can be moved anywhere as a group
+%   \end{itemize}
+%   \item enabling restructuring across sorts by unsorting selections
+%   \item entering restructuring mode automatically on deletion/construction
+% \end{itemize}
