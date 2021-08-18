@@ -2,19 +2,66 @@
 
 \section{Tile-based Editor Calculus}\label{sec:formalism}
 
-We now present a precise specification of tile-based
-editing in the form of a core calculus called \ty.
-\note{add back punchline}
+We now precisely specify tile-based editing
+as a calculus called \ty.
+The punchline of \ty~ (Section \ref{sec:actions})
+is the action judgment
+$\performAction{\editState_1}{\action}{\editState_2}$,
+which sends edit state $\editState_1$ to $\editState_2$
+via action $\action$, and its governing metatheory,
+which states that every action-reachable edit state
+corresponds to a well-formed program term.
 
-% The punchline of \ty~ is the action judgment
-% $\performAction{\editState_1}{\action}{\editState_2}$ \note{section ref},
-% which sends edit state $\editState_1$ to $\editState_2$
-% via action $\alpha$.
-% These actions are governed by a syntactic sensibility theorem \note{ref},
-% which states that every action-reachable edit state can
-% be parsed into a language term.
-% Section \note{ref} presents the action judgment and characterizes
-% its metatheory.
+\subsection{Terms, tiles, \& tips}
+
+We begin by showing that \ty's actions need not
+directly maintain program terms, as it is
+sufficient instead to maintain a well-formed
+tile structure.
+
+
+
+, where ``well-formed'' is suitably
+defined to ensure that they can always be parsed
+into
+
+
+
+\input{term-flattening}
+\input{tip-syntax}
+% \input{fix-holes-judgment}
+\input{hole-fixing-judgment}
+
+Finally we establish the connection between
+\ty~ edit states and \emph{terms} of the
+underlying language, as are typically defined
+with a strictly tree-structured abstract syntax.
+Figure \note{ref} shows the abstract syntax of
+\ty~ language terms;
+this syntax coincides with that in Figure \note{ref}
+except for the inclusion of a new operator hole term
+to account for operator holes in the tile syntax.
+
+Figure \note{ref} defines the judgments
+$\flattenTerm{p}{\tiles^{\pat}}$
+and
+$\flattenTerm{e}{\tiles^{\expr}}$,
+which specify how to ``flatten'' a tree-structured
+term into a corresponding sequence of tiles.
+We consider a tile sequence $\tiles^s$ to be well-formed
+with respect to the underlying language if there exists
+a language term that flattens to $\tiles^s$.
+\note{talk a bit about the parentheses rule, note that this is just for stating theorem}
+
+Showing the existence of such a language term
+is equivalent to showing the tiles in $\tiles^s$
+form a valid operator sequence.
+Each tile may be interpreted as a component
+of an operator sequence, taking one of four
+different shapes: operand, unary prefix,
+unary suffix, and binary infix...
+
+
 
 \subsection{Edit states}
 \input{edit-state-syntax}
@@ -226,47 +273,11 @@ on edit states in pointing mode:
 %   $\nearrow^*$ is the reflexive transitive closure of $\nearrow$.
 % \end{definition}
 
-\subsubsection{Terms, tips, \& hole fixing}
-\input{term-flattening}
-\input{tip-syntax}
-% \input{fix-holes-judgment}
-\input{hole-fixing-judgment}
-
-Finally we establish the connection between
-\ty~ edit states and \emph{terms} of the
-underlying language, as are typically defined
-with a strictly tree-structured abstract syntax.
-Figure \note{ref} shows the abstract syntax of
-\ty~ language terms;
-this syntax coincides with that in Figure \note{ref}
-except for the inclusion of a new operator hole term
-to account for operator holes in the tile syntax.
-
-Figure \note{ref} defines the judgments
-$\flattenTerm{p}{\tiles^{\pat}}$
-and
-$\flattenTerm{e}{\tiles^{\expr}}$,
-which specify how to ``flatten'' a tree-structured
-term into a corresponding sequence of tiles.
-We consider a tile sequence $\tiles^s$ to be well-formed
-with respect to the underlying language if there exists
-a language term that flattens to $\tiles^s$.
-\note{talk a bit about the parentheses rule, note that this is just for stating theorem}
-
-Showing the existence of such a language term
-is equivalent to showing the tiles in $\tiles^s$
-form a valid operator sequence.
-Each tile may be interpreted as a component
-of an operator sequence, taking one of four
-different shapes: operand, unary prefix,
-unary suffix, and binary infix...
-
-
-\subsection{Actions}
+\subsection{Actions} \label{sec:actions}
 We now present \ty's central action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 which sends edit state $\editState_1$ to $\editState_2$
-via action $\alpha$.
+via action $\action$.
 The action judgment is governed by a syntactic sensibility
 theorem (Theorem \note{ref}) that ensures that
 the subject of every action-reachable edit state can

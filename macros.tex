@@ -6,7 +6,7 @@
 
 \newcommand{\note}[1]{\textcolor{blue}{#1}}
 \newcommand{\tylr}{\texttt{tylr}}
-\newcommand{\ty}{\textsf{ty}}
+\newcommand{\ty}{\textsf{tylrcore}}
 
 % Violet hot dog buns; highlight color helps distinguish them
 \newcommand{\llparenthesiscolor}{\textcolor{violet}{\llparenthesis}}
@@ -20,15 +20,21 @@
 \newcommand{\snum}{\texttt{num}}
 \newcommand{\sbool}{\texttt{bool}}
 \newcommand{\sarr}[2]{#1 \rightarrow #2}
+\newcommand{\tprod}{\texttt{,}}
 \newcommand{\sprod}[2]{#1\texttt{,}#2}
 \newcommand{\sann}[2]{#1~\texttt{:}~#2}
 \newcommand{\sboollit}[1]{#1}
 \newcommand{\snumlit}[1]{#1}
 \newcommand{\sparen}[1]{\texttt{(}#1\texttt{)}}
+\newcommand{\tlam}[1]{\lambda #1.}
 \newcommand{\slam}[2]{\lambda #1.#2}
+\newcommand{\tlet}[2]{\texttt{let}~#1~\texttt{=}~#2~\texttt{in}}
 \newcommand{\slet}[3]{\texttt{let}~#1~\texttt{=}~#2~\texttt{in}~#3}
-\newcommand{\splus}[2]{#1~\texttt{+}~#2}
+\newcommand{\tplus}{\texttt{+}}
+\newcommand{\splus}[2]{#1~\tplus~#2}
+\newcommand{\tmult}{\texttt{*}}
 \newcommand{\smult}[2]{#1~\texttt{*}~#2}
+\newcommand{\tdiv}{\texttt{/}}
 \newcommand{\sdiv}[2]{#1~\texttt{/}~#2}
 \newcommand{\sequals}[2]{#1~\texttt{==}~#2}
 \newcommand{\sap}[2]{#1\texttt{\textvisiblespace}#2}
@@ -40,7 +46,7 @@
 
 \newcommand{\ophole}{%
 \begin{tikzpicture}%
-\draw[line width=0.75pt,violet]
+\draw[line width=0.75pt,gray]
   (-0.25ex,0.5ex)
   -- (0,1ex)
   -- (0.5ex,1ex)
@@ -52,7 +58,7 @@
 }
 \newcommand{\binhole}{%
 \begin{tikzpicture}%
-\draw[line width=0.65pt,violet]
+\draw[line width=0.65pt,gray]
   (0,0.5ex)
   -- (-0.25ex,1ex)
   -- (0.75ex,1ex)
@@ -62,6 +68,20 @@
   -- cycle;%
 \end{tikzpicture}%
 }
+
+% \newcommand{\optile}[1]{\mbox{$\langle\overline{\underline{\text{#1\vphantom{|}}}}\rangle$}}
+% \newcommand{\pretile}[1]{\mbox{$\langle\overline{\underline{\text{#1\vphantom{|}}}}\langle$}}
+% \newcommand{\posttile}[1]{\mbox{$\rangle\overline{\underline{\text{#1\vphantom{|}}}}\rangle$}}
+% \newcommand{\bintile}[1]{\mbox{$\rangle\overline{\underline{\text{#1\vphantom{|}}}}\langle$}}
+
+\newcommand{\ltiletip}{{\color{gray}\langle}}
+\newcommand{\rtiletip}{{\color{gray}\rangle}}
+
+\newcommand{\optile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\rtiletip$}}
+\newcommand{\pretile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\ltiletip$}}
+\newcommand{\posttile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\rtiletip$}}
+\newcommand{\bintile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\ltiletip$}}
+
 
 \newcommand{\editState}{Z}
 \newcommand{\performAction}[3]{#1 \xlongrightarrow{#2} #3}
@@ -153,18 +173,6 @@
 
 % HTyp and HExp
 \newcommand{\isComplete}[1]{#1~\mathsf{complete}}
-
-% HTyp
-\newcommand{\htyp}[0]{\tau} % Meta variable for types
-\newcommand{\tarr}[2]{#1 \rightarrow #2}
-%\newcommand{\tsum}[2]{#1 + #2}
-\newcommand{\tprod}[2]{#1 \times #2}
-\newcommand{\tunit}{\mathsf{1}}
-\newcommand{\tnum}{\mathsf{num}}
-\newcommand{\tb}{\texttt{b}}
-\newcommand{\tehole}{\llparenthesiscolor\rrparenthesiscolor}
-\newcommand{\tsum}[2]{{#1} + {#2}}
-\newcommand{\trec}[2]{\mu(#1.#2)}
 
 \newcommand{\tconsistent}[2]{#1 \sim #2}
 \newcommand{\tinconsistent}[2]{#1 \nsim #2}

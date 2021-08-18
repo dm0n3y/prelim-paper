@@ -23,10 +23,14 @@ The function takes an integer index and
 returns a circle---represented as a pair comprising
 its center point and radius---to be drawn in
 the $xy$-plane for every index.
-Shown above, the initial implementation draws unit circles
+Shown above, the initial program draws unit circles
 along the line $y = x$.
 
 \subsection{Terms versus tiles}
+
+\input{terms-vs-tiles}
+\input{term-syntax}
+% \input{tile-syntax}
 
 % \note{maybe forward reference alternative choices not skipping tokens}
 Panning the cursor over the program in \tylr,
@@ -36,32 +40,96 @@ governed by \tylr's \emph{term syntax},
 the relevant subset of which is shown in
 Figure \ref{fig:term-syntax}.
 For example, the first edit state in Figure \ref{fig:pan-term-view}
-shows the top-level function expression binding the index \code{n}
-and returning an indexed circle.
+shows the top-level function---an expression term as
+indicated by the green coloring---binding
+the pattern variable \code{n} and returning an indexed circle.
 Notice how every term has a convex hexagonal shape.
 
-Highlighted within each term is a substructure called a \emph{tile}.
-Each term's highlighted tile encompasses all root-level tokens used to
+Highlighted within each term is a substructure called a \emph{tile};
+with respect to the containing term, we say it is the term's \emph{root tile}.
+Each term's root tile encompasses all root-level tokens used to
 represent the term, along with children of the term that the tokens
-delimit on both sides---we call such children \emph{bidelimited}.
+delimit on both sides---such children we call \emph{bidelimited}.
 For example, in the first edit state of
 Figure \ref{fig:pan-term-view}, observe how the function's highlighted
 tile spans the function's tokens \code{$\boldsymbol{\lambda}$}
 and \code{\textbf{.}\vphantom{$\boldsymbol{\lambda}$}}
-as well as the bidelimited pattern child, but does not
-extend to the \emph{unidelimited} body.
+as well as the bidelimited pattern child; however, it does not
+extend to the \emph{unidelimited} body child.
 
 Holding Alt/Option while panning the cursor, this time in
 Figure \ref{fig:pan-tile-view}, reveals the program structure
 as governed by \tylr's \emph{tile syntax},
 shown in Figure \ref{fig:tile-syntax}.
-Tiles enjoy a more linear structure compared to the
+Tiles enjoy a flatter structure compared to the
 strictly hierarchical terms.
-Notice in the first edit state of Figure \ref{fig:pan-term-view},
-for example, how the tiles comprising the function body are siblings
-with the function term's root tile.
+Notice in the first edit state of Figure \ref{fig:pan-tile-view},
+for example, how the tiles comprising the function body
+are siblings with the function term's root tile.
+The \emph{tips} of a tile indicate its syntactic
+role in the tile sequence as a(n):
+\optile{operand}, \pretile{prefix operator},
+\posttile{postfix operator}, or \bintile{infix operator}.
 
-\note{talk about tips and well-formedness}
+Where other structure editors model their edit states
+using the strictly hierarchical term syntax,\footnote{Technically,
+most other structure editors model their edit states
+in terms of the language's abstract syntax, whereas the
+term syntax used here is more akin to the concrete syntax,
+but the important point is that they are both strictly hierarchical.}
+\tylr~ instead models its edit state using the flatter
+tile syntax, precedence-parsing the tile structure
+as needed to produce the term structure.
+Indeed, the term structure shown in Figure \ref{fig:pan-term-view}
+is simply a decoration overlaid atop the actual tile
+structure shown in Figure \ref{fig:pan-tile-view}.
+
+
+\subsection{Opseqs \& holes}
+
+The edit states shown in Figure \ref{fig:pan} are in
+\emph{pointing mode}, \tylr's default editing mode.
+Much like how a text editor's cursor points at positions
+between characters in its default mode, \tylr's default
+cursor points at positions between tiles.
+% \note{note how they are explicitly indicated in above
+% the terms/tiles, the local cursor positions for the current tile
+% sequence are shown, that we can speak meaningfully of the
+% sort of a cursor position, maybe forward reference that
+% this will be useful for explaining how selecting works}
+\tylr's central guarantee is: if you are in pointing mode,
+then you have a well-formed program term.
+
+Simply maintaining a well-formed tile structure
+according to the tile syntax alone, however, is
+not sufficient to uphold this guarantee.
+The generic sequential structure of tile sequences
+simplifies how we define edit operations, but
+does not guarantee that the tiles represent a well-formed
+\emph{operator sequence}, or \emph{opseq} for short.
+The conditions for being an opseq
+enjoy a simple physical metaphor:
+\begin{enumerate}
+\item[(1)] every tile \emph{fits} its siblings:
+  if a pair of tips meet, they look like $\ltiletip\ltiletip$
+  or $\rtiletip\rtiletip$; and
+\item[(2)] every tile sequence is \emph{convex}:
+  it is nonempty, the first tile's left tip $\ltiletip$
+  points left, and the last tile's right tip $\rtiletip$
+  points right.
+\end{enumerate}
+If \tylr~ maintains well-formed opseqs in pointing mode, then we have
+our guarantee, since precedence-parsing is total on opseqs.
+
+For this reason, \tylr~ automatically inserts
+and removes placeholder tiles called \emph{holes}
+as we edit to maintain opseq structure.
+There are two kinds of holes:
+\emph{operand holes} \optile{\ophole}
+and \emph{operator holes} \bintile{\binhole}.
+We will soon see a number of examples of
+automatic hole fixing as we turn our attention
+to editing tiles.
 
 % \note{also mention right bias of term view (for simplicity)}
 
@@ -79,47 +147,6 @@ with the function term's root tile.
 % the bidelimited pattern child \texttt{n} of the lambda term,
 % the bidelimited expression child \texttt{n , n} of
 % the parenthesized term).
-
-Tiles are color-coded by sort---green for expressions, blue
-for patterns---and shaped such that they enclose bidelimited
-child terms of different sort and leave unenclosed bidelimited
-child terms of the same sort.
-
-\note{need to define sort and bidelimited,
-couch this in examination of term syntax}
-
-\input{terms-vs-tiles}
-\input{term-syntax}
-% \input{tile-syntax}
-
-Tiles are shaped at their ends to fit together sequentially
-into operator sequences.
-% \begin{align*}
-% \langle\overline{\underline{\text{operand}}}\rangle,
-% \langle\overline{\underline{\text{prefix operator}}}\langle, \\
-% \rangle\overline{\underline{\text{postfix operator}}}\rangle,
-% \rangle\text{infix operator}\langle.
-% \end{align*}
-Holding Alt/Option at any time reveals the local tile sequence
-housing the cursor, as shown in Figure \ref{fig:pan-tile-view}.
-Where other structure editors model their edit states
-using the strictly hierarchical term syntax,
-\tylr~ instead models its edit state
-using the flattened tile syntax, parsing the tile structure
-as needed to produce the term structure.
-Indeed, the apparent term structure shown in Figure
-\ref{fig:pan-term-view} is simply a
-decoration overlaid atop the actual tile structure shown in
-Figure \ref{fig:pan-tile-view}.
-
-\note{add discussion of tile structure well-formedness,
-discuss sort-colored cursor positions}
-
-\note{need to define pointing mode}
-
-\note{mention holes, forward reference how these will
-be key players moving forward, explicitly mention
-the convex contiguity of well-formed opseqs}
 
 % Tiles are closely related to nested words \note{cite} and
 % visibly pushdown languages \note{cite}, which we discuss
