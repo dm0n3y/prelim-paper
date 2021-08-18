@@ -34,27 +34,27 @@
     \[\arraycolsep=3pt\begin{array}{rlrl}
       \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
       \text{pattern tile} & \tile^{\pat} & ::= &
-        \ophole ~\vert~
-        \svar{x} ~\vert~
-        \sparen{\tiles^{\pat}} \\
+        \optile{$\ophole$} ~\vert~
+        \optile{$\svar{x}$} ~\vert~
+        \optile{$\sparen{\tiles^{\pat}}$} \\
       & & \vert &
-        \binhole ~\vert~
-        \sprod{}{} \\
+        \bintile{$\binhole$} ~\vert~
+        \bintile{$\sprod{}{}$} \\
       \text{expression tile} & \tile^{\expr} & ::= &
-        \ophole ~\vert~
-        \snumlit{n} ~\vert~
-        \svar{x} ~\vert~
-        \sparen{\tiles^{\expr}} \\
+        \optile{$\ophole$} ~\vert~
+        \optile{$\snumlit{n}$} ~\vert~
+        \optile{$\svar{x}$} ~\vert~
+        \optile{$\sparen{\tiles^{\expr}}$} \\
       & & \vert &
-        \binhole ~\vert~
+        \bintile{$\binhole$} ~\vert~
         % \sap{}{} ~\vert~
-        \splus{}{} ~\vert~
-        \smult{}{} ~\vert~
-        \sdiv{}{} ~\vert~
-        \sprod{}{} \\
+        \bintile{$\tplus$} ~\vert~
+        \bintile{$\tmult$} ~\vert~
+        \bintile{$\tdiv$} ~\vert~
+        \bintile{$\tprod$} \\
       & & \vert &
-        \slam{\tiles^{\pat}}{} ~\vert~
-        \slet{\tiles^{\pat}}{\tiles^{\expr}}{}
+        \pretile{$\tlam{\tiles^{\pat}}$} ~\vert~
+        \pretile{$\tlet{\tiles^{\pat}}{\tiles^{\expr}}$}
     \end{array}\]
     \caption{}
     \label{fig:tile-syntax}
