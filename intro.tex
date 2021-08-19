@@ -70,7 +70,7 @@ from high viscosity \cite{cog-dim},
 \ie, it is difficult to modify
 and restructure existing code.
 We believe this is a fundamental consequence
-of the heretofore core assumption that structure editors
+of the basic assumption that structure editors
 should operate directly on the abstract syntactic structure
 of a program.\footnote{\note{add comment here clarifying
 this is talking about pure structure editors and not
@@ -82,27 +82,42 @@ the arbitrary range selections of text editors.
 Amy's thing and weave in a little more text editor vs
 structure editor dichotomy earlier}
 
-In this paper, we present a new approach to structure
+In this paper, we describe a new approach to structure
 editing, called \emph{tile-based editing}, that
 recovers many of the flexible and linear editing
 affordances of text editors.
-Instead of representing the program in the language's
-abstract syntax, a tile-based editor represents it
-in a parallel tile-based syntax equipped with its own
-syntax-directed editing.
-Closely related to nested words \cite{nested-words}
-and visibly pushdown languages \cite{visibly-pushdown-langs},
-tiles encode both the linearity of sequentially
-positioned syntactic elements as well as
-their hierarchical nesting between matching sets
-of delimiters.
+Using a tile-based editor, the user manipulates
+structural components called \emph{tiles} that
+are shaped to fit together according to their
+syntactic roles, \ala blocks in a block-based editor;
+unlike blocks, tiles directly model linear
+operator sequences and facilitate left-to-right
+editing using keyboard input.
+Uniquely, tiles may be broken apart into
+\emph{shards} as needed to specify arbitrary range
+selections up to token boundaries.
+Using a novel \emph{restructuring mode}, the user
+may then ``cut and paste'' these selections like
+in a text editor;
+unlike text-based cut-and-paste, restructuring
+mode ensures you paste your selections such that
+the result is a well-formed program term.
 
-\note{modal editing, disassembly into shards,
-supporting arbitrary range selections up to token boundaries}
+% Instead of representing the program in the language's
+% abstract syntax, a tile-based editor represents it
+% in a parallel tile-based syntax equipped with its own
+% syntax-directed editing.
 
-\note{contributions: design and implementation of a
-minimal tile-based editor,
-formalization sketch of tile-based editing,
-discussion of how tile-based editing can be scaled up
-to more text-like interfaces like Hazel, plan to evaluate}
+% Closely related to nested words \cite{nested-words}
+% and visibly pushdown languages \cite{visibly-pushdown-langs},
+% tiles encode both the linearity of sequentially
+% positioned syntactic elements as well as
+% their hierarchical nesting between matching sets
+% of delimiters.
+
+% \note{contributions: design and implementation of a
+% minimal tile-based editor,
+% formalization sketch of tile-based editing,
+% discussion of how tile-based editing can be scaled up
+% to more text-like interfaces like Hazel, plan to evaluate}
 
