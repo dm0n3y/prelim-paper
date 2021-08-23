@@ -3,27 +3,28 @@
   \[
     \arraycolsep=3pt\begin{array}{rlrl}
         \text{pattern term} & \spat & ::= &
-          \ophole ~\vert~
-          \svar{x} ~\vert~
-          \sparen{\spat} \\
+          \optile{$\ophole$} ~\vert~
+          \optile{$\svar{x}$} ~\vert~
+          \optile{$\sparen{\spat}$} \\
         & & \vert &
-          \spat~\binhole~\spat ~\vert~
-          \sprod{\spat}{\spat} \\
+          \optile{$\spat~\binhole~\spat$} ~\vert~
+          \optile{$\sprod{\spat}{\spat}$} \\
         \text{expression term} & \sexp & ::= &
-          \ophole ~\vert~
-          \snumlit{n} ~\vert~
-          \svar{x} ~\vert~
-          \sparen{\sexp} \\
+          \optile{$\ophole$} ~\vert~
+          \optile{$\snumlit{n}$} ~\vert~
+          \optile{$\svar{x}$} ~\vert~
+          \optile{$\sparen{\sexp}$} \\
         & & \vert &
           % \sap{\sexp}{\sexp} ~\vert~
-          \sexp~\binhole~\sexp ~\vert~
-          \splus{\sexp}{\sexp} ~\vert~
-          \smult{\sexp}{\sexp} ~\vert~
-          \sdiv{\sexp}{\sexp} ~\vert~
-          \sprod{\sexp}{\sexp} \\
+          \optile{$\sexp~\binhole~\sexp$} ~\vert~
+          \optile{$\sprod{\sexp}{\sexp}$} \\
         & & \vert &
-          \slam{\spat}{\sexp} ~\vert~
-          \slet{\spat}{\sexp}{\sexp}
+          \optile{$\splus{\sexp}{\sexp}$} ~\vert~
+          \optile{$\smult{\sexp}{\sexp}$} ~\vert~
+          \optile{$\sdiv{\sexp}{\sexp}$} \\
+        & & \vert &
+          \optile{$\slam{\spat}{\sexp}$} ~\vert~
+          \optile{$\slet{\spat}{\sexp}{\sexp}$}
     \end{array}\]
     \caption{}
     \label{fig:term-syntax}
