@@ -1,60 +1,17 @@
 \begin{figure*}
   \judgbox{\performAction{\editState_1}{\action}{\editState_2}}{$\editState_1$ transitions via $\action$ to $\editState_2$}
   \begin{mathpar}
-  \inferrule[MoveRightAtomic]{
-    \disassemblesDown{\selem}{\cdot}
+  \inferrule[MovePointing]{
+    \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
   }{
     \performAction{
-      \zipper{\pointing{\selection_1}{\selem\selection_2}}{\zframe}
+      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
     }{
-      \actionlit{move}\ \texttt{right}
+      \actionlit{move}\ \direction
     }{
-      \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_2}}{\zframe}}
+      \editState
     }
   }
-
-  \inferrule[MoveRightDisassembles]{
-    \disassemblesDown{\selem}{\selection_3} \\
-    \selection_3\neq\cdot \\
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selection_3\selection_2}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip
-    }
-  }{
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selem\selection_2}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip
-    }
-  }
-
-  \inferrule[MoveRightFrame]{
-    \disassemblesUp{
-      \zframe
-    }{
-      \zipper{\pointing{\selection_2}{\selection_3}}{\zframe'}
-    } \\
-    \performAction{
-      \zipper{\pointing{\selection_2\selection_1}{\selection_3}}{\zframe'}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip
-    }
-  }{
-    \performAction{
-      \zipper{\pointing{\selection_1}{\cdot}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip
-    }
-  } \\
 
   \inferrule[Construct]{
     \fixHolesSelections{\rtipconc{s}}{\selection_1}{\tile^s\selection_2}{\ltipconc{s}}{\selection'_1}{\selection'_2}
@@ -79,95 +36,17 @@
     }
   } \\\\\\
 
-  \inferrule[SelectLeftAtomic]{
-    \disassemblesDown{\selem}{\cdot} \\
-    \parseSelection{\selem\selection_2} = \selection'_2
+  \inferrule[MoveSelecting]{
+    \smove{\zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
   }{
     \performAction{
-      \zipper{\selecting{\selection_1\selem}{\selection_2}{\selection_3}}{\zframe}
+      \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}
     }{
-      \actionlit{move}\ \texttt{left}
+      \actionlit{move}\ \direction
     }{
-      \zipper{\selecting{\selection_1}{\selection'_2}{\selection_3}}{\zframe}
+      \editState
     }
   }
-
-  \inferrule[SelectLeftDisassembles]{
-    \disassemblesDown{\selem}{\selection_4} \\
-    \selection_4\neq\cdot \\
-    \performAction{
-      \zipper{\selecting{\selection_1\selection_4}{\selection_2}{\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{left}
-    }{
-      \zip
-    }
-  }{
-    \performAction{
-      \zipper{\selecting{\selection_1\selem}{\selection_2}{\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{left}
-    }{
-      \zip
-    }
-  }
-
-  \inferrule[SelectLeftFrame]{
-    \disassemblesUp{
-      \zframe
-    }{
-      \zipper{\pointing{\selection_3}{\selection_4}}{\zframe'}
-    } \\
-    \performAction{
-      \zipper{\selecting{\selection_3}{\selection_1}{\selection_2\selection_4}}{\zframe'}
-    }{
-      \actionlit{move}\ \texttt{left}
-    }{
-      \zip
-    }
-  }{
-    \performAction{
-      \zipper{\selecting{\cdot}{\selection_1}{\selection_2}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{left}
-    }{
-      \zip
-    }
-  } \\
-
-  \inferrule[SelectRightAtomic]{
-    \disassemblesDown{\selem}{\cdot} \\
-    \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_3}}{\zframe}} =
-      \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
-  }{
-    \performAction{
-      \zipper{\selecting{\selection_1}{\selem\selection_2}{\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zipper{\selecting{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
-    }
-  }
-
-  \inferrule[SelectRightDisassembles]{
-    \disassemblesDown{\selem}{\selection_4} \\
-    \selection_4\neq\cdot \\
-    \performAction{
-      \zipper{\selecting{\selection_1}{\selection_4\selection_2}{\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip
-    }
-  }{
-    \performAction{
-      \zipper{\selecting{\selection_1}{\selem\selection_2}{\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zip
-    }
-  } \\
 
   \inferrule[MarkSelecting]{
     \matchesSort{\leftTip{\selection_2}}{\rightTip{\selection_2}} \\
@@ -182,36 +61,17 @@
     }
   } \\\\\\
 
-  \inferrule[MoveRightRestructuringNotWhole]{
-    \text{\note{not\ }}\wholeSelection{s}{\selection_2}
-  }{
-    \performAction{
-      \zipper{\restructuring{\selection_1}{\selection_2}{\tile^{s}\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zipper{\restructuring{\selection_1\tile^{s}}{\selection_2}{\selection_3}}{\zframe}
-    }
-  }
-
-  \inferrule[MoveRightRestructuringWhole]{
-    \wholeSelection{s}{\selection_2} \\
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selection_3}}{\zframe}
-    }{
-      \actionlit{move}\ \texttt{right}
-    }{
-      \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
-    }
+  \inferrule[MoveRestructuring]{
+    \rmove{\zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}
     }{
-      \actionlit{move}\ \texttt{right}
+      \actionlit{move}\ \direction
     }{
-      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
+      \editState
     }
-  } \\
+  }
 
   \inferrule[Delete]{
     \fixHolesSelections{\rtipconc{s}}{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{\ltipconc{s}}{\selection'_1}{\selection'_3}

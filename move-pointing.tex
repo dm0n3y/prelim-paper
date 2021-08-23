@@ -1,0 +1,63 @@
+\begin{figure}
+  \judgbox{\pmove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ transitions via movement $\direction$ to $\editState_2$\\\ \ in pointing mode}
+  \begin{mathpar}
+  \inferrule[PMoveRightAtomic]{
+    \disassemblesDown{\selem}{\cdot}
+  }{
+    \pmove{
+      \zipper{\pointing{\selection_1}{\selem\selection_2}}{\zframe}
+    }{
+      \texttt{right}
+    }{
+      \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_2}}{\zframe}}
+    }
+  }
+
+  \inferrule[PMoveRightDisassembles]{
+    \disassemblesDown{\selem}{\selection_3} \\
+    \selection_3\neq\cdot \\
+    \pmove{
+      \zipper{\pointing{\selection_1}{\selection_3\selection_2}}{\zframe}
+    }{
+      \texttt{right}
+    }{
+      \zip
+    }
+  }{
+    \pmove{
+      \zipper{\pointing{\selection_1}{\selem\selection_2}}{\zframe}
+    }{
+      \texttt{right}
+    }{
+      \zip
+    }
+  }
+
+  \inferrule[PMoveRightFrame]{
+    \disassemblesUp{
+      \zframe
+    }{
+      \zipper{\pointing{\selection_2}{\selection_3}}{\zframe'}
+    } \\
+    \pmove{
+      \zipper{\pointing{\selection_2\selection_1}{\selection_3}}{\zframe'}
+    }{
+      \texttt{right}
+    }{
+      \zip
+    }
+  }{
+    \pmove{
+      \zipper{\pointing{\selection_1}{\cdot}}{\zframe}
+    }{
+      \texttt{right}
+    }{
+      \zip
+    }
+  }
+\end{mathpar}
+
+\vspace{-2px}
+\CaptionLabel{Movement in pointing mode}{fig:move-pointing}
+\vspace{-2px}
+\end{figure}

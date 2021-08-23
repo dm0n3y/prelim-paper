@@ -1,0 +1,101 @@
+\begin{figure}
+  \judgbox{\smove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ transitions via movement $\direction$ to $\editState_2$\\\ \ in selecting mode}
+  \begin{mathpar}
+
+\inferrule[SMoveLeftAtomic]{
+  \disassemblesDown{\selem}{\cdot} \\
+  \parseSelection{\selem\selection_2} = \selection'_2
+}{
+  \smove{
+    \zipper{\selecting{\selection_1\selem}{\selection_2}{\selection_3}}{\zframe}
+  }{
+    \texttt{left}
+  }{
+    \zipper{\selecting{\selection_1}{\selection'_2}{\selection_3}}{\zframe}
+  }
+}
+
+\inferrule[SMoveLeftDisassembles]{
+  \disassemblesDown{\selem}{\selection_4} \\
+  \selection_4\neq\cdot \\
+  \performAction{
+    \zipper{\selecting{\selection_1\selection_4}{\selection_2}{\selection_3}}{\zframe}
+  }{
+    \actionlit{move}\ \texttt{left}
+  }{
+    \zip
+  }
+}{
+  \performAction{
+    \zipper{\selecting{\selection_1\selem}{\selection_2}{\selection_3}}{\zframe}
+  }{
+    \actionlit{move}\ \texttt{left}
+  }{
+    \zip
+  }
+}
+
+\inferrule[SMoveLeftFrame]{
+  \disassemblesUp{
+    \zframe
+  }{
+    \zipper{\pointing{\selection_3}{\selection_4}}{\zframe'}
+  } \\
+  \performAction{
+    \zipper{\selecting{\selection_3}{\selection_1}{\selection_2\selection_4}}{\zframe'}
+  }{
+    \actionlit{move}\ \texttt{left}
+  }{
+    \zip
+  }
+}{
+  \performAction{
+    \zipper{\selecting{\cdot}{\selection_1}{\selection_2}}{\zframe}
+  }{
+    \actionlit{move}\ \texttt{left}
+  }{
+    \zip
+  }
+} \\
+
+\inferrule[SMoveRightAtomic]{
+  \disassemblesDown{\selem}{\cdot} \\
+  \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_3}}{\zframe}} =
+    \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
+}{
+  \performAction{
+    \zipper{\selecting{\selection_1}{\selem\selection_2}{\selection_3}}{\zframe}
+  }{
+    \actionlit{move}\ \texttt{right}
+  }{
+    \zipper{\selecting{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
+  }
+}
+
+\inferrule[SMoveRightDisassembles]{
+  \disassemblesDown{\selem}{\selection_4} \\
+  \selection_4\neq\cdot \\
+  \performAction{
+    \zipper{\selecting{\selection_1}{\selection_4\selection_2}{\selection_3}}{\zframe}
+  }{
+    \actionlit{move}\ \texttt{right}
+  }{
+    \zip
+  }
+}{
+  \performAction{
+    \zipper{\selecting{\selection_1}{\selem\selection_2}{\selection_3}}{\zframe}
+  }{
+    \actionlit{move}\ \texttt{right}
+  }{
+    \zip
+  }
+}
+
+\end{mathpar}
+
+\vspace{-2px}
+\CaptionLabel{Movement in selecting mode}{fig:move-selecting}
+\vspace{-2px}
+\end{figure}
+

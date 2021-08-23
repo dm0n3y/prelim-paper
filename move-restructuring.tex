@@ -1,0 +1,42 @@
+\begin{figure}
+  \judgbox{\rmove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ transitions via movement $\direction$ to $\editState_2$\\\ \ in restructuring mode}
+  \begin{mathpar}
+
+\inferrule[RMoveRightCracked]{
+  \text{\note{not\ }}\wholeSelection{s}{\selection_2}
+}{
+  \rmove{
+    \zipper{\restructuring{\selection_1}{\selection_2}{\tile^{s}\selection_3}}{\zframe}
+  }{
+    \texttt{right}
+  }{
+    \zipper{\restructuring{\selection_1\tile^{s}}{\selection_2}{\selection_3}}{\zframe}
+  }
+}
+
+\inferrule[RMoveRightIntact]{
+  \wholeSelection{s}{\selection_2} \\
+  \pmove{
+    \zipper{\pointing{\selection_1}{\selection_3}}{\zframe}
+  }{
+    \texttt{right}
+  }{
+    \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
+  }
+}{
+  \rmove{
+    \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}
+  }{
+    \texttt{right}
+  }{
+    \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
+  }
+} \\
+
+\end{mathpar}
+
+\vspace{-2px}
+\CaptionLabel{Movement in restructuring mode}{fig:move-restructuring}
+\vspace{-2px}
+\end{figure}
+
