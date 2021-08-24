@@ -10,22 +10,30 @@ $\performAction{\editState_1}{\action}{\editState_2}$,
 which sends edit state $\editState_1$ to $\editState_2$
 via action $\action$, and its governing metatheory,
 which states that every action-reachable edit state
-corresponds to a well-formed program term.
+can be parsed into a well-formed program term.
 
-\subsection{Terms, tiles, \& tips}
+Parsing in \ty~ is stratified into two phases:
+assembling shards into tiles, and precedence-parsing
+tiles into terms.
+We will begin in Section \ref{sec:terms-tiles-tips}
+by showing that the precedence-parsing phase is
+guaranteed to succeed provided the input tiles form
+an opseq.
+As a result, the edit states and actions we will
+subsequently define in Sections \ref{sec:edit-states} and
+\ref{sec:actions} need only concern themselves with
+shard assembly and fixing holes to maintain opseq structure.
 
-We begin by showing that \ty's actions need not
-directly maintain program terms, as it is
-sufficient instead to maintain a well-formed
-tile structure.
+% \note{something about how both of these parsing steps
+% deviate from the usual approach of parsing, which takes
+% a sequence of characters or tokens and produces a
+% parse tree, whereas here we have more fine-grained
+% delineation between different parseable/parsed structures,
+% which is why we take care in this section to define
+% derivations from one structure to another}
 
 
-
-, where ``well-formed'' is suitably
-defined to ensure that they can always be parsed
-into
-
-
+\subsection{Terms, tiles, \& tips} \label{sec:terms-tiles-tips}
 
 \input{term-flattening}
 \input{tip-syntax}
@@ -63,7 +71,7 @@ unary suffix, and binary infix...
 
 
 
-\subsection{Edit states}
+\subsection{Edit states} \label{sec:edit-states}
 \input{edit-state-syntax}
 
 \note{set up running example right away}
