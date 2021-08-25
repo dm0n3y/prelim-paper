@@ -40,6 +40,8 @@
 \newcommand{\sap}[2]{#1\texttt{\textvisiblespace}#2}
 \newcommand{\scond}[3]{#1~\texttt{?}~#2~\texttt{:}~#3}
 
+\newcommand{\sbinhole}[2]{#1~\binhole~#2}
+
 \newcommand{\action}{a}
 \newcommand{\actionlit}[1]{\texttt{#1}}
 \newcommand{\direction}{d}
@@ -77,11 +79,19 @@
 \newcommand{\ltiletip}{{\color{gray}\langle}}
 \newcommand{\rtiletip}{{\color{gray}\rangle}}
 
-\newcommand{\optile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\rtiletip$}}
-\newcommand{\pretile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\ltiletip$}}
-\newcommand{\posttile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\rtiletip$}}
-\newcommand{\bintile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\ltiletip$}}
+\newcommand{\toptile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\rtiletip$}}
+\newcommand{\tpretile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\ltiletip$}}
+\newcommand{\tposttile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\rtiletip$}}
+\newcommand{\tbintile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\ltiletip$}}
 
+\newcommand{\optile}[1]{\mbox{$\ltiletip\text{$#1$\vphantom{|}}\rtiletip$}}
+\newcommand{\pretile}[1]{\mbox{$\ltiletip\text{$#1$\vphantom{|}}\ltiletip$}}
+\newcommand{\posttile}[1]{\mbox{$\rtiletip\text{$#1$\vphantom{|}}\rtiletip$}}
+\newcommand{\bintile}[1]{\mbox{$\rtiletip\text{$#1$\vphantom{|}}\ltiletip$}}
+
+
+\newcommand{\tterm}[1]{\toptile{#1}}
+\newcommand{\term}[1]{\optile{#1}}
 
 \newcommand{\editState}{Z}
 \newcommand{\performAction}[3]{#1 \xlongrightarrow{#2} #3}

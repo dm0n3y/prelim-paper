@@ -3,22 +3,28 @@
   \begin{mathpar}
     \inferrule[]{
     }{
-      \flattenTerm{\ophole}{\ophole}
-    }\hspace{40pt}
+      \flattenTerm{\term{\ophole}}{\optile{\ophole}}
+    }\hspace{20pt}
     \inferrule[]{
     }{
-      \flattenTerm{\svar{x}}{\svar{x}}
+      \flattenTerm{\term{\svar{x}}}{\optile{\svar{x}}}
+    }\hspace{20pt}
+    \inferrule[]{
+      \flattenTerm{p}{\tiles^{\pat}}
+    }{
+      \flattenTerm{\term{\sparen{p}}}{\optile{\sparen{\tiles^{\pat}}}}
     }\\
     \inferrule[]{
       \flattenTerm{p_1}{\tiles^{\pat}_1} \\
       \flattenTerm{p_2}{\tiles^{\pat}_2}
     }{
-      \flattenTerm{\sprod{p_1}{p_2}}{\sprod{\tiles^{\pat}_1}{\tiles^{\pat}_2}}
-    }\hspace{40pt}
+      \flattenTerm{\term{\sbinhole{p_1}{p_2}}}{\tiles^{\pat}_1~\bintile{\binhole}~\tiles^{\pat}_2}
+    }\hspace{20pt}
     \inferrule[]{
-      \flattenTerm{p}{\tiles^{\pat}}
+      \flattenTerm{p_1}{\tiles^{\pat}_1} \\
+      \flattenTerm{p_2}{\tiles^{\pat}_2}
     }{
-      \flattenTerm{p}{\sparen{\tiles^{\pat}}}
+      \flattenTerm{\term{\sprod{p_1}{p_2}}}{\tiles^{\pat}_1~\bintile{\tprod}~\tiles^{\pat}_2}
     }
   \end{mathpar}
 
@@ -27,26 +33,45 @@
   \begin{mathpar}
     \inferrule[]{
     }{
-      \flattenTerm{\ophole}{\ophole}
-    }\hspace{40pt}
+      \flattenTerm{\term{\ophole}}{\optile{\ophole}}
+    }\hspace{15pt}
     \inferrule[]{
     }{
-      \flattenTerm{\snumlit{n}}{\snumlit{n}}
-    }\hspace{40pt}
+      \flattenTerm{\term{\snumlit{n}}}{\optile{\snumlit{n}}}
+    }\hspace{15pt}
     \inferrule[]{
     }{
-      \flattenTerm{\svar{x}}{\svar{x}}
+      \flattenTerm{\term{\svar{x}}}{\optile{\svar{x}}}
+    }\hspace{15pt}
+    \inferrule[]{
+      \flattenTerm{e}{\tiles^{\expr}}
+    }{
+      \flattenTerm{\term{\sparen{e}}}{\optile{\sparen{\tiles^{\expr}}}}
     }\\
     \inferrule[]{
       \flattenTerm{e_1}{\tiles^{\expr}_1} \\
       \flattenTerm{e_2}{\tiles^{\expr}_2}
     }{
-      \flattenTerm{\sprod{e_1}{e_2}}{\sprod{\tiles^{\expr}_1}{\tiles^{\expr}_2}}
-    }\hspace{40pt}
+      \flattenTerm{\term{\sbinhole{e_1}{e_2}}}{\tiles^{\expr}_1~\bintile{\binhole}~\tiles^{\expr}_2}
+    }\hspace{20pt}
     \inferrule[]{
+      \flattenTerm{e_1}{\tiles^{\expr}_1} \\
+      \flattenTerm{e_2}{\tiles^{\expr}_2}
+    }{
+      \flattenTerm{\term{\sprod{e_1}{e_2}}}{\tiles^{\expr}_1~\bintile{\tprod}~\tiles^{\expr}_2}
+    }\\
+    \inferrule[]{
+      \flattenTerm{p}{\tiles^{\pat}} \\
       \flattenTerm{e}{\tiles^{\expr}}
     }{
-      \flattenTerm{e}{\sparen{\tiles^{\expr}}}
+      \flattenTerm{\term{\slam{p}{e}}}{\pretile{\tlam{\tiles^{\pat}}}~\tiles^{\expr}}
+    }\\
+    \inferrule[]{
+      \flattenTerm{p}{\tiles^{\pat}} \\
+      \flattenTerm{e_1}{\tiles^{\expr}_1} \\
+      \flattenTerm{e_2}{\tiles^{\expr}_2}
+    }{
+      \flattenTerm{\term{\slet{p}{e_1}{e_2}}}{\pretile{\tlet{\tiles^{\pat}}{\tiles^{\expr}_1}}~\tiles^{\expr}_2}
     }
   \end{mathpar}
 

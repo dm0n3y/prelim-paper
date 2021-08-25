@@ -3,28 +3,28 @@
   \[
     \arraycolsep=3pt\begin{array}{rlrl}
         \text{pattern term} & \spat & ::= &
-          \optile{$\ophole$} ~\vert~
-          \optile{$\svar{x}$} ~\vert~
-          \optile{$\sparen{\spat}$} \\
+          \term{\ophole} ~\vert~
+          \term{\svar{x}} ~\vert~
+          \term{\sparen{\spat}} \\
         & & \vert &
-          \optile{$\spat~\binhole~\spat$} ~\vert~
-          \optile{$\sprod{\spat}{\spat}$} \\
+          \term{\spat~\binhole~\spat} ~\vert~
+          \term{\sprod{\spat}{\spat}} \\
         \text{expression term} & \sexp & ::= &
-          \optile{$\ophole$} ~\vert~
-          \optile{$\snumlit{n}$} ~\vert~
-          \optile{$\svar{x}$} ~\vert~
-          \optile{$\sparen{\sexp}$} \\
+          \term{\ophole} ~\vert~
+          \term{\snumlit{n}} ~\vert~
+          \term{\svar{x}} ~\vert~
+          \term{\sparen{\sexp}} \\
         & & \vert &
           % \sap{\sexp}{\sexp} ~\vert~
-          \optile{$\sexp~\binhole~\sexp$} ~\vert~
-          \optile{$\sprod{\sexp}{\sexp}$} \\
+          \term{\sexp~\binhole~\sexp} ~\vert~
+          \term{\sprod{\sexp}{\sexp}} \\
         & & \vert &
-          \optile{$\splus{\sexp}{\sexp}$} ~\vert~
-          \optile{$\smult{\sexp}{\sexp}$} ~\vert~
-          \optile{$\sdiv{\sexp}{\sexp}$} \\
+          \term{\splus{\sexp}{\sexp}} ~\vert~
+          \term{\smult{\sexp}{\sexp}} ~\vert~
+          \term{\sdiv{\sexp}{\sexp}} \\
         & & \vert &
-          \optile{$\slam{\spat}{\sexp}$} ~\vert~
-          \optile{$\slet{\spat}{\sexp}{\sexp}$}
+          \term{\slam{\spat}{\sexp}} ~\vert~
+          \term{\slet{\spat}{\sexp}{\sexp}}
     \end{array}\]
     \caption{}
     \label{fig:term-syntax}
@@ -35,27 +35,27 @@
     \[\arraycolsep=3pt\begin{array}{rlrl}
       \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
       \text{pattern tile} & \tile^{\pat} & ::= &
-        \optile{$\ophole$} ~\vert~
-        \optile{$\svar{x}$} ~\vert~
-        \optile{$\sparen{\tiles^{\pat}}$} \\
+        \optile{\ophole} ~\vert~
+        \optile{\svar{x}} ~\vert~
+        \optile{\sparen{\tiles^{\pat}}} \\
       & & \vert &
-        \bintile{$\binhole$} ~\vert~
-        \bintile{$\sprod{}{}$} \\
+        \bintile{\binhole} ~\vert~
+        \bintile{\sprod{}{}} \\
       \text{expression tile} & \tile^{\expr} & ::= &
-        \optile{$\ophole$} ~\vert~
-        \optile{$\snumlit{n}$} ~\vert~
-        \optile{$\svar{x}$} ~\vert~
-        \optile{$\sparen{\tiles^{\expr}}$} \\
+        \optile{\ophole} ~\vert~
+        \optile{\snumlit{n}} ~\vert~
+        \optile{\svar{x}} ~\vert~
+        \optile{\sparen{\tiles^{\expr}}} \\
       & & \vert &
-        \bintile{$\binhole$} ~\vert~
+        \bintile{\binhole} ~\vert~
         % \sap{}{} ~\vert~
-        \bintile{$\tplus$} ~\vert~
-        \bintile{$\tmult$} ~\vert~
-        \bintile{$\tdiv$} ~\vert~
-        \bintile{$\tprod$} \\
+        \bintile{\tplus} ~\vert~
+        \bintile{\tmult} ~\vert~
+        \bintile{\tdiv} ~\vert~
+        \bintile{\tprod} \\
       & & \vert &
-        \pretile{$\tlam{\tiles^{\pat}}$} ~\vert~
-        \pretile{$\tlet{\tiles^{\pat}}{\tiles^{\expr}}$}
+        \pretile{\tlam{\tiles^{\pat}}} ~\vert~
+        \pretile{\tlet{\tiles^{\pat}}{\tiles^{\expr}}}
     \end{array}\]
     \caption{}
     \label{fig:tile-syntax}
@@ -69,4 +69,5 @@
       % $b$ over boolean values,
       and $n$ over number literals.
   }
+  \label{fig:term-tile-syntax}
 \end{figure}
