@@ -19,10 +19,11 @@ We will begin in Section \ref{sec:terms-tiles-tips}
 by showing that the precedence-parsing phase is
 guaranteed to succeed provided the input tiles form
 an opseq.
-As a result, the edit states and actions we will
-subsequently define in Sections \ref{sec:edit-states} and
-\ref{sec:actions} need only concern themselves with
-shard assembly and fixing holes to maintain opseq structure.
+As a result, we can structure \ty~ edit states using
+tiles rather than terms (Section \ref{sec:edit-states}),
+and the actions operating on edit states need only
+concern themselves with shard assembly and fixing holes
+to maintain opseq structure (Section \ref{sec:actions}).
 
 % \note{something about how both of these parsing steps
 % deviate from the usual approach of parsing, which takes
