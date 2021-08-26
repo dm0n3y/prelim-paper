@@ -11,6 +11,7 @@ which sends edit state $\editState_1$ to $\editState_2$
 via action $\action$, and its governing metatheory,
 which states that every action-reachable edit state
 can be parsed into a well-formed program term.
+\note{call back to figure in section 2}
 
 Parsing in \ty~ is stratified into two phases:
 assembling shards into tiles, and precedence-parsing
@@ -32,6 +33,17 @@ to maintain opseq structure (Section \ref{sec:actions}).
 % delineation between different parseable/parsed structures,
 % which is why we take care in this section to define
 % derivations from one structure to another}
+
+\note{add some high level preview about edit states, zippers,
+justify this organization so that people are happy to wait;
+consider giving an example right away as I discuss bottom-up zippers}
+
+% \note{without more preview into edit states, can be misleading
+% into thinking edit states are just all tiles rather than
+% having a focused subject}
+
+% \note{edit states are bottom-up zippers, actions act at subject, etc,
+% note that need not re-parse entire program}
 
 
 \subsection{Terms, tiles, \& tips} \label{sec:terms-tiles-tips}
@@ -290,6 +302,11 @@ on edit states in pointing mode:
 % \end{definition}
 
 \subsection{Actions} \label{sec:actions}
+
+\note{add invariants for all modes, or consider
+modifying restructuring movement to take into account
+sort (but emphasize what is obligatory as you scale)}
+
 We now present \ty's central action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 which sends edit state $\editState_1$ to $\editState_2$
