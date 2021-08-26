@@ -1,5 +1,5 @@
 \begin{figure}
-  \judgbox{\pmove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ transitions via movement $\direction$ to $\editState_2$\\\ \ in pointing mode}
+  \judgbox{\pmove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ moves to $\editState_2$ in pointing mode}
   \begin{mathpar}
   \inferrule[PMoveRightAtomic]{
     \disassemblesDown{\selem}{\cdot}
@@ -58,6 +58,7 @@
 \end{mathpar}
 
 \vspace{-2px}
-\CaptionLabel{Movement in pointing mode \note{move p to subscript on arrow}}{fig:move-pointing}
+\caption{Movement in pointing mode}
+\label{fig:move-pointing}
 \vspace{-2px}
 \end{figure}

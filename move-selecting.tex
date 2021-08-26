@@ -1,5 +1,5 @@
 \begin{figure}
-  \judgbox{\smove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ transitions via movement $\direction$ to $\editState_2$\\\ \ in selecting mode}
+  \judgbox{\smove{\editState_1}{\direction}{\editState_2}}{$\editState_1$ moves to $\editState_2$ in selecting mode}
   \begin{mathpar}
 
 \inferrule[SMoveLeftAtomic]{
@@ -18,18 +18,18 @@
 \inferrule[SMoveLeftDisassembles]{
   \disassemblesDown{\selem}{\selection_4} \\
   \selection_4\neq\cdot \\
-  \performAction{
+  \smove{
     \zipper{\selecting{\selection_1\selection_4}{\selection_2}{\selection_3}}{\zframe}
   }{
-    \actionlit{move}\ \texttt{left}
+    \texttt{left}
   }{
     \zip
   }
 }{
-  \performAction{
+  \smove{
     \zipper{\selecting{\selection_1\selem}{\selection_2}{\selection_3}}{\zframe}
   }{
-    \actionlit{move}\ \texttt{left}
+    \texttt{left}
   }{
     \zip
   }
@@ -41,18 +41,18 @@
   }{
     \zipper{\pointing{\selection_3}{\selection_4}}{\zframe'}
   } \\
-  \performAction{
+  \rmove{
     \zipper{\selecting{\selection_3}{\selection_1}{\selection_2\selection_4}}{\zframe'}
   }{
-    \actionlit{move}\ \texttt{left}
+    \texttt{left}
   }{
     \zip
   }
 }{
-  \performAction{
+  \rmove{
     \zipper{\selecting{\cdot}{\selection_1}{\selection_2}}{\zframe}
   }{
-    \actionlit{move}\ \texttt{left}
+    \texttt{left}
   }{
     \zip
   }
@@ -63,10 +63,10 @@
   \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_3}}{\zframe}} =
     \zipper{\pointing{\selection'_1}{\selection'_3}}{\zframe'}
 }{
-  \performAction{
+  \rmove{
     \zipper{\selecting{\selection_1}{\selem\selection_2}{\selection_3}}{\zframe}
   }{
-    \actionlit{move}\ \texttt{right}
+    \texttt{right}
   }{
     \zipper{\selecting{\selection'_1}{\selection_2}{\selection'_3}}{\zframe'}
   }
@@ -75,18 +75,18 @@
 \inferrule[SMoveRightDisassembles]{
   \disassemblesDown{\selem}{\selection_4} \\
   \selection_4\neq\cdot \\
-  \performAction{
+  \rmove{
     \zipper{\selecting{\selection_1}{\selection_4\selection_2}{\selection_3}}{\zframe}
   }{
-    \actionlit{move}\ \texttt{right}
+    \texttt{right}
   }{
     \zip
   }
 }{
-  \performAction{
+  \rmove{
     \zipper{\selecting{\selection_1}{\selem\selection_2}{\selection_3}}{\zframe}
   }{
-    \actionlit{move}\ \texttt{right}
+    \texttt{right}
   }{
     \zip
   }
