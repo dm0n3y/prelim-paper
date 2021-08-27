@@ -54,11 +54,17 @@ Figure \ref{fig:term-tile-syntax}.
 to terms via ``derivations'' much like we define parsing
 on character sequences according to a CFG}
 
-
 \input{term-flattening}
 \input{tip-syntax}
 % \input{fix-holes-judgment}
 \input{hole-fixing-judgment}
+
+\begin{theorem}
+  A selection $\selection$ is intact and $\lltip{s}~\rrtip{s}$-connected
+  if and only if there exists a term $x$ of sort $s$ such that
+  $\flattenTerm{x}{\selection}$.
+  \note{todo: sort-indexed term notation, need to address children well-formedness}
+\end{theorem}
 
 Finally we establish the connection between
 \ty~ edit states and \emph{terms} of the
