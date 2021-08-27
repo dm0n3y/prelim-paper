@@ -36,40 +36,40 @@
   \judgbox{
     \fixHolesSelection{\tip_1}{\selection_1}{\selection_2}{\tip_2}
   }{
-    $\selection_1$ is \note{empty} hole fixed under tip constraint $\tip_1$ \\
-    to produce $\selection_2$ and new tip constraint $\tip_2$
+    $\selection_1$ is hole fixed to fit left tip $\tau_1$ \\
+    \ \ \ and produces $\selection_2$ with right tip $\tip_2$
   }
   \begin{mathpar}
     \inferrule[]{
     }{
       \fixHolesSelection{\tip}{\cdot}{\cdot}{\tip}
-    } \\
+    } \hspace{30pt}
     \inferrule[]{
-      \text{\note{$\selem$ is a hole}} \\
+      \ishole{\selem} \\
       \fixHolesSelection{\tip}{\selection}{\selection'}{\tip'}
     }{
       \fixHolesSelection{\tip}{\selem\selection}{\selection'}{\tip'}
     } \\
     \inferrule[]{
-      \text{\note{$\selem$ not a hole}} \\
-      \fits{\tip}{\leftTip{\selem}} \\
+      \neg(\ishole{\selem}) \\
+      \tip = \leftTip{\selem} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{r}{\selem\selection}{\selection'}{\tip'}
+      \fixHolesSelection{\tip}{\selem\selection}{\selection'}{\tip'}
     } \\
     \inferrule[]{
-      \text{\note{$\selem$ not a hole}} \\
-      \leftTip{\selem} = \ltipconc{s} \\
+      \neg(\ishole{\selem}) \\
+      \rrtip{s} = \leftTip{\selem} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{\lltip{s}}{\selem\selection}{\optile{\ophole}^s\selem\selection'}{\rTip'}
+      \fixHolesSelection{\lltip{s}}{\selem\selection}{\optile{\ophole}^s\selem\selection'}{\tip'}
     } \\
     \inferrule[]{
-      \text{\note{$\selem$ not a hole}} \\
-      \leftTip{\selem} = \ltipconv{s} \\
-      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
+      \neg(\ishole{\selem}) \\
+      \lltip{s} = \leftTip{\selem} \\
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{\rrtip{s}}{\selem\selection}{\bintile{\binhole}^s\selem\selection'}{\rTip'}
+      \fixHolesSelection{\rrtip{s}}{\selem\selection}{\bintile{\binhole}^s\selem\selection'}{\tip'}
     } \\
   \end{mathpar}
 
