@@ -2,31 +2,25 @@
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{LeftTip} & \lTip & ::= & \ltipconv{s} ~\vert~ \ltipconc{s} \\
-      \mathsf{RightTip} & \rTip & ::= & \rtipconv{s} ~\vert~ \rtipconc{s}
+      \text{tip} & \tip & ::= & \lltip{s} ~\vert~ \rrtip{s}
   \end{array}\]
 
   \judgbox{
-    \matchesSort{\lTip}{\rTip}
-  }{
-    $\lTip$ expects the same sort as $\rTip$
-  }
+    \text{$L$ is $\tau_1\tau_2$-connected}
+  }{}
   \begin{mathpar}
     \inferrule[]{
+      \leftTip{\selem} = \tau_1 \\
+      \rightTip{\selem} = \tau_2
     }{
-      \matchesSort{\ltipconc{s}}{\rtipconv{s}}
-    } \ \ \ \ \ \ \ \ \ \
+      \text{$\selem$ is $\tau_1\tau_2$-connected}
+    }
+
     \inferrule[]{
+      \text{$\selem$ is $\tau_1\tau_2$-connected} \\
+      \text{$\selection$ is $\tau_2\tau_3$-connected}
     }{
-      \matchesSort{\ltipconc{s}}{\rtipconc{s}}
-    } \\
-    \inferrule[]{
-    }{
-      \matchesSort{\ltipconv{s}}{\rtipconc{s}}
-    } \ \ \ \ \ \ \ \ \ \
-    \inferrule[]{
-    }{
-      \matchesSort{\ltipconv{s}}{\rtipconv{s}}
+      \text{$\selem\selection$ is $\tau_1\tau_3$-connected}
     }
   \end{mathpar}
 

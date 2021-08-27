@@ -107,10 +107,11 @@
 \newcommand{\selem}{\ell}
 \newcommand{\tframe}{F}
 \newcommand{\tfrelem}{f}
-\newcommand{\tframelit}[2]{#1 \gg #2}
+% \newcommand{\tframelit}[2]{#1 ~\gg~ #2}
+\newcommand{\tframelit}[2]{#1\ \ \rotatebox[origin=c]{90}{$\gg$}\ \ #2}
 
 \newcommand{\zip}{Z}
-\newcommand{\zipper}[2]{#1 \gtrdot #2}
+\newcommand{\zipper}[2]{#1\ \ \rotatebox[origin=c]{90}{$\gtrdot$}\ \ #2}
 \newcommand{\subject}{B}
 \newcommand{\zframe}{M}
 \newcommand{\pointing}[2]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}#2}
@@ -128,6 +129,11 @@
 \newcommand{\leftSort}[1]{\overleftarrow{#1}^s}
 \newcommand{\rightSort}[1]{\overrightarrow{#1}^s}
 
+\newcommand{\lltip}[1]{\setlength\fboxsep{2pt}\colorbox{black!10!}{$\langle^{#1}$}}
+\newcommand{\rrtip}[1]{\setlength\fboxsep{2pt}\colorbox{black!10!}{$\rangle^{#1}$}}
+\newcommand{\tip}{\tau}
+\newcommand{\sortoftip}[1]{\mathsf{sort}\left(#1\right)}
+
 \newcommand{\lTip}{lt}
 \newcommand{\rTip}{rt}
 \newcommand{\ltipconv}[1]{{}^{#1}\langle}
@@ -140,10 +146,12 @@
 
 \newcommand{\wholeSelection}[2]{\texttt{whole}_{#1}~#2}
 
-\newcommand{\filterTiles}[2]{filterTiles_{#1}(#2)}
+\newcommand{\filterTiles}[2]{\mathsf{filterTiles}_{#1}(#2)}
+
+% \newcommand{\fixholes}[4]{#1~#2~#3\rightsquigarrow#4}
 
 \newcommand{\fixHolesSelection}[4]{#1~#2\rightsquigarrow#3~#4}
-\newcommand{\fixHolesSelections}[6]{#1~#2\mid#3~#4\rightsquigarrow#5\mid#6}
+\newcommand{\fixHolesSelections}[4]{#1\mid#2\rightsquigarrow#3\mid#4}
 
 \newcommand{\parseSelection}[1]{\left\lceil#1\right\rceil}
 \newcommand{\parseZipper}[1]{\left\lfloor#1\right\rfloor}

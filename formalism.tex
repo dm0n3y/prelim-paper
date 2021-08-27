@@ -345,6 +345,27 @@ be parsed into language term.
   \end{itemize}
 \end{itemize}
 
+\begin{theorem}
+  Suppose $Z = \zipper{\subject}{\tfrelem^s}$ is a reachable edit state.
+  \begin{enumerate}
+  \item[(1)] If $\subject = \pointing{\selection_1}{\selection_2}$,
+    then $\selection_1\selection_2$ is an opseq of sort $s$.
+  \item[(2)] If $\subject = \selecting{\selection_1}{\selection_2}{\selection_3}$,
+    then $\parseSelection{\selection_1\selection_2\selection_3}$ is an opseq of sort $s$.
+  \item[(3)] If $\subject = \restructuring{\selection_1}{\selection_2}{\selection_3}$...
+    \begin{enumerate}
+      \item[(a)] ...and $\selection_2$ is intact, then
+        $\selection_1\selection_3$ is an opseq of sort $s$.
+      \item[(b)] ...and $\selection_2$ is cracked, then
+        $\parseSelection{\selection_1\selection_2\selection_3}$ is an opseq of sort $s$.
+    \end{enumerate}
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}
+
+\end{theorem}
+
 % \subsection{Typechecking}
 % \note{
 %   Define tree-structured variants of tiles and frames.

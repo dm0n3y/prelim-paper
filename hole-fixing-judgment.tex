@@ -1,68 +1,100 @@
 \begin{figure}
+  % \judgbox{
+  %   \fixholes{\tip_1}{\selection}{\tip_2}{\selection'}
+  % }{
+  %   $\selection$ is hole-fixed to $\tip_1\tip_2$-connected $\selection'$
+  % }
+  % \begin{mathpar}
+  %   \inferrule[]{
+  %   }{
+  %     \fixholes{\lltip{s}}{\cdot}{\rrtip{s}}{\optile{\ophole}^s}
+  %   }\hspace{20pt}
+  %   \inferrule[]{
+  %   }{
+  %     \fixholes{\rrtip{s}}{\cdot}{\lltip{s}}{\bintile{\binhole}^s}
+  %   }
+
+  %   \inferrule[]{
+  %     \fixholes{\tau_1}{\selection}{\tau_2}{\selection'}
+  %   }{
+  %     \fixholes{\tau_1}{\optile{\ophole}\selection}{\tau_2}{\selection'}
+  %   }\hspace{20pt}
+  %   \inferrule[]{
+  %     \fixholes{\tau_1}{\selection}{\tau_2}{\selection'}
+  %   }{
+  %     \fixholes{\tau_1}{\bintile{\binhole}\selection}{\tau_2}{\selection'}
+  %   }
+
+  %   \inferrule[]{
+  %     \leftTip{\selem} = \tau_1 \\
+  %     \fixholes{\rightTip{\selem}}{\selection}{\tau_2}{\selection'}
+  %   }{
+  %     \fixholes{\tau_1}{\selem\selection}{\tau_2}{\selem\selection'}
+  %   }
+  % \end{mathpar}
+
   \judgbox{
-    \fixHolesSelection{\rTip_1}{\selection_1}{\selection_2}{\rTip_2}
+    \fixHolesSelection{\tip_1}{\selection_1}{\selection_2}{\tip_2}
   }{
-    $\selection_1$ is \note{empty} hole fixed under tip constraint $\rTip_1$ \\
-    to produce $\selection_2$ and new tip constraint $\rTip_2$
+    $\selection_1$ is \note{empty} hole fixed under tip constraint $\tip_1$ \\
+    to produce $\selection_2$ and new tip constraint $\tip_2$
   }
   \begin{mathpar}
     \inferrule[]{
     }{
-      \fixHolesSelection{\rTip}{\cdot}{\cdot}{\rTip}
+      \fixHolesSelection{\tip}{\cdot}{\cdot}{\tip}
     } \\
     \inferrule[]{
       \text{\note{$\selem$ is a hole}} \\
-      \fixHolesSelection{\rTip}{\selection}{\selection'}{\rTip'}
+      \fixHolesSelection{\tip}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{\rTip}{\selem\selection}{\selection'}{\rTip'}
+      \fixHolesSelection{\tip}{\selem\selection}{\selection'}{\tip'}
     } \\
     \inferrule[]{
       \text{\note{$\selem$ not a hole}} \\
-      \fits{\rTip}{\leftTip{\selem}} \\
-      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
+      \fits{\tip}{\leftTip{\selem}} \\
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{r}{\selem\selection}{\selection'}{\rTip'}
+      \fixHolesSelection{r}{\selem\selection}{\selection'}{\tip'}
     } \\
     \inferrule[]{
       \text{\note{$\selem$ not a hole}} \\
       \leftTip{\selem} = \ltipconc{s} \\
-      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
+      \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{\rtipconc{s}}{\selem\selection}{\ophole^s\selem\selection'}{\rTip'}
+      \fixHolesSelection{\lltip{s}}{\selem\selection}{\optile{\ophole}^s\selem\selection'}{\rTip'}
     } \\
     \inferrule[]{
       \text{\note{$\selem$ not a hole}} \\
       \leftTip{\selem} = \ltipconv{s} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\rTip'}
     }{
-      \fixHolesSelection{\rtipconv{s}}{\selem\selection}{\binhole^s\selem\selection'}{\rTip'}
+      \fixHolesSelection{\rrtip{s}}{\selem\selection}{\bintile{\binhole}^s\selem\selection'}{\rTip'}
     } \\
   \end{mathpar}
 
   \judgbox{
-    \fixHolesSelections{\rTip}{\selection_1}{\selection_2}{\lTip}{\selection_3}{\selection_4}
-  }{$\selection_1$ and $\selection_2$ are hole fixed under \\
-    tip constraints $\rTip$ and $\lTip$ \\
-    to produce $\selection_3$ and $\selection_4$
+    \fixHolesSelections{\selection_1}{\selection_2}{\selection_3}{\selection_4}
+  }{$\selection_1$ and $\selection_2$ are hole fixed \\
+    \ \ to produce $\selection_3$ and $\selection_4$
   }
   \vspace{10pt}
   \begin{mathpar}
     \inferrule[]{
-      \fixHolesSelection{\rTip}{\selection_1}{\selection'_1}{\rTip'} \\
-      \fixHolesSelection{\rTip'}{\selection_2}{\selection'_2}{\rTip''} \\
-      \fits{\rTip''}{\lTip}
+      \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
+      \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\rrtip{s}}
     }{
-      \fixHolesSelections{\rTip}{\selection_1}{\selection_2}{\lTip}{\selection'_1}{\selection'_2}
+      \fixHolesSelections{\selection_1}{\selection_2}{\selection'_1}{\selection'_2}
     } \\
     \inferrule[]{
-      \fixHolesSelection{\rTip}{\selection_1}{\selection'_1}{\rTip'} \\
-      \fixHolesSelection{\rTip'}{\selection_2}{\selection'_2}{\rtipconc{s}}
+      \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
+      \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\lltip{s}}
     }{
-      \fixHolesSelections{\rTip}{\selection_1}{\selection_2}{\ltipconc{s}}{\selection'_1}{\selection'_2\ophole^s}
+      \fixHolesSelections{\selection_1}{\selection_2}{\selection'_1}{\selection'_2\optile{\ophole}^s}
     }
   \end{mathpar}
   \caption{
-    Hole fixing \note{explain why binhole rule isn't needed}
+    Hole fixing \note{add sort subscript to judgment form}
   }
   \label{fig:fixholes-2}
   \end{figure}
