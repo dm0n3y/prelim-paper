@@ -17,26 +17,10 @@
     }
 
     \inferrule[]{
-      \text{$\selem$ is $\tau_1\tau_2$-connected} \\
-      \text{$\selection$ is $\tau_2\tau_3$-connected}
+      \text{$\selection_1$ is $\tau_1\tau_2$-connected} \\
+      \text{$\selection_2$ is $\tau_2\tau_3$-connected}
     }{
-      \text{$\selem\selection$ is $\tau_1\tau_3$-connected}
-    }
-  \end{mathpar}
-
-  \judgbox{
-    \fits{\rTip}{\lTip}
-  }{
-    $\rTip$ fits with $\lTip$
-  }
-  \begin{mathpar}
-    \inferrule[]{
-    }{
-      \fits{\rtipconc{s}}{\ltipconv{s}}
-    } \\
-    \inferrule[]{
-    }{
-      \fits{\rtipconv{s}}{\ltipconc{s}}
+      \text{$\selection_1\selection_2$ is $\tau_1\tau_3$-connected}
     }
   \end{mathpar}
 
