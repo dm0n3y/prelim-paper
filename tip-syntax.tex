@@ -10,8 +10,16 @@
   }{}
   \begin{mathpar}
     \inferrule[]{
+      \stepDisassembleSelection{\selem}{\cdot} \\
       \leftTip{\selem} = \tau_1 \\
       \rightTip{\selem} = \tau_2
+    }{
+      \text{$\selem$ is $\tau_1\tau_2$-connected}
+    }
+
+    \inferrule[]{
+      \stepDisassembleSelection{\selem}{\selection} \\
+      \text{$\selection$ is $\tau_1\tau_2$-connected}
     }{
       \text{$\selem$ is $\tau_1\tau_2$-connected}
     }
