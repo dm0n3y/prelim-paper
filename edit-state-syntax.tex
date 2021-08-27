@@ -15,13 +15,13 @@
     \text{pattern tile frame} & \tfrelem^{\pat} & ::= &
       \tframelit{\sparen{\_}}{\tframe^{\pat}} \\
     & & \vert &
-      \tframelit{\slam{\_}{}}{\tframe^{\expr}} \\
+      \tframelit{\tlam{\_}}{\tframe^{\expr}} \\
     & & \vert &
-      \tframelit{\slet{\_}{\tiles^{\expr}}{}}{\tframe^{\expr}} \\
+      \tframelit{\tlet{\_}{\tiles^{\expr}}}{\tframe^{\expr}} \\
     \text{expression tile frame} & \tfrelem^{\expr} & ::= &
       \tframelit{\sparen{\_}}{\tframe^{\expr}} \\
     & & \vert &
-      \tframelit{\slet{\tiles^{\pat}}{\_}{}}{\tframe^{\expr}} \\\\
+      \tframelit{\tlet{\tiles^{\pat}}{\_}}{\tframe^{\expr}} \\\\
       % \scond{}{\tiles^{\expr}}{}
 
     \text{selection} & \selection & ::= &
