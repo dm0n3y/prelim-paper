@@ -4,9 +4,9 @@
   \[
     \arraycolsep=3pt
     \begin{array}{rcl}
-      \sparen{\tiles^s} & \dd & \tokenLit{\texttt{(}}~\tiles^s~\tokenLit{\texttt{)}} \\
-      \slam{\tiles^{\pat}} & \dd & \tokenLit{\lambda}~\tiles^{\pat}~\tokenLit{\texttt{.}} \\
-      \slet{\tiles^{\pat}}{\tiles^{\expr}}{} & \dd & \tokenLit{\texttt{let}}~\tiles^{\pat}~\tokenLit{\texttt{=}}~\tiles^{\expr}~\tokenLit{\texttt{in}}
+      \sparen{\tiles^s} & \dd & \shardlit{\texttt{(}}~\tiles^s~\shardlit{\texttt{)}} \\
+      \slam{\tiles^{\pat}} & \dd & \shardlit{\lambda}~\tiles^{\pat}~\shardlit{\texttt{.}} \\
+      \slet{\tiles^{\pat}}{\tiles^{\expr}}{} & \dd & \shardlit{\texttt{let}}~\tiles^{\pat}~\shardlit{\texttt{=}}~\tiles^{\expr}~\shardlit{\texttt{in}}
   \end{array}\]
   \caption{
     Disassembling a selected element $\selem$.

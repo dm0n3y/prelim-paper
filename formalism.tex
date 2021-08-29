@@ -2,7 +2,7 @@
 
 \section{Tile-based Editor Calculus}\label{sec:formalism}
 
-We now precisely specify tile-based editing
+We now precisely characterize tile-based editing
 as a calculus called \ty.
 The punchline of \ty~ (Section \ref{sec:actions})
 is the action judgment
@@ -11,20 +11,53 @@ which sends edit state $\editState_1$ to $\editState_2$
 via action $\action$, and its governing metatheory,
 which states that every action-reachable edit state
 can be parsed into a well-formed program term.
-\note{call back to figure in section 2}
+
+Edit states $Z$ follow a variant of the well-known \emph{zipper}
+pattern \cite{zipper}, which decouples a focused substructure $B$
+from its surrounding context $M$.
+In this work, we refer to $B$ as the \emph{subject}
+and $M$ as the \emph{frame}.
+\[
+\arraycolsep=4pt
+\begin{array}{rlrl}
+  \text{zipper} & \zip & ::= & \zipper{\subject}{\zframe}
+\end{array}
+\]
+Our zipper design diverges from prior art in our pursuit
+of linear text-like interactivity.
+Prior zipper designs are strictly hierarchical and ask
+the client to navigate in a structure-aware two-dimensional
+fashion: left and right to traverse siblings,
+up and down to traverse parent-child relations.
+In contrast, we aim to support a one-dimensional interaction
+model:
+it should be possible to navigate freely by moving solely
+left and right;
+furthermore it should be possible to specify
+arbitrary ranges of a serialization of the program.
+Toward these ends, movement and selection in \ty~ rely
+on a form of incremental unparsing and reparsing by which
+hierarchical structures may be temporarily ``flattened''
+to support linear traversal and partial selection.
+
+
+% In particular, they have a \emph{bottom-up} zipper structure---consisting
+% of a focused substructure $\subject$ and, separately, its surrounding
+% ``inside-out'' context $\zframe$---
 
 Parsing in \ty~ is stratified into two phases:
 assembling shards into tiles, and precedence-parsing
 tiles into terms.
 We will begin in Section \ref{sec:terms-tiles-tips}
 by showing that the precedence-parsing phase is
-guaranteed to succeed provided the input tiles form
-an opseq.
+guaranteed to succeed provided each element of the
+input sequence ``fits'' its neighbors.
+\note{sort of misleading, ignores children}
 As a result, we can structure \ty~ edit states using
 tiles rather than terms (Section \ref{sec:edit-states}),
 and the actions operating on edit states need only
 concern themselves with shard assembly and fixing holes
-to maintain opseq structure (Section \ref{sec:actions}).
+to maintain sequential ``fit'' (Section \ref{sec:actions}).
 
 % \note{something about how both of these parsing steps
 % deviate from the usual approach of parsing, which takes
@@ -56,8 +89,6 @@ on character sequences according to a CFG}
 
 \input{term-flattening}
 \input{tip-syntax}
-% \input{fix-holes-judgment}
-\input{hole-fixing-judgment}
 
 \begin{definition}
   A selection $\selection$ is an \emph{opseq of sort $s$} if
@@ -148,7 +179,7 @@ We described the syntax of tiles $\tile^s$
 in Section \ref{sec:overview};
 the same syntax that was presented in Figure \ref{fig:tile-syntax}
 is presented again in Figure \ref{fig:edit-state-syntax} in context.
-Tokens $\token^s$ are the lexical components of tiles, forming either
+Tokens $\shard^s$ are the lexical components of tiles, forming either
 the substance of childless tiles or the delimiters of parent
 tiles' children.
 Tokens are generated from tiles via the \emph{tile disassembly} function
@@ -326,6 +357,9 @@ The action judgment is governed by a syntactic sensibility
 theorem (Theorem \note{ref}) that ensures that
 the subject of every action-reachable edit state can
 be parsed into language term.
+
+% \input{fix-holes-judgment}
+\input{hole-fixing-judgment}
 
 \input{filter-tiles}
 \input{whole-selection}

@@ -2,30 +2,30 @@
   \vspace{-3px}
   \[
   \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{PatToken} & \token^{\pat} & ::= &
-        \tokenLit{\ophole} ~\vert~
-        \tokenLit{\svar{x}} ~\vert~
-        \tokenLit{\binhole} ~\vert~
-        \tokenLit{\sprod{}{}} ~\vert~
-        \tokenLit{\texttt{(}} ~\vert~
-        \tokenLit{\texttt{)}} \\
-      \mathsf{ExpToken} & \token^{\expr} & ::= &
-        \tokenLit{\ophole} ~\vert~
-        \tokenLit{\sboollit{b}} ~\vert~
-        \tokenLit{\snumlit{n}} ~\vert~
-        \tokenLit{\svar{x}} ~\vert~
-        \tokenLit{\binhole} ~\vert~
-        \tokenLit{\sprod{}{}} ~\vert~
-        \tokenLit{\splus{}{}} ~\vert~
-        \tokenLit{\smult{}{}} \\
+      \mathsf{PatToken} & \shard^{\pat} & ::= &
+        \shardlit{\ophole} ~\vert~
+        \shardlit{\svar{x}} ~\vert~
+        \shardlit{\binhole} ~\vert~
+        \shardlit{\sprod{}{}} ~\vert~
+        \shardlit{\texttt{(}} ~\vert~
+        \shardlit{\texttt{)}} \\
+      \mathsf{ExpToken} & \shard^{\expr} & ::= &
+        \shardlit{\ophole} ~\vert~
+        \shardlit{\sboollit{b}} ~\vert~
+        \shardlit{\snumlit{n}} ~\vert~
+        \shardlit{\svar{x}} ~\vert~
+        \shardlit{\binhole} ~\vert~
+        \shardlit{\sprod{}{}} ~\vert~
+        \shardlit{\splus{}{}} ~\vert~
+        \shardlit{\smult{}{}} \\
       & & \vert &
-        \tokenLit{\texttt{(}} ~\vert~
-        \tokenLit{\texttt{)}} ~\vert~
-        \tokenLit{\lambda} ~\vert~
-        \tokenLit{\texttt{.}} ~\vert~
-        \tokenLit{\texttt{let}} ~\vert~
-        \tokenLit{\texttt{=}} ~\vert~
-        \tokenLit{\texttt{in}}
+        \shardlit{\texttt{(}} ~\vert~
+        \shardlit{\texttt{)}} ~\vert~
+        \shardlit{\lambda} ~\vert~
+        \shardlit{\texttt{.}} ~\vert~
+        \shardlit{\texttt{let}} ~\vert~
+        \shardlit{\texttt{=}} ~\vert~
+        \shardlit{\texttt{in}}
   \end{array}\]
   \caption{
     Syntax of pattern and expression tokens.

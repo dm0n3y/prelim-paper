@@ -11,63 +11,68 @@
       \tfrelem^{\pat} ~\vert~
       \tfrelem^{\expr} \\\\
 
-    \text{sequence frame} & \tframe^s & ::= & \tframelit{\tiles^s\_\tiles^s}{\tfrelem^s} \\
-    \text{pattern tile frame} & \tfrelem^{\pat} & ::= &
-      \tframelit{\sparen{\_}}{\tframe^{\pat}} \\
-    & & \vert &
-      \tframelit{\tlam{\_}}{\tframe^{\expr}} \\
-    & & \vert &
-      \tframelit{\tlet{\_}{\tiles^{\expr}}}{\tframe^{\expr}} \\
-    \text{expression tile frame} & \tfrelem^{\expr} & ::= &
-      \tframelit{\sparen{\_}}{\tframe^{\expr}} \\
-    & & \vert &
-      \tframelit{\tlet{\tiles^{\pat}}{\_}}{\tframe^{\expr}} \\\\
-      % \scond{}{\tiles^{\expr}}{}
+    % \text{sequence frame} & \tframe^s & ::= & \tframelit{\tiles^s\_\tiles^s}{\tfrelem^s} \\
+    % \text{pattern tile frame} & \tfrelem^{\pat} & ::= &
+    %   \tframelit{\sparen{\_}}{\tframe^{\pat}} \\
+    % & & \vert &
+    %   \tframelit{\tlam{\_}}{\tframe^{\expr}} \\
+    % & & \vert &
+    %   \tframelit{\tlet{\_}{\tiles^{\expr}}}{\tframe^{\expr}} \\
+    % \text{expression tile frame} & \tfrelem^{\expr} & ::= &
+    %   \tframelit{\sparen{\_}}{\tframe^{\expr}} \\
+    % & & \vert &
+    %   \tframelit{\tlet{\tiles^{\pat}}{\_}}{\tframe^{\expr}} \\\\
+    %   % \scond{}{\tiles^{\expr}}{}
 
     \text{selection} & \selection & ::= &
     \selem_1\dots\selem_n \\
     \text{selected element} & \selem & ::= &
-      \tile^{\pat} ~\vert~
-      \tile^{\expr} ~\vert~
-      \token^{\pat} ~\vert~
-      \token^{\expr} \\\\
+      \tile ~\vert~
+      \shard \\\\
 
-    \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
-    \text{pattern tile} & \tile^{\pat} & ::= &
-      \ophole ~\vert~
-      \svar{x} ~\vert~
-      % \sann{}{\tiles^{\typ}} ~\vert~
-      \binhole ~\vert~
-      \sprod{}{} ~\vert~
-      \sparen{\tiles^{\pat}}\\
-    \text{expression tile} & \tile^{\expr} & ::= &
-      \ophole ~\vert~
-      % \sboollit{b} ~\vert~
-      \snumlit{n} ~\vert~
-      \svar{x} ~\vert~
-      % \sap{}{} ~\vert~
-      \binhole ~\vert~
-      \sprod{}{} ~\vert~
-      \splus{}{} ~\vert~
-      \smult{}{} ~\vert~
-      % \sequals{}{} ~\vert~
-      \sparen{\tiles^{\expr}} \\
-    & & \vert &
-      \slam{\tiles^{\pat}}{} ~\vert~
-      \slet{\tiles^{\pat}}{\tiles^{\expr}}{}\\\\ % ~\vert~
-      % \scond{}{\tiles^{\expr}}{}
+    % \text{tile sequence} & \tiles^s & ::= & \tile^s_1\dots\tile^s_n \\
+    % \text{pattern tile} & \tile^{\pat} & ::= &
+    %   \ophole ~\vert~
+    %   \svar{x} ~\vert~
+    %   % \sann{}{\tiles^{\typ}} ~\vert~
+    %   \binhole ~\vert~
+    %   \sprod{}{} ~\vert~
+    %   \sparen{\tiles^{\pat}}\\
+    % \text{expression tile} & \tile^{\expr} & ::= &
+    %   \ophole ~\vert~
+    %   % \sboollit{b} ~\vert~
+    %   \snumlit{n} ~\vert~
+    %   \svar{x} ~\vert~
+    %   % \sap{}{} ~\vert~
+    %   \binhole ~\vert~
+    %   \sprod{}{} ~\vert~
+    %   \splus{}{} ~\vert~
+    %   \smult{}{} ~\vert~
+    %   % \sequals{}{} ~\vert~
+    %   \sparen{\tiles^{\expr}} \\
+    % & & \vert &
+    %   \slam{\tiles^{\pat}}{} ~\vert~
+    %   \slet{\tiles^{\pat}}{\tiles^{\expr}}{}\\\\ % ~\vert~
+    %   % \scond{}{\tiles^{\expr}}{}
 
-      \text{pattern token} & \token^{\pat} & ::= &
-        \tokenLit{\texttt{(}} ~\vert~
-        \tokenLit{\texttt{)}} \\
-      \text{expression token} & \token^{\expr} & ::= &
-        \tokenLit{\texttt{(}} ~\vert~
-        \tokenLit{\texttt{)}} ~\vert~
-        \tokenLit{\lambda} ~\vert~
-        \tokenLit{\texttt{.}} ~\vert~
-        \tokenLit{\texttt{let}} ~\vert~
-        \tokenLit{\texttt{=}} ~\vert~
-        \tokenLit{\texttt{in}}
+      \text{tile} & \tile & ::= &
+        \tile^{\pat} ~\vert~
+        \tile^{\expr} \\
+
+      \text{shard} & \shard & ::= &
+        \shard^{\pat} ~\vert~
+        \shard^{\expr} \\
+      % \text{pattern shard} & \shard^{\pat} & ::= &
+      %   \shardlit{\texttt{(}} ~\vert~
+      %   \shardlit{\texttt{)}} \\
+      % \text{expression shard} & \shard^{\expr} & ::= &
+      %   \shardlit{\texttt{(}} ~\vert~
+      %   \shardlit{\texttt{)}} ~\vert~
+      %   \shardlit{\lambda} ~\vert~
+      %   \shardlit{\texttt{.}} ~\vert~
+      %   \shardlit{\texttt{let}} ~\vert~
+      %   \shardlit{\texttt{=}} ~\vert~
+      %   \shardlit{\texttt{in}}
   \end{array}\]
   \caption{
     Syntax of edit states \note{consider moving tiles and tokens to overview section}

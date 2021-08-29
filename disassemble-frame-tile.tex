@@ -13,7 +13,7 @@
       } \\
       \du
       & \zipper{
-        \pointing{\tiles^s_1\tokenLit{\texttt{(}}~}{~\tokenLit{\texttt{)}}\tiles^s_2}
+        \pointing{\tiles^s_1\shardlit{\texttt{(}}~}{~\shardlit{\texttt{)}}\tiles^s_2}
       }{
         \tfrelem^{\pat}
       } \vstretch \\
@@ -25,7 +25,7 @@
       } \\
       \du
       & \zipper{
-        \pointing{\tiles^{\expr}_1\tokenLit{\lambda}~}{~\tokenLit{\texttt{.}}\tiles^{\expr}_2}
+        \pointing{\tiles^{\expr}_1\shardlit{\lambda}~}{~\shardlit{\texttt{.}}\tiles^{\expr}_2}
       }{
         \tfrelem^{\expr}
       } \vstretch \\
@@ -38,9 +38,9 @@
       \du
       & \zipper{
         \pointing{
-          \tiles^{\expr}_1\tokenLit{\texttt{let}}~
+          \tiles^{\expr}_1\shardlit{\texttt{let}}~
         }{
-          ~\tokenLit{\texttt{=}}~\tiles^{\expr}_0\tokenLit{\texttt{in}}~\tiles^{\expr}_2
+          ~\shardlit{\texttt{=}}~\tiles^{\expr}_0\shardlit{\texttt{in}}~\tiles^{\expr}_2
         }
       }{
         \tfrelem^{\expr}
@@ -54,9 +54,9 @@
       \du
       & \zipper{
         \pointing{
-          \tiles^{\expr}_1\tokenLit{\texttt{let}}~\tiles^{\pat}~\tokenLit{\texttt{=}}~
+          \tiles^{\expr}_1\shardlit{\texttt{let}}~\tiles^{\pat}~\shardlit{\texttt{=}}~
         }{
-          ~\tokenLit{\texttt{in}}~\tiles^{\expr}_2
+          ~\shardlit{\texttt{in}}~\tiles^{\expr}_2
         }
       }{
         \tfrelem^{\expr}
