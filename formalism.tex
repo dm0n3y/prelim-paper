@@ -8,13 +8,13 @@ The punchline of \ty~ (Section \ref{sec:actions})
 is the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 which sends edit state $\editState_1$ to $\editState_2$
-via action $\action$, and its governing metatheory,
-which states that every action-reachable edit state
+via action $\action$; and its governing invariants,
+which state that every action-reachable edit state
 can be parsed into a well-formed program term.
 
-Edit states $Z$ follow a variant of the well-known \emph{zipper}
-pattern \cite{zipper}, which decouples a focused substructure $B$
-from its surrounding context $M$.
+Edit states $Z$ and their actions follow a variant of the well-known \emph{zipper}
+pattern \cite{zipper}, which decomposes a structure of interest
+into a focused substructure $B$ and its surrounding context $M$.
 In this work, we refer to $B$ as the \emph{subject}
 and $M$ as the \emph{frame}.
 \[
@@ -23,7 +23,7 @@ and $M$ as the \emph{frame}.
   \text{zipper} & \zip & ::= & \zipper{\subject}{\zframe}
 \end{array}
 \]
-Our zipper design diverges from prior art in our pursuit
+Our design diverges from prior art in our pursuit
 of linear text-like interactivity.
 Prior zipper designs are strictly hierarchical and ask
 the client to navigate in a structure-aware two-dimensional
@@ -34,30 +34,49 @@ model:
 it should be possible to navigate freely by moving solely
 left and right;
 furthermore it should be possible to specify
-arbitrary ranges of a serialization of the program.
-Toward these ends, movement and selection in \ty~ rely
+arbitrary subranges of a one-dimensional serialization
+of the total structure.
+Toward these ends, actions in \ty~ rely
 on a form of incremental unparsing and reparsing by which
-hierarchical structures may be temporarily ``flattened''
+hierarchical structures may be ``flattened'' as needed
 to support linear traversal and partial selection.
 
+Our formal presentation builds upon the term and tile syntax
+described earlier in Figure \ref{fig:term-tile-syntax} of
+Section \ref{sec:overview}.
+We will begin in Section \ref{sec:terms-tiles-tips} by
+describing how tiles can be disassembled into shards,
+and how a sequence of tiles and shards is parseable
+into a well-formed term provided they form an opseq;
+in other words, \ty~ edit states and actions need not
+deal directly with the term syntax to enforce well-formedness.
+Having introduced the ingredients necessary for subjects,
+we will then describe frames in
+Section ?? and how they, too, can be disassembled and
+reassembled as needed.
+Finally, Section ?? will give the punchline.
 
 % In particular, they have a \emph{bottom-up} zipper structure---consisting
 % of a focused substructure $\subject$ and, separately, its surrounding
 % ``inside-out'' context $\zframe$---
 
-Parsing in \ty~ is stratified into two phases:
-assembling shards into tiles, and precedence-parsing
-tiles into terms.
-We will begin in Section \ref{sec:terms-tiles-tips}
-by showing that the precedence-parsing phase is
-guaranteed to succeed provided each element of the
-input sequence ``fits'' its neighbors.
-\note{sort of misleading, ignores children}
-As a result, we can structure \ty~ edit states using
-tiles rather than terms (Section \ref{sec:edit-states}),
-and the actions operating on edit states need only
-concern themselves with shard assembly and fixing holes
-to maintain sequential ``fit'' (Section \ref{sec:actions}).
+% \note{add some high level preview about edit states, zippers,
+% justify this organization so that people are happy to wait;
+% consider giving an example right away as I discuss bottom-up zippers}
+
+% Parsing in \ty~ is stratified into two phases:
+% assembling shards into tiles, and precedence-parsing
+% tiles into terms.
+% We will begin in Section \ref{sec:terms-tiles-tips}
+% by showing that the precedence-parsing phase is
+% guaranteed to succeed provided each element of the
+% input sequence ``fits'' its neighbors.
+% \note{sort of misleading, ignores children}
+% As a result, we can structure \ty~ edit states using
+% tiles rather than terms (Section \ref{sec:edit-states}),
+% and the actions operating on edit states need only
+% concern themselves with shard assembly and fixing holes
+% to maintain sequential ``fit'' (Section \ref{sec:actions}).
 
 % \note{something about how both of these parsing steps
 % deviate from the usual approach of parsing, which takes
@@ -66,18 +85,6 @@ to maintain sequential ``fit'' (Section \ref{sec:actions}).
 % delineation between different parseable/parsed structures,
 % which is why we take care in this section to define
 % derivations from one structure to another}
-
-\note{add some high level preview about edit states, zippers,
-justify this organization so that people are happy to wait;
-consider giving an example right away as I discuss bottom-up zippers}
-
-% \note{without more preview into edit states, can be misleading
-% into thinking edit states are just all tiles rather than
-% having a focused subject}
-
-% \note{edit states are bottom-up zippers, actions act at subject, etc,
-% note that need not re-parse entire program}
-
 
 \subsection{Terms, tiles, \& tips} \label{sec:terms-tiles-tips}
 
