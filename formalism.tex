@@ -12,7 +12,7 @@ via action $\action$; and its governing invariants,
 which state that every action-reachable edit state
 can be parsed into a well-formed program term.
 
-Edit states $Z$ and their actions follow a variant of the well-known \emph{zipper}
+Edit states $Z$ follow a variant of the well-known \emph{zipper}
 pattern \cite{zipper}, which decomposes a structure of interest
 into a focused substructure $B$ and its surrounding context $M$.
 In this work, we refer to $B$ as the \emph{subject}
@@ -32,7 +32,8 @@ up and down to traverse parent-child relations.
 In contrast, we aim to support a one-dimensional interaction
 model:
 it should be possible to navigate freely by moving solely
-left and right;
+left and right \note{might need to clarify or change wording
+here to address comparison with ordered traversals of trees};
 furthermore it should be possible to specify
 arbitrary subranges of a one-dimensional serialization
 of the total structure.
@@ -44,17 +45,40 @@ to support linear traversal and partial selection.
 Our formal presentation builds upon the term and tile syntax
 described earlier in Figure \ref{fig:term-tile-syntax} of
 Section \ref{sec:overview}.
-We will begin in Section \ref{sec:terms-tiles-tips} by
-describing how tiles can be disassembled into shards,
-and how a sequence of tiles and shards is parseable
-into a well-formed term provided they form an opseq;
-in other words, \ty~ edit states and actions need not
-deal directly with the term syntax to enforce well-formedness.
-Having introduced the ingredients necessary for subjects,
-we will then describe frames in
-Section ?? and how they, too, can be disassembled and
-reassembled as needed.
-Finally, Section ?? will give the punchline.
+We will begin by introducing shards
+and describing their relation to tiles via disassembly
+and reassembly (Section ??) .
+We will then describe how tiles and shards relate to
+terms (Section ??). In particular, we will show that
+we can successfully parse a sequence of tiles
+into a term provided that they ``fit'' together in
+certain ways.
+
+As a result, we need not limit ourselves to
+the highly structured terms
+but can instead organize zippers around the
+more flexible tiles and shards (Section ??).
+This paves the way for linear navigation and
+flexible selection when we define actions operating
+on zippers (Section ??).
+Meanwhile, by taking care to
+maintain proper ``fit'' and tile assembly along the
+way, actions ensure that reachable edit states can
+be successfully parsed into a program term.
+
+% We will begin in Section \ref{sec:terms-tiles-tips} by
+% describing how tiles can be disassembled into shards,
+% and how a sequence of tiles and shards is parseable
+% into a well-formed term provided they ``fit'' together;
+% in other words, \ty~ edit states and actions need not
+% deal directly with the term syntax to enforce well-formedness.
+% Having introduced the ingredients necessary for subjects,
+% we will then describe frames in
+% Section ?? and how they, too, can be disassembled and
+% reassembled as needed.
+% Finally, Section ?? will give the punchline.
+% \note{revisit this paragraph and rework to more explicitly
+% note subject/frame organization, also mention zipping}
 
 % In particular, they have a \emph{bottom-up} zipper structure---consisting
 % of a focused substructure $\subject$ and, separately, its surrounding
