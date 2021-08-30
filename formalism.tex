@@ -110,13 +110,20 @@ be successfully parsed into a program term.
 % which is why we take care in this section to define
 % derivations from one structure to another}
 
-\subsection{Terms, tiles, \& tips} \label{sec:terms-tiles-tips}
+\subsection{Shards and pieces} \label{sec:shards-and-pieces}
 
-The syntax for terms and tiles were presented in
-Figure \ref{fig:term-tile-syntax}.
-\note{talk about we define precedence-parsing from tiles
-to terms via ``derivations'' much like we define parsing
-on character sequences according to a CFG}
+The syntax for shards is given below.
+\input{shard-syntax}
+
+\noindent \note{give an example of shard, note that
+we don't model all shards that show up in overview and
+that we'll discuss this when we talk about extensions}
+
+Collectively we refer to shards and tiles as \emph{pieces}.
+\input{pieces-syntax}
+
+
+\subsection{Tips and terms} \label{sec:tips-and-terms}
 
 \input{term-flattening}
 \input{tip-syntax}
