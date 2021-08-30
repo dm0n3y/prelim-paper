@@ -61,7 +61,7 @@ Section \ref{sec:overview}.
   \item[\textbf{\ref{sec:subjects-and-frames}}]
   As a result, we need not limit ourselves to
   the highly structured terms
-  but can instead organize zippers around the
+  but can instead organize our zippers around the
   more flexible tiles and shards.
 
   \item[\textbf{\ref{sec:actions}}]
@@ -69,7 +69,7 @@ Section \ref{sec:overview}.
   flexible selection when we define actions operating
   on zippers.
   Meanwhile, by taking care to
-  maintain proper ``fit'' and tile assembly along the
+  maintain proper ``fit'' and shard assemblage along the
   way, actions ensure that reachable edit states can
   be successfully parsed into a program term.
 
@@ -122,15 +122,77 @@ Section \ref{sec:overview}.
 
 \subsection{Shards and pieces} \label{sec:shards-and-pieces}
 
-The syntax for shards is given below.
+Given below is the syntax for shards corresponding to the tiles
+in Figure \ref{fig:tile-syntax}.
 \input{shard-syntax}
 
 \noindent \note{give an example of shard, note that
 we don't model all shards that show up in overview and
 that we'll discuss this when we talk about extensions}
-
 Collectively we refer to shards and tiles as \emph{pieces}.
 \input{pieces-syntax}
+
+% \noindent
+% \note{something about pieces being quite flexible, forward
+% referencing Section \ref{sec:sec:subjects-and-frames} and
+% nothing how they make it easy to encode partial selections
+% as well as intermediate disassembled edit states
+% between input and output edit states of an action}
+
+\input{subject-disassembly}
+
+We can produce shards from tiles via \emph{step-disassembly},
+as defined for pieces and pseqs in Figure \ref{fig:subject-disassembly}.
+The first judgment $\pieceDisassembles{\selem}{\selection}$
+step-disassembles a piece $\selem$ into a sequence of
+its constituent shards and children tiles.
+The second judgment $\stepDisassembleSelection{\selection_1}{\selection_2}$
+chooses a piece in $\selection_1$ and replaces it with its
+step-disassembly in-place to produce $\selection_2$.
+The reflexive transitive closure $\tpiecesdd^*$ of
+$\tpiecesdd$ we call \emph{disassembly}.
+
+Disassembly of pieces is analogous to string derivation for a
+context-free grammar (CFG),
+where a string containing terminal and nonterminal symbols is iteratively
+rewritten according to the grammar rules.
+A parser for a CFG may then be characterized as a function
+that takes a string of terminal symbols and identifies
+a derivation from the grammar's starting nonterminal
+symbol to the input string, if any exist.
+We may similarly characterize a parser on pieces according
+to the disassembly relation.
+In this case, however, our parsing goal is \emph{maximal}
+rather than \emph{maximum} structure, \ie, the parser
+need not identify a disassembly connecting the input
+shards to unbroken tiles (the start symbol), but need only assemble shards
+together opportunistically.
+\note{too hand-wavey, come back and revise}
+
+More precisely, we can show that disassembly is a
+partial order, and that every pseq in this order
+has a unique maximal element that diassembles to it.
+\begin{lemma}
+  $\tpiecesdd^*$ is a partial order.
+\end{lemma}
+\begin{lemma}\label{lemma:unique-parsed-selection}
+  For every piece sequence $\selection$, there is a unique
+  sequence $\selection'$ such that:
+  \begin{itemize}
+  \item $\selection'\searrow^*\selection$, and
+  \item $\selection'$ is maximal: if $\selection''\searrow^*\selection'$ then $\selection'' = \selection'$.
+  \end{itemize}
+\end{lemma}
+\noindent
+These results allow us to specify, in an algorithm-independent
+fashion, a well-defined \emph{assembly} function.
+\begin{definition}
+  Given pieces $\selection$, let $\parseSelection{\selection}$ be
+  the unique maximal pseq that disassembles to $\selection$.
+\end{definition}
+\noindent
+We defer presenting a constructive implementation of this function
+to the imaginary appendix.
 
 
 \subsection{Tips and terms} \label{sec:tips-and-terms}
@@ -269,38 +331,6 @@ the CFG's start symbol to the input string,
 our selection parser identifies an analogous ``disassembly'' from
 a maximally structured selection to the input selection.
 \note{more example}
-Figure \ref{fig:disassemble-selection} defines the step-disassembly relation $\selection_1\searrow\selection_2$,
-which chooses a tile in $\selection_1$ and replaces it with the
-result of its disassembly.
-We can show that the reflexive transitive
-closure $\searrow^*$ of $\searrow$, called \emph{selection disassembly},
-is a partial order in
-which every selection has a unique maximal element that
-disassembles to it.
-\begin{lemma}
-  $\searrow^*$ is a partial order.
-\end{lemma}
-\begin{lemma}\label{lemma:unique-parsed-selection}
-  For every selection $\selection$, there is a unique
-  selection $\selection'$ such that:
-  \begin{itemize}
-  \item $\selection'\searrow^*\selection$, and
-  \item $\selection'$ is maximal: if $\selection''\searrow^*\selection'$ then $\selection'' = \selection'$.
-  \end{itemize}
-\end{lemma}
-Lemma \ref{lemma:unique-parsed-selection} makes it
-possible to specify a well-defined \emph{selection assembly}
-function:
-\begin{definition}
-  Given a selection $\selection$, let $\parseSelection{\selection}$ be
-  the unique maximal selection that disassembles down
-  to $\selection$.
-\end{definition}
-We defer presenting a constructive implementation of this function
-to the imaginary appendix.
-
-\input{disassemble-tile}
-\input{disassemble-selection}
 
 \subsubsection{Frames \& zippers}
 The sort-indexed frame $\tfrelem^s$ of a zipper
