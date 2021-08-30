@@ -42,29 +42,39 @@ on a form of incremental unparsing and reparsing by which
 hierarchical structures may be ``flattened'' as needed
 to support linear traversal and partial selection.
 
-Our formal presentation builds upon the term and tile syntax
+Our presentation in this section builds upon the term and tile syntax
 described earlier in Figure \ref{fig:term-tile-syntax} of
 Section \ref{sec:overview}.
-We will begin by introducing shards
-and describing their relation to tiles via disassembly
-and reassembly (Section ??) .
-We will then describe how tiles and shards relate to
-terms (Section ??). In particular, we will show that
-we can successfully parse a sequence of tiles
-into a term provided that they ``fit'' together in
-certain ways.
+\begin{enumerate}
+  \item[\textbf{\ref{sec:shards-and-pieces}}]
+  We will begin by formally introducing shards
+  and describing their relation to tiles via disassembly
+  and reassembly.
 
-As a result, we need not limit ourselves to
-the highly structured terms
-but can instead organize zippers around the
-more flexible tiles and shards (Section ??).
-This paves the way for linear navigation and
-flexible selection when we define actions operating
-on zippers (Section ??).
-Meanwhile, by taking care to
-maintain proper ``fit'' and tile assembly along the
-way, actions ensure that reachable edit states can
-be successfully parsed into a program term.
+  \item[\textbf{\ref{sec:tips-and-terms}}]
+  We will then describe how tiles and shards relate to
+  terms. In particular, we will show that
+  we can successfully parse a sequence of tiles
+  into a term provided that they ``fit'' together in
+  certain ways.
+
+  \item[\textbf{\ref{sec:subjects-and-frames}}]
+  As a result, we need not limit ourselves to
+  the highly structured terms
+  but can instead organize zippers around the
+  more flexible tiles and shards.
+
+  \item[\textbf{\ref{sec:actions}}]
+  This paves the way for linear navigation and
+  flexible selection when we define actions operating
+  on zippers.
+  Meanwhile, by taking care to
+  maintain proper ``fit'' and tile assembly along the
+  way, actions ensure that reachable edit states can
+  be successfully parsed into a program term.
+
+\end{enumerate}
+
 
 % We will begin in Section \ref{sec:terms-tiles-tips} by
 % describing how tiles can be disassembled into shards,
@@ -171,7 +181,7 @@ unary suffix, and binary infix...
 
 
 
-\subsection{Edit states} \label{sec:edit-states}
+\subsection{Subjects and frames} \label{sec:subjects-and-frames}
 \input{edit-state-syntax}
 
 \note{set up running example right away}
