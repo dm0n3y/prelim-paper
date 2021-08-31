@@ -5,8 +5,29 @@
       \text{tip} & \tip & ::= & \lltip{s} ~\vert~ \rrtip{s}
   \end{array}\]
 
+  \begin{tabular}{c|c|c}
+    $\selem$ & $\leftTip{\selem}$ & $\rightTip{\selem}$ \\
+    \hline
+    $\optile{\ophole}^{s}$ & $\lltip{s}$ & $\rrtip{s}$ \\
+    $\optile{\svar{x}}^s$ & $\lltip{s}$ & $\rrtip{s}$ \\
+    $\optile{\snumlit{n}}$ & $\lltip{\expr}$ & $\rrtip{\expr}$ \\
+    $\optile{\sparen{\tiles^s}}$ & $\lltip{s}$ & $\rrtip{s}$ \\
+    $\bintile{\binhole}^s$ & $\rrtip{s}$ & $\lltip{s}$ \\
+    $\bintile{\tprod}^s$ & $\rrtip{s}$ & $\lltip{s}$ \\
+    $\pretile{\tlam{\tiles^{\pat}}}$ & $\lltip{\expr}$ & $\lltip{\expr}$ \\
+    $\pretile{\tlet{\tiles^{\pat}}{\tiles^{\expr}}}$ & $\lltip{\expr}$ & $\lltip{\expr}$ \\
+    \hline
+    $\shardlit{(}^s$ & $\lltip{s}$ & $\lltip{s}$ \\
+    $\shardlit{)}^s$ & $\rrtip{s}$ & $\rrtip{s}$ \\
+    $\shardlit{\lambda}$ & $\lltip{\expr}$ & $\lltip{\pat}$ \\
+    $\shardlit{.}$ & $\rrtip{\pat}$ & $\lltip{\expr}$ \\
+    $\shardlit{let}$ & $\lltip{\expr}$ & $\lltip{\pat}$ \\
+    $\shardlit{=}$ & $\rrtip{\pat}$ & $\lltip{\expr}$ \\
+    $\shardlit{in}$ & $\rrtip{\expr}$ & $\lltip{\expr}$
+  \end{tabular}
+
   \judgbox{
-    \text{$L$ is $\tau_1\tau_2$-connected}
+    \text{$\selection$ is $\tau_1\tau_2$-connected}
   }{}
   \begin{mathpar}
     \inferrule[]{
