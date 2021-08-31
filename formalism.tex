@@ -231,6 +231,8 @@ a couple properties. First, they are always \emph{intact}:
 \begin{lemma}
   If $\flattenTerm{p}{\selection}$ or $\flattenTerm{e}{\selection}$ then $\selection$ is intact.
 \end{lemma}
+\note{call back to initial \tylr~ figure showing term
+vs tile view of lambda term}
 
 Second, the constituent pieces of a disassembled term ``fit''
 their neighbors, \ie, each piece's left and right \emph{tips}
@@ -238,6 +240,7 @@ match, respectively, the right tip of its left neighbor
 and the left tip of its right neighbor.
 The syntax for tips is given below: each tip points left
 or right and specifies an expected sort.
+\note{vague, come back and revise}
 \[\arraycolsep=3pt\begin{array}{rlrl}
     \text{tip} & \tip & ::= & \lltip{s} ~\vert~ \rrtip{s}
 \end{array}\]
