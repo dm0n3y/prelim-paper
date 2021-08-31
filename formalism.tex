@@ -395,26 +395,21 @@ We can show that the reflexive transitive closure
 $\nearrow^*$ of $\nearrow$, which we call \emph{edit state disassembly},
 is a partial order in
 which every edit state with a subject in pointing mode
-has a unique minimal element that disassembles up to it:
+has a unique minimal element that disassembles to it:
 \begin{lemma}
   $\nearrow^*$ is a partial order.
 \end{lemma}
 \begin{lemma}\label{lemma:unique-parsed-editstate}
-  For every edit state $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
-  there exists a unique $\editState' = \zipper{\pointing{\selection'_1}{\selection'_2}}{\tfrelem^{s'}}$ such that
+  For every zipper $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$
+  in pointing mode,
+  there exists a unique zipper $\parseZipper{\editState}$ such that
   \begin{itemize}
-  \item $\editState' \nearrow^* \editState$, and
-  \item if $\editState'' \nearrow^* \editState'$ then $\editState'' = \editState'$.
+  \item $\parseZipper{\editState} \nearrow^* \editState$, and
+  \item $\parseZipper{\editState}$ is minimal: if $\editState' \nearrow^* \parseZipper{\editState}$ then $\editState' = \parseZipper{\editState}$.
   \end{itemize}
 \end{lemma}
-Lemma \ref{lemma:unique-parsed-editstate} makes it
-possible to specify a well-defined parsing function
-on edit states in pointing mode:
-\begin{definition}
-  Given an edit state $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
-  let $\parseZipper{\editState}$ be the unique minimal edit state
-  that disassembles up to $\editState$.
-\end{definition}
+\noindent
+We say that the operator $\parseZipper{\cdot}$ performs \emph{zipper assembly}.
 
 % \begin{definition}
 %   $\zeta^s_1\nearrow\zeta^s_2$ if $\disassembleTileFrame{\zeta^s_1} = \zeta^s_2$.
