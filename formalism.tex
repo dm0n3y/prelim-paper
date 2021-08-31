@@ -204,7 +204,7 @@ assembly to the yet-imaginary appendix.
 
 \subsection{Tips and terms} \label{sec:tips-and-terms}
 
-Segments form the core data structures of \ty~ zippers,
+Segments form core data structures in \ty~ zippers,
 as we will see in Section \ref{sec:subjects-and-frames}.
 Their syntactic flexibility simplifies how we define
 zipper actions in Section
@@ -220,6 +220,8 @@ disassembly} judgments $\flattenTerm{p}{\selection}$
 and $\flattenTerm{e}{\selection'}$, which decompose
 the terms $p$ and $e$ into segments $C$ and $C'$.
 
+\input{term-flattening}
+
 The segments produced by term disassembly always satisfy
 a couple properties. First, they are always \emph{intact}:
 \begin{definition}
@@ -229,10 +231,21 @@ a couple properties. First, they are always \emph{intact}:
 \begin{lemma}
   If $\flattenTerm{p}{\selection}$ or $\flattenTerm{e}{\selection}$ then $\selection$ is intact.
 \end{lemma}
-Second... \note{talk about tips and connectedness}
 
-\input{term-flattening}
-\input{tip-syntax}
+Second, the constituent pieces of a disassembled term ``fit''
+their neighbors, \ie, each piece's left and right \emph{tips}
+match, respectively, the right tip of its left neighbor
+and the left tip of its right neighbor.
+The syntax for tips is given below: each tip points left
+or right and specifies an expected sort.
+\[\arraycolsep=3pt\begin{array}{rlrl}
+    \text{tip} & \tip & ::= & \lltip{s} ~\vert~ \rrtip{s}
+\end{array}\]
+The left and right tips of each piece form are given in
+Figure \ref{fig:piece-tips}. \note{discuss a tile example and
+a shard example that changes sorts}
+
+\input{piece-tips}
 
 \begin{definition}
   A selection $\selection$ is an \emph{opseq of sort $s$} if

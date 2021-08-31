@@ -1,0 +1,33 @@
+\begin{figure}
+  \judgbox{
+    \text{$\selection$ is $\tau_1\tau_2$-connected}
+  }{}
+  \begin{mathpar}
+    \inferrule[]{
+      \stepDisassembleSelection{\selem}{\cdot} \\
+      \leftTip{\selem} = \tau_1 \\
+      \rightTip{\selem} = \tau_2
+    }{
+      \text{$\selem$ is $\tau_1\tau_2$-connected}
+    }
+
+    \inferrule[]{
+      \stepDisassembleSelection{\selem}{\selection} \\
+      \text{$\selection$ is $\tau_1\tau_2$-connected}
+    }{
+      \text{$\selem$ is $\tau_1\tau_2$-connected}
+    }
+
+    \inferrule[]{
+      \text{$\selection_1$ is $\tau_1\tau_2$-connected} \\
+      \text{$\selection_2$ is $\tau_2\tau_3$-connected}
+    }{
+      \text{$\selection_1\selection_2$ is $\tau_1\tau_3$-connected}
+    }
+  \end{mathpar}
+
+  \caption{
+    Syntax of tile and token tips
+  }
+  \label{fig:tip-syntax}
+\end{figure}

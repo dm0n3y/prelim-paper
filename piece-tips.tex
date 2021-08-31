@@ -1,0 +1,31 @@
+\begin{figure}
+  \begin{minipage}[t]{0.6\columnwidth}\vspace{0pt}
+    \begin{tabular}{c|c|c}
+      $\selem$ & $\leftTip{\selem}$ & $\rightTip{\selem}$ \\
+      \hline
+      $\optile{\ophole}^{s}$ & $\lltip{s}$ & $\rrtip{s}$ \\
+      $\optile{\svar{x}}^s$ & $\lltip{s}$ & $\rrtip{s}$ \\
+      $\optile{\snumlit{n}}$ & $\lltip{\expr}$ & $\rrtip{\expr}$ \\
+      $\optile{\sparen{\_}}^s$ & $\lltip{s}$ & $\rrtip{s}$ \\
+      $\bintile{\binhole}^s$ & $\rrtip{s}$ & $\lltip{s}$ \\
+      $\bintile{\tprod}^s$ & $\rrtip{s}$ & $\lltip{s}$ \\
+      $\pretile{\tlam{\_}}$ & $\lltip{\expr}$ & $\lltip{\expr}$ \\
+      $\pretile{\tlet{\_}{\_}}$ & $\lltip{\expr}$ & $\lltip{\expr}$
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}[t]{0.35\columnwidth}\vspace{0pt}
+    \begin{tabular}{c|c|c}
+      $\shard$ & $\leftTip{\shard}$ & $\rightTip{\shard}$ \\
+      \hline
+      $\shardlit{(}^s$ & $\lltip{s}$ & $\lltip{s}$ \\
+      $\shardlit{)}^s$ & $\rrtip{s}$ & $\rrtip{s}$ \\
+      $\shardlit{\lambda}$ & $\lltip{\expr}$ & $\lltip{\pat}$ \\
+      $\shardlit{.}$ & $\rrtip{\pat}$ & $\lltip{\expr}$ \\
+      $\shardlit{let}$ & $\lltip{\expr}$ & $\lltip{\pat}$ \\
+      $\shardlit{=}$ & $\rrtip{\pat}$ & $\lltip{\expr}$ \\
+      $\shardlit{in}$ & $\rrtip{\expr}$ & $\lltip{\expr}$
+    \end{tabular}
+    \end{minipage}
+  \caption{Left and right tips of pieces \note{wtf latex why won't you align}}
+  \label{fig:piece-tips}
+\end{figure}
