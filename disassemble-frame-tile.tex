@@ -1,7 +1,6 @@
 \begin{figure}
-  \newcommand{\du}{\nearrow}
   \newcommand{\vstretch}{\vspace{0.3cm}}
-  \judgbox{\disassemblesUp{\zframe}{\editState}}{$\zframe$ disassembles up to $\editState$}
+  \judgbox{\framedu{\zframe}{\editState}}{$\zframe$ step-disassembles to $\editState$}
   \[
     \arraycolsep=3pt
     \def\arraystretch{1.2}
@@ -11,7 +10,7 @@
       }{
         \tframelit{\tiles^s_1\_\tiles^s_2}{\tfrelem^{\pat}}
       } \\
-      \du
+      \tframedu
       & \zipper{
         \pointing{\tiles^s_1\shardlit{\texttt{(}}~}{~\shardlit{\texttt{)}}\tiles^s_2}
       }{
@@ -23,7 +22,7 @@
       }{
         \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
       } \\
-      \du
+      \tframedu
       & \zipper{
         \pointing{\tiles^{\expr}_1\shardlit{\lambda}~}{~\shardlit{\texttt{.}}\tiles^{\expr}_2}
       }{
@@ -35,7 +34,7 @@
       }{
         \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
       } \\
-      \du
+      \tframedu
       & \zipper{
         \pointing{
           \tiles^{\expr}_1\shardlit{\texttt{let}}~
@@ -51,7 +50,7 @@
       }{
         \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
       } \\
-      \du
+      \tframedu
       & \zipper{
         \pointing{
           \tiles^{\expr}_1\shardlit{\texttt{let}}~\tiles^{\pat}~\shardlit{\texttt{=}}~

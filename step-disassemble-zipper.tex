@@ -1,13 +1,13 @@
 \begin{figure}
-  \judgbox{\disassembleZipper{\editState_1}{\editState_2}}{$\editState_1$ step-disassembles up to $\editState_2$}
+  \judgbox{\zipperdu{\editState_1}{\editState_2}}{$\editState_1$ step-disassembles to $\editState_2$}
   \begin{mathpar}
     \inferrule[]{
-      \disassemblesUp{\zframe}{\zipper{\pointing{\selection_3}{\selection_4}}{\zframe'}}
+      \framedu{\zframe}{\zipper{\pointing{\selection'_1}{\selection'_2}}{\zframe'}}
     }{
-      \disassembleZipper{
+      \zipperdu{
         \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
       }{
-        \zipper{\pointing{\selection_3\selection_1}{\selection_2\selection_4}}{\zframe'}
+        \zipper{\pointing{\selection'_1\selection_1}{\selection_2\selection'_2}}{\zframe'}
       }
     }
   \end{mathpar}
