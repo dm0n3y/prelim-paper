@@ -22,12 +22,12 @@ The problem, as many have observed
 \cite{user-modeling,fine-tuning-selection-semantics,
 practical-lang-based-editing,lang-on-the-usefulness,
 psg,Minor92,TowardUserFriendly,MillerPMV94},
-is that structure editors have consistently suffered
-from prohibitive usability issues.
+is that structure editors can be too slow
+or difficult to use.
 
 For example, while
 block-based editors like Scratch \cite{scratch}
-have seen great success in introducing programming
+excel at introducing programming
 to children and end-users, they soon become unwieldy
 as users gain experience and create larger programs.
 Cited issues include their inefficient mouse-driven
@@ -35,7 +35,8 @@ input, low visual information density, and rigid
 tree-based construction of operator sequences
 \cite{BlocksFingertips,cog-dim-blocks,blocks-and-beyond}.
 
-Other structure editors like JetBrains MPS \note{cite}
+Other structure editors like JetBrains MPS
+\cite{DBLP:conf/icse/VoelterP12}
 resolve those particular issues with
 keyboard-driven text-like interfaces, but instead suffer
 from steep learning curves and difficult-to-predict
@@ -86,20 +87,26 @@ In this paper, we describe a new approach to structure
 editing, called \emph{tile-based editing}, that
 recovers many of the flexible and linear editing
 affordances of text editors.
+The key insight is that, in order to guarantee edit state
+well-formedness, it is sufficient to maintain a structure
+more relaxed than the abstract syntactic structure demands,
+but on which parsing is guaranteed to succeed.
+
 Using a tile-based editor, the user manipulates
 structural components called \emph{tiles} that
 are shaped to fit together according to their
-syntactic roles, \ala blocks in a block-based editor;
-unlike blocks, tiles directly model linear
+syntactic roles, \ala blocks in a block-based editor.
+Unlike blocks, tiles directly model linear
 operator sequences and facilitate left-to-right
 editing using keyboard input.
+
 Uniquely, tiles may be broken apart into
 \emph{shards} as needed to specify arbitrary range
 selections up to token boundaries.
 Using a novel \emph{restructuring mode}, the user
 may then ``cut and paste'' these selections like
-in a text editor;
-unlike text-based cut-and-paste, restructuring
+in a text editor.
+Unlike text-based cut-and-paste, restructuring
 mode ensures you paste your selections such that
 the result is a well-formed program term.
 
