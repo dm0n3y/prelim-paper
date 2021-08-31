@@ -246,36 +246,6 @@ Second... \note{talk about tips and connectedness}
   \note{todo: sort-indexed term notation}
 \end{theorem}
 
-Finally we establish the connection between
-\ty~ edit states and \emph{terms} of the
-underlying language, as are typically defined
-with a strictly tree-structured abstract syntax.
-Figure \note{ref} shows the abstract syntax of
-\ty~ language terms;
-this syntax coincides with that in Figure \note{ref}
-except for the inclusion of a new operator hole term
-to account for operator holes in the tile syntax.
-
-Figure \note{ref} defines the judgments
-$\flattenTerm{p}{\tiles^{\pat}}$
-and
-$\flattenTerm{e}{\tiles^{\expr}}$,
-which specify how to ``flatten'' a tree-structured
-term into a corresponding sequence of tiles.
-We consider a tile sequence $\tiles^s$ to be well-formed
-with respect to the underlying language if there exists
-a language term that flattens to $\tiles^s$.
-\note{talk a bit about the parentheses rule, note that this is just for stating theorem}
-
-Showing the existence of such a language term
-is equivalent to showing the tiles in $\tiles^s$
-form a valid operator sequence.
-Each tile may be interpreted as a component
-of an operator sequence, taking one of four
-different shapes: operand, unary prefix,
-unary suffix, and binary infix...
-
-
 
 \subsection{Subjects and frames} \label{sec:subjects-and-frames}
 \input{edit-state-syntax}
@@ -295,13 +265,13 @@ the top-down structure adopted in other work \note{cite}.
 In this work, we call the focused substructure the \emph{subject} of
 the zipper and its surrounding context the \emph{frame}.
 
-\subsubsection{Tiles, tokens, \& selections}
-The subject $\sigma$ of a zipper $\zipper{\subject}{\tfrelem^s}$
-may be in one of three modes.
-\note{name them here}
-We defer higher-level discussion regarding their roles in
-editing to Section \note{ref}, where we define \ty's editing
-operations, and focus now on the structures that constitute them.
+% \subsubsection{Tiles, tokens, \& selections}
+% The subject $\sigma$ of a zipper $\zipper{\subject}{\tfrelem^s}$
+% may be in one of three modes.
+% \note{name them here}
+% We defer higher-level discussion regarding their roles in
+% editing to Section \note{ref}, where we define \ty's editing
+% operations, and focus now on the structures that constitute them.
 
 % The first mode, called \emph{pointing mode}, consists of
 % a pair of tiles of the sort expected by the frame.
@@ -314,57 +284,57 @@ operations, and focus now on the structures that constitute them.
 % and \emph{restructuring mode}, each consist of a trio of
 % \emph{selections}.
 
-\note{add back some discussion of tiles/tokens here}
+% \note{add back some discussion of tiles/tokens here}
 
-All three modes consist of two or more \emph{selections}.
-A selection is a linear sequence of heterogeneously
-sorted \emph{tiles} and \emph{tokens}.
-We described the syntax of tiles $\tile^s$
-in Section \ref{sec:overview};
-the same syntax that was presented in Figure \ref{fig:tile-syntax}
-is presented again in Figure \ref{fig:edit-state-syntax} in context.
-Tokens $\shard^s$ are the lexical components of tiles, forming either
-the substance of childless tiles or the delimiters of parent
-tiles' children.
-Tokens are generated from tiles via the \emph{tile disassembly} function
-$\disassembleTile{\cdot}$, defined in Figure \ref{fig:disassemble-tile},
-which takes a tile and produces
-a selection consisting of the tile's tokens
-and the tile's children tiles.
-\note{need more examples}
+% All three modes consist of two or more \emph{selections}.
+% A selection is a linear sequence of heterogeneously
+% sorted \emph{tiles} and \emph{tokens}.
+% We described the syntax of tiles $\tile^s$
+% in Section \ref{sec:overview};
+% the same syntax that was presented in Figure \ref{fig:tile-syntax}
+% is presented again in Figure \ref{fig:edit-state-syntax} in context.
+% Tokens $\shard^s$ are the lexical components of tiles, forming either
+% the substance of childless tiles or the delimiters of parent
+% tiles' children.
+% Tokens are generated from tiles via the \emph{tile disassembly} function
+% $\disassembleTile{\cdot}$, defined in Figure \ref{fig:disassemble-tile},
+% which takes a tile and produces
+% a selection consisting of the tile's tokens
+% and the tile's children tiles.
+% \note{need more examples}
 
-\note{find different phrasing here that doesn't invite interpretation as technical terms}
-Selections have a permissive syntax, with multiple
-ways of representing the same essential content.
-For example, both a singleton tile and the tile's disassembly
-form valid selections.
-\note{make this a real example}
-Such a permissive syntax is useful for representing
-arbitrary divisions of a program's
-lexical components, but we would like to ensure
-that the divided selections remain ``maximally assembled''
-in order to inform the user of the top-level structures
-they are manipulating.
-\note{give explicit examples of divisions showing maximally
-and non-maximally assembled selections}
+% \note{find different phrasing here that doesn't invite interpretation as technical terms}
+% Selections have a permissive syntax, with multiple
+% ways of representing the same essential content.
+% For example, both a singleton tile and the tile's disassembly
+% form valid selections.
+% \note{make this a real example}
+% Such a permissive syntax is useful for representing
+% arbitrary divisions of a program's
+% lexical components, but we would like to ensure
+% that the divided selections remain ``maximally assembled''
+% in order to inform the user of the top-level structures
+% they are manipulating.
+% \note{give explicit examples of divisions showing maximally
+% and non-maximally assembled selections}
 
-This calls for defining an appropriate
-parser on selections to maintain
-maximal structure as they grow and shrink during editing.
-\note{make this more precise "when the selection changes",
-perhaps add another example here of a selection growing}
-Such a parser cannot be specified in the standard way
-with a context-free grammar because such parsers are
-all-or-nothing, whereas in our case our parser should
-produce structure opportunistically while not requiring any
-specific top-level form.
-\note{maybe don't talk about this here, if anything talk about
-it after I define what we did}
-Much as a CFG-based parser identifies a derivation from
-the CFG's start symbol to the input string,
-our selection parser identifies an analogous ``disassembly'' from
-a maximally structured selection to the input selection.
-\note{more example}
+% This calls for defining an appropriate
+% parser on selections to maintain
+% maximal structure as they grow and shrink during editing.
+% \note{make this more precise "when the selection changes",
+% perhaps add another example here of a selection growing}
+% Such a parser cannot be specified in the standard way
+% with a context-free grammar because such parsers are
+% all-or-nothing, whereas in our case our parser should
+% produce structure opportunistically while not requiring any
+% specific top-level form.
+% \note{maybe don't talk about this here, if anything talk about
+% it after I define what we did}
+% Much as a CFG-based parser identifies a derivation from
+% the CFG's start symbol to the input string,
+% our selection parser identifies an analogous ``disassembly'' from
+% a maximally structured selection to the input selection.
+% \note{more example}
 
 \subsubsection{Frames \& zippers}
 The sort-indexed frame $\tfrelem^s$ of a zipper
