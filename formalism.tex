@@ -204,6 +204,33 @@ assembly to the yet-imaginary appendix.
 
 \subsection{Tips and terms} \label{sec:tips-and-terms}
 
+Segments form the core data structures of \ty~ zippers,
+as we will see in Section \ref{sec:subjects-and-frames}.
+Their syntactic flexibility simplifies how we define
+zipper actions in Section
+\ref{sec:actions}, but it also means we need additional
+metasyntactic assurances to know they can be parsed into
+well-formed program term.
+
+We characterize assembly of pieces into terms
+similarly to how we characterized segment assembly
+in Section \ref{sec:shards-and-pieces}.
+Figure \ref{fig:flatten-term} defines the \emph{term
+disassembly} judgments $\flattenTerm{p}{\selection}$
+and $\flattenTerm{e}{\selection'}$, which decompose
+the terms $p$ and $e$ into segments $C$ and $C'$.
+
+The segments produced by term disassembly always satisfy
+a couple properties. First, they are always \emph{intact}:
+\begin{definition}
+  A segment $\selection$ is called \emph{intact} if it consists
+  solely of tiles.
+\end{definition}
+\begin{lemma}
+  If $\flattenTerm{p}{\selection}$ or $\flattenTerm{e}{\selection}$ then $\selection$ is intact.
+\end{lemma}
+Second... \note{talk about tips and connectedness}
+
 \input{term-flattening}
 \input{tip-syntax}
 
