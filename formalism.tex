@@ -264,6 +264,20 @@ a shard example that changes sorts}
 
 
 \subsection{Subjects and frames} \label{sec:subjects-and-frames}
+Zippers $\editState = \zipper{\subject}{\zframe}$ decompose
+expression opseqs into a focused subject $\subject$ and
+its surrounding frame $\zframe$.
+Subjects are modal, each variant corresponding respectively
+to the pointing, selecting, and restructuring modes we
+described using \tylr~ in Section \ref{sec:overview}.
+\[\arraycolsep=4pt\begin{array}{rlrl}
+  \text{subject} & \subject & ::= &
+  \pointing{\selection}{\selection} ~\vert~
+  \selecting{\selection}{\selection}{\selection} ~\vert~
+  \restructuring{\selection}{\selection}{\selection}
+\end{array}\]
+
+
 \input{edit-state-syntax}
 
 \note{set up running example right away}
