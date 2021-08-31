@@ -224,7 +224,7 @@ does not guarantee that the tiles represent a well-formed
 The qualifications for a tile sequence to an opseq
 enjoy a simple physical metaphor:
 
-1. every tile *fits* its siblings:
+1. every tile *fits* its neighbors:
   if a pair of tips meet, they look like $\langle\langle$
   or $\rangle\rangle$; and
 2. every tile sequence is *convex*:

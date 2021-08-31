@@ -72,19 +72,20 @@ role in the tile sequence as a(n):
 \tposttile{postfix operator}, or \tbintile{infix operator}.
 
 Where traditional structure editors model their edit states
-using the strictly hierarchical term syntax,\footnote{Technically,
-most other structure editors model their edit states
-in terms of the language's abstract syntax, whereas the
-term syntax used here is more akin to the concrete syntax,
-but the important point is that they are both strictly hierarchical.}
+using the strictly hierarchical term syntax,\footnote{
+  Technically, most other structure editors model their edit states
+  in terms of the language's abstract syntax, whereas the
+  term syntax used here is more akin to the concrete syntax,
+  but the important point is that they are both strictly hierarchical.
+}
 \tylr~ instead models its edit state using the flatter
 tile syntax, precedence-parsing the tile structure
 as needed to produce the term structure.
 Indeed, the term structure shown in Figure \ref{fig:pan-term-view}
 is simply a decoration overlaid atop the actual tile
 structure shown in Figure \ref{fig:pan-tile-view}.
-Moving forward, we refer to
-
+Moving forward, we will refer to structure editors
+with term-structured edit states as \emph{term-based editors}.
 
 \subsection{Opseqs \& holes}
 
@@ -111,7 +112,7 @@ does not guarantee that the tiles represent a well-formed
 The qualifications for a tile sequence to an opseq
 enjoy a simple physical metaphor:
 \begin{enumerate}
-\item[(1)] every tile \emph{fits} its siblings:
+\item[(1)] every tile \emph{fits} its neighbors:
   if a pair of tips meet, they look like $\ltiletip\ltiletip$
   or $\rtiletip\rtiletip$; and
 \item[(2)] every tile sequence is \emph{convex}:
