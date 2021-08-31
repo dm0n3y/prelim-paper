@@ -129,7 +129,8 @@ in Figure \ref{fig:tile-syntax}.
 \noindent \note{give an example of shard, note that
 we don't model all shards that show up in overview and
 that we'll discuss this when we talk about extensions}
-Collectively we refer to shards and tiles as \emph{pieces}.
+Collectively we refer to shards and tiles as \emph{pieces};
+a sequence of pieces is called a \emph{segment}.
 \input{pieces-syntax}
 
 % \noindent
@@ -142,57 +143,63 @@ Collectively we refer to shards and tiles as \emph{pieces}.
 \input{subject-disassembly}
 
 We can produce shards from tiles via \emph{step-disassembly},
-as defined for pieces and pseqs in Figure \ref{fig:subject-disassembly}.
+as defined for pieces and segments in Figure \ref{fig:subject-disassembly}.
 The first judgment $\pieceDisassembles{\selem}{\selection}$
-step-disassembles a piece $\selem$ into a sequence of
+step-disassembles a piece $\selem$ into a segment of
 its constituent shards and children tiles.
 The second judgment $\stepDisassembleSelection{\selection_1}{\selection_2}$
 chooses a piece in $\selection_1$ and replaces it with its
-step-disassembly in-place to produce $\selection_2$.
+step-disassemblage to produce $\selection_2$.
 The reflexive transitive closure $\tpiecesdd^*$ of
 $\tpiecesdd$ we call \emph{disassembly}.
+\note{give examples from overview}
 
-Disassembly of pieces is analogous to string derivation for a
+Disassembly of segments is analogous to string derivation for a
 context-free grammar (CFG),
 where a string containing terminal and nonterminal symbols is iteratively
 rewritten according to the grammar rules.
 A parser for a CFG may then be characterized as a function
-that takes a string of terminal symbols and identifies
+that takes a string of terminal symbols and identifies,
+if any exist,
 a derivation from the grammar's starting nonterminal
-symbol to the input string, if any exist.
+symbol to the input string.
 We may similarly characterize a parser on pieces according
 to the disassembly relation.
-In this case, however, our parsing goal is \emph{maximal}
-rather than \emph{maximum} structure, \ie, the parser
+In this case, however, our parsing goal is maximal,
+not maximum, structure, \ie, the parser
 need not identify a disassembly connecting the input
 shards to unbroken tiles (the start symbol), but need only assemble shards
 together opportunistically.
 \note{too hand-wavey, come back and revise}
 
 More precisely, we can show that disassembly is a
-partial order, and that every pseq in this order
-has a unique maximal element that diassembles to it.
+partial order, and that every segment in this order
+has a unique maximal segment that disassembles to it.
 \begin{lemma}
   $\tpiecesdd^*$ is a partial order.
 \end{lemma}
 \begin{lemma}\label{lemma:unique-parsed-selection}
-  For every piece sequence $\selection$, there is a unique
-  sequence $\selection'$ such that:
+  For every segment $\selection$, there exists a unique
+  segment $\parseSelection{\selection}$ such that:
   \begin{itemize}
-  \item $\selection'\searrow^*\selection$, and
-  \item $\selection'$ is maximal: if $\selection''\searrow^*\selection'$ then $\selection'' = \selection'$.
+  \item $\parseSelection{\selection}\searrow^*\selection$, and
+  \item $\parseSelection{\selection}$ is maximal: if $\selection'\searrow^*\parseSelection{\selection}$ then $\selection' = \parseSelection{\selection}$.
   \end{itemize}
 \end{lemma}
 \noindent
-These results allow us to specify, in an algorithm-independent
-fashion, a well-defined \emph{assembly} function.
-\begin{definition}
-  Given pieces $\selection$, let $\parseSelection{\selection}$ be
-  the unique maximal pseq that disassembles to $\selection$.
-\end{definition}
-\noindent
-We defer presenting a constructive implementation of this function
-to the imaginary appendix.
+We say that the operator $\parseSelection{\cdot}$ performs \emph{segment assembly}.
+We defer presenting a constructive implementation of segment
+assembly to the yet-imaginary appendix.
+
+% These results allow us to specify, in an algorithm-independent
+% fashion, a well-defined \emph{assembly} function.
+% \begin{definition}
+%   Let $\parseSelection{\selection}$ be
+%   the unique maximal segment that disassembles to segment $\selection$.
+% \end{definition}
+% \noindent
+% We defer presenting a constructive implementation of assembly
+% to the imaginary appendix.
 
 
 \subsection{Tips and terms} \label{sec:tips-and-terms}
