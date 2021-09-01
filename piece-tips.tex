@@ -1,7 +1,11 @@
 \begin{figure}
+  \[\arraycolsep=3pt\begin{array}{rlrl}
+    \text{tip} & \tip & ::= & \lltip{s} ~\vert~ \rrtip{s}
+  \end{array}\]
+
   \begin{minipage}[t]{0.6\columnwidth}\vspace{0pt}
-    \begin{tabular}{c|c|c}
-      $\selem$ & $\leftTip{\selem}$ & $\rightTip{\selem}$ \\
+    \begin{tabular}{|lll|}
+      $\tile$ & \strut$\leftTip{\tile}$ & $\rightTip{\tile}$ \\
       \hline
       $\optile{\ophole}^{s}$ & $\lltip{s}$ & $\rrtip{s}$ \\
       $\optile{\svar{x}}^s$ & $\lltip{s}$ & $\rrtip{s}$ \\
@@ -14,8 +18,8 @@
     \end{tabular}
     \end{minipage}
     \begin{minipage}[t]{0.35\columnwidth}\vspace{0pt}
-    \begin{tabular}{c|c|c}
-      $\shard$ & $\leftTip{\shard}$ & $\rightTip{\shard}$ \\
+    \begin{tabular}{|lll|}
+      $\shard$ & \strut$\leftTip{\shard}$ & $\rightTip{\shard}$ \\
       \hline
       $\shardlit{(}^s$ & $\lltip{s}$ & $\lltip{s}$ \\
       $\shardlit{)}^s$ & $\rrtip{s}$ & $\rrtip{s}$ \\
@@ -26,6 +30,6 @@
       $\shardlit{in}$ & $\rrtip{\expr}$ & $\lltip{\expr}$
     \end{tabular}
     \end{minipage}
-  \caption{Left and right tips of pieces \note{wtf latex why won't you align}}
+  \caption{The syntax of tips. Left and right tips of pieces. \note{wtf latex why won't you align}}
   \label{fig:piece-tips}
 \end{figure}
