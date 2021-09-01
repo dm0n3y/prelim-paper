@@ -202,7 +202,7 @@ assembly to the yet-imaginary appendix.
 % to the imaginary appendix.
 
 
-\subsection{Tips and terms} \label{sec:tips-and-terms}
+\subsection{Terms, tips, and holes} \label{sec:tips-and-terms}
 
 Segments form core data structures in \ty~ zippers,
 as we will see in Section \ref{sec:subjects-and-frames}.
@@ -277,6 +277,36 @@ the segment in question.
 \end{theorem}
 \noindent
 We call such a segment an \emph{opseq of sort $s$}.
+
+\paragraph{Hole fixing}
+We have seen in Section \ref{sec:overview} how tile-based
+editing supports temporary departure from intactness of
+the edit state while selecting and restructuring.
+However, edit actions must take care to maintain
+connectedness at all times to preserve opseq structure
+upon reassembling shards and returning to pointing mode.
+
+\input{hole-fixing-judgment}
+
+Toward this end, we will see that actions make use of the the hole fixing judgment
+$\fixHolesSelections{\selection_1}{\selection_2}{\selection'_1}{\selection'_2}$
+given in Figure \ref{fig:fixholes-2},
+which takes a pair of segments $\selection_1$ and $\selection_2$
+and inserts and removes holes of sort $s$ to produce $\selection'_1$
+and $\selection'_2$.
+Hole fixing is governed by the following properties.
+
+\begin{lemma}
+  Suppose $\fixHolesSelections{\selection_1}{\selection_2}{\selection'_1}{\selection'_2}$.
+  Then,
+  \begin{enumerate}
+    \item $\selection'_1\selection'_2$ is $\lltip{s}\rrtip{s}$-connected;
+    \item $\selection'_1\selection'_2$ consists of the same non-hole pieces as
+        $\selection_1\selection_2$; and
+    \item there exist no neighboring holes in $\selection'_1\selection'_2$.
+  \end{enumerate}
+  \note{formalize 2 and 3}
+\end{lemma}
 
 \subsection{Subjects and frames} \label{sec:subjects-and-frames}
 Zippers $\editState = \zipper{\subject}{\zframe}$ decompose
@@ -479,9 +509,6 @@ The action judgment is governed by a syntactic sensibility
 theorem (Theorem \note{ref}) that ensures that
 the subject of every action-reachable edit state can
 be parsed into language term.
-
-% \input{fix-holes-judgment}
-\input{hole-fixing-judgment}
 
 \input{filter-tiles}
 \input{whole-selection}
