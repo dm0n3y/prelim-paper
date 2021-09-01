@@ -358,7 +358,27 @@ reasoning, as we will discuss in Section ??.
 % \input{edit-state-syntax}
 
 \paragraph{Frames}
+Corresponding to the ``unzipped'' portion of the zipper,
+frames model the remainder of the program not included
+in the subject, the ``zipped'' portion.
+Frames may be understood as a \emph{bottom-up} sequence of
+nested containers, where the head container immediately
+wraps the subject, and each container points to its
+parent container, up to the program root.
+
 The syntax for frames is given below.
+At the top level, frames $\zframe$ are sort-indexed \emph{tile frames}
+$\tfrelem^s$, which represent tiles with a missing child of
+sort $s$.
+Other than the program root $\froot$, we annotate tile frame literals
+with $\framehole$ symbols in place of the missing children.
+Each tile frame $\tfrelem^s$ points to its parent
+\emph{sequence frame} $\tframe^{s'}$, which carries the tile frame's
+sibling tiles of sort $s'$.
+Each sequence frame $\tframe^s$ in turn points to its parent
+tile frame $\tfrelem^s$.
+\note{give an example from overview}
+
 \[\arraycolsep=3pt\begin{array}{rlrl}
   \text{frame} & \zframe & ::= & \tfrelem^{\pat} ~\vert~ \tfrelem^{\expr} \\\\
   \text{sequence frame} & \tframe^s & ::= & \tframelit{\tiles^s\framehole\tiles^s}{\tfrelem^s} \\
@@ -376,22 +396,6 @@ The syntax for frames is given below.
     \tframelit{\tlet{\tiles^{\pat}}{\framehole}}{\tframe^{\expr}}
     % \scond{}{\tiles^{\expr}}{}
 \end{array}\]
-Frames are \emph{bottom-up},
-
-\note{set up running example right away}
-
-We start with an overview of the syntax of \ty~ edit states,
-presented altogether in Figure \ref{fig:edit-state-syntax}.
-Edit states in \ty~ are sort-indexed structures
-$\zipper{\subject}{\tfrelem^s}$ that follow a variant
-of the zipper pattern first described by Huet.
-In particular, they have a \emph{bottom-up}
-zipper structure \note{cite}---consisting of a focused substructure
-$\subject$ and, separately,
-its surrounding ``inside-out'' context $\tfrelem^s$---unlike
-the top-down structure adopted in other work \note{cite}.
-In this work, we call the focused substructure the \emph{subject} of
-the zipper and its surrounding context the \emph{frame}.
 
 % \subsubsection{Tiles, tokens, \& selections}
 % The subject $\sigma$ of a zipper $\zipper{\subject}{\tfrelem^s}$
