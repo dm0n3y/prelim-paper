@@ -288,21 +288,23 @@ upon reassembling shards and returning to pointing mode.
 
 \input{hole-fixing-judgment}
 
-Toward this end, we will see that actions make use of the the hole fixing judgment
-$\fixHolesSelections{\selection_1}{\selection_2}{\selection'_1}{\selection'_2}$
+Toward this end, we will see that actions make use of the hole fixing judgment
+$\fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}$
 given in Figure \ref{fig:fixholes-2},
 which takes a pair of segments $\selection_1$ and $\selection_2$
 and inserts and removes holes of sort $s$ to produce $\selection'_1$
 and $\selection'_2$.
-Hole fixing is governed by the following properties.
+\note{add discussion of auxiliary judgment}
+Hole fixing is governed by the following lemma.
 
 \begin{lemma}
-  Suppose $\fixHolesSelections{\selection_1}{\selection_2}{\selection'_1}{\selection'_2}$.
+  Suppose $\selection_1$ and $\selection_2$ are connected segments
+  and $\fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}$.
   Then,
   \begin{enumerate}
     \item $\selection'_1\selection'_2$ is $\lltip{s}\rrtip{s}$-connected;
-    \item $\selection'_1\selection'_2$ consists of the same non-hole pieces as
-        $\selection_1\selection_2$; and
+    \item $\selection'_1$ and $\selection'_2$ consist of the same non-hole pieces as
+        $\selection_1$ and $\selection_2$ respectively; and
     \item there exist no neighboring holes in $\selection'_1\selection'_2$.
   \end{enumerate}
   \note{formalize 2 and 3}
