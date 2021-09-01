@@ -217,8 +217,8 @@ similarly to how we characterized segment assembly
 in Section \ref{sec:shards-and-pieces}.
 Figure \ref{fig:flatten-term} defines the \emph{term
 disassembly} judgments $\flattenTerm{p}{\selection}$
-and $\flattenTerm{e}{\selection'}$, which decompose
-the terms $p$ and $e$ into segments $C$ and $C'$.
+and $\flattenTerm{e}{\selection}$, which decompose
+the terms $p$ and $e$ into segments $\selection$.
 
 \input{term-flattening}
 
@@ -234,34 +234,49 @@ a couple properties. First, they are always \emph{intact}:
 \note{call back to initial \tylr~ figure showing term
 vs tile view of lambda term}
 
-Second, the constituent pieces of a disassembled term ``fit''
-their neighbors, \ie, each piece's left and right \emph{tips}
+\input{piece-tips}
+Second, each piece in a term disassemblage ``fits''
+its neighbors, \ie, each piece's left and right \emph{tips}
 match, respectively, the right tip of its left neighbor
 and the left tip of its right neighbor.
-The syntax for tips is given below: each tip points left
-or right and specifies an expected sort.
-\note{vague, come back and revise}
-\[\arraycolsep=3pt\begin{array}{rlrl}
-    \text{tip} & \tip & ::= & \lltip{s} ~\vert~ \rrtip{s}
-\end{array}\]
-The left and right tips of each piece form are given in
-Figure \ref{fig:piece-tips}. \note{discuss a tile example and
-a shard example that changes sorts}
+We have suggestively notated the tile and shard forms with
+approximations of their tips, but have elided some relevant
+sort information.
+More completely, we define in Figure \ref{fig:piece-tips}
+the syntax for tips and the operators $\leftTip{c}$
+and $\rightTip{c}$ that return the left and right tips
+of a piece $c$.
+\note{describe tips, discuss a tile example and
+a shard example}
 
-\input{piece-tips}
+\input{tip-tip-connected}
 
-\begin{definition}
-  A selection $\selection$ is an \emph{opseq of sort $s$} if
-  it is intact and $\lltip{s}~\rrtip{s}$-connected.
-\end{definition}
+In fact, this notion of ``fit'' extends to all disassemblages
+of a disassembled term. \note{todo: different names for term
+disassembly vs tile disassembly}
+More precisely, Figure \ref{fig:tip-tip-connected} defines
+\emph{$\tau_1\tau_2$-connectedness} of a segment.
+\note{a little more discussion, example of connected vs not connected segment}
 
-\begin{theorem}
-  A selection $\selection$ is an opseq of sort $s$
+\begin{lemma}
+  If $\flattenTerm{p}{C}$ then $C$ is $\lltip{\pat}\rrtip{\pat}$-connected.
+  If $\flattenTerm{e}{C}$ then $C$ is $\lltip{\expr}\rrtip{\expr}$-connected.
+  \note{todo: sort-indexed terms}
+\end{lemma}
+
+These two properties of segments---intactness
+and connectedness---are in fact also \emph{sufficient} to
+guarantee there exists a term that disassembles to
+the segment in question.
+
+\begin{theorem} \label{thm:term-parseability}
+  A segment $\selection$ is intact and $\lltip{s}~\rrtip{s}$-connected
   if and only if there exists a term $x$ of sort $s$ such that
   $\flattenTerm{x}{\selection}$.
-  \note{todo: sort-indexed term notation}
+  \note{todo: sort-indexed terms}
 \end{theorem}
-
+\noindent
+We call such a segment an \emph{opseq of sort $s$}.
 
 \subsection{Subjects and frames} \label{sec:subjects-and-frames}
 Zippers $\editState = \zipper{\subject}{\zframe}$ decompose
