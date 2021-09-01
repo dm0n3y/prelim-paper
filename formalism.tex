@@ -57,6 +57,8 @@ Section \ref{sec:overview}.
   we can successfully parse a sequence of tiles
   into a term provided that they ``fit'' together in
   certain ways.
+  \note{slightly misleading in that the ``fit'' property
+  must hold for all disassemblages of the tiles}
 
   \item[\textbf{\ref{sec:subjects-and-frames}}]
   As a result, we need not limit ourselves to
@@ -234,7 +236,6 @@ a couple properties. First, they are always \emph{intact}:
 \note{call back to initial \tylr~ figure showing term
 vs tile view of lambda term}
 
-\input{piece-tips}
 Second, each piece in a term disassemblage ``fits''
 its neighbors, \ie, each piece's left and right \emph{tips}
 match, respectively, the right tip of its left neighbor
@@ -249,20 +250,23 @@ of a piece $c$.
 \note{describe tips, discuss a tile example and
 a shard example}
 
-\input{tip-tip-connected}
-
 In fact, this notion of ``fit'' extends to all disassemblages
 of a disassembled term. \note{todo: different names for term
 disassembly vs tile disassembly}
 More precisely, Figure \ref{fig:tip-tip-connected} defines
 \emph{$\tau_1\tau_2$-connectedness} of a segment.
 \note{a little more discussion, example of connected vs not connected segment}
+We say that a segment $\selection$ is \emph{connected} if there exist
+tips $\tau_1$ and $\tau_2$ such that $\selection$ is $\tau_1\tau_2$-connected.
 
 \begin{lemma}
-  If $\flattenTerm{p}{C}$ then $C$ is $\lltip{\pat}\rrtip{\pat}$-connected.
-  If $\flattenTerm{e}{C}$ then $C$ is $\lltip{\expr}\rrtip{\expr}$-connected.
+  If $\flattenTerm{p}{C}$ then $C$ is $\lltip{\pat}~\rrtip{\pat}$-connected.
+  If $\flattenTerm{e}{C}$ then $C$ is $\lltip{\expr}~\rrtip{\expr}$-connected.
   \note{todo: sort-indexed terms}
 \end{lemma}
+
+\input{piece-tips}
+\input{tip-tip-connected}
 
 These two properties of segments---intactness
 and connectedness---are in fact also \emph{sufficient} to
