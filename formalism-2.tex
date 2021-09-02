@@ -104,6 +104,19 @@ after which remaining six rules build on top of that}
 \input{action-syntax}
 
 \subsubsection{Moving}
+\[
+  \inferrule[Move]{
+    \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
+  }{
+    \performAction{
+      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
+    }{
+      \actionlit{move}\ \direction
+    }{
+      \editState
+    }
+  }
+\]
 Our design of zipper operations diverges from prior art
 in our pursuit of linear text-like interactivity.
 Prior zipper designs are strictly hierarchical and ask
@@ -123,20 +136,92 @@ on a form of incremental unparsing and reparsing by which
 hierarchical structures may be ``flattened'' as needed
 to support linear traversal and partial selection.
 
-\[
-  \inferrule[Move]{
-    \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
-  }{
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
-    }{
-      \actionlit{move}\ \direction
-    }{
-      \editState
-    }
-  }
-\]
+\input{move-pointing}
 
+\note{---break---}
+
+We can produce shards from tiles via \emph{step-disassembly},
+as defined for pieces and segments in Figure \ref{fig:subject-disassembly}.
+The first judgment $\pieceDisassembles{\selem}{\selection}$
+step-disassembles a piece $\selem$ into a segment of
+its constituent shards and children tiles.
+The second judgment $\stepDisassembleSelection{\selection_1}{\selection_2}$
+chooses a piece in $\selection_1$ and replaces it with its
+step-disassemblage to produce $\selection_2$.
+The reflexive transitive closure $\tpiecesdd^*$ of
+$\tpiecesdd$ we call \emph{disassembly}.
+\note{give examples from overview}
+
+\input{subject-disassembly}
+
+Disassembly of segments is analogous to string derivation for a
+context-free grammar (CFG),
+where a string containing terminal and nonterminal symbols is iteratively
+rewritten according to the grammar rules.
+A parser for a CFG may then be characterized as a function
+that takes a string of terminal symbols and identifies,
+if any exist,
+a derivation from the grammar's starting nonterminal
+symbol to the input string.
+We may similarly characterize a parser on pieces according
+to the disassembly relation.
+In this case, however, our parsing goal is maximal,
+not maximum, structure, \ie, the parser
+need not identify a disassembly connecting the input
+shards to unbroken tiles (the start symbol), but need only assemble shards
+together opportunistically.
+\note{too hand-wavey, come back and revise}
+
+More precisely, we can show that disassembly is a
+partial order, and that every segment in this order
+has a unique maximal segment that disassembles to it.
+\begin{lemma}
+  $\tpiecesdd^*$ is a partial order.
+\end{lemma}
+\begin{lemma}\label{lemma:unique-parsed-selection}
+  For every segment $\selection$, there exists a unique
+  segment $\parseSelection{\selection}$ such that:
+  \begin{itemize}
+  \item $\parseSelection{\selection}\searrow^*\selection$, and
+  \item $\parseSelection{\selection}$ is maximal: if $\selection'\searrow^*\parseSelection{\selection}$ then $\selection' = \parseSelection{\selection}$.
+  \end{itemize}
+\end{lemma}
+\noindent
+We say that the operator $\parseSelection{\cdot}$ performs \emph{segment assembly}.
+We defer presenting a constructive implementation of segment
+assembly to the yet-imaginary appendix.
+
+\note{---break---}
+
+Like tiles, frames may be decomposed into their
+lexically constituent tiles and tokens via the
+\emph{frame disassembly} function $\disassembleTileFrame{\cdot}$,
+defined in Figure \note{ref}.
+Similar to how we lift tile disassembly to selection
+disassembly, we can lift frame disassembly to
+\emph{edit state step-disassembly}, defined in Figure \note{ref}.
+We can show that the reflexive transitive closure
+$\nearrow^*$ of $\nearrow$, which we call \emph{edit state disassembly},
+is a partial order in
+which every edit state with a subject in pointing mode
+has a unique minimal element that disassembles to it:
+\begin{lemma}
+  $\nearrow^*$ is a partial order.
+\end{lemma}
+\begin{lemma}\label{lemma:unique-parsed-editstate}
+  For every zipper $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$
+  in pointing mode,
+  there exists a unique zipper $\parseZipper{\editState}$ such that
+  \begin{itemize}
+  \item $\parseZipper{\editState} \nearrow^* \editState$, and
+  \item $\parseZipper{\editState}$ is minimal: if $\editState' \nearrow^* \parseZipper{\editState}$ then $\editState' = \parseZipper{\editState}$.
+  \end{itemize}
+\end{lemma}
+\noindent
+We say that the operator $\parseZipper{\cdot}$ performs \emph{zipper assembly}.
+
+\input{disassemble-frame-tile}
+\input{step-disassemble-zipper}
 
 \subsubsection{Constructing}
 \[
@@ -152,6 +237,111 @@ to support linear traversal and partial selection.
     }
   }
 \]
+
+We characterize assembly of pieces into terms
+similarly to how we characterized segment assembly
+in Section \ref{sec:shards-and-pieces}.
+Figure \ref{fig:flatten-term} defines the \emph{term
+disassembly} judgments $\flattenTerm{p}{\selection}$
+and $\flattenTerm{e}{\selection}$, which decompose
+the terms $p$ and $e$ into segments $\selection$.
+
+\input{term-flattening}
+
+The segments produced by term disassembly always satisfy
+a couple properties. First, they are always \emph{intact}:
+\begin{definition}
+  A segment $\selection$ is called \emph{intact} if it consists
+  solely of tiles.
+\end{definition}
+\begin{lemma}
+  If $\flattenTerm{p}{\selection}$ or $\flattenTerm{e}{\selection}$ then $\selection$ is intact.
+\end{lemma}
+\note{call back to initial \tylr~ figure showing term
+vs tile view of lambda term}
+
+Second, each piece in a term disassemblage ``fits''
+its neighbors, \ie, each piece's left and right \emph{tips}
+match, respectively, the right tip of its left neighbor
+and the left tip of its right neighbor.
+We have suggestively notated the tile and shard forms with
+approximations of their tips, but have elided some relevant
+sort information.
+More completely, we define in Figure \ref{fig:piece-tips}
+the syntax for tips and the operators $\leftTip{c}$
+and $\rightTip{c}$ that return the left and right tips
+of a piece $c$.
+\note{describe tips, discuss a tile example and
+a shard example}
+
+In fact, this notion of ``fit'' extends to all disassemblages
+of a disassembled term. \note{todo: different names for term
+disassembly vs tile disassembly}
+More precisely, Figure \ref{fig:tip-tip-connected} defines
+\emph{$\tau_1\tau_2$-connectedness} of a segment.
+\note{a little more discussion, example of connected vs not connected segment}
+We say that a segment $\selection$ is \emph{connected} if there exist
+tips $\tau_1$ and $\tau_2$ such that $\selection$ is $\tau_1\tau_2$-connected.
+
+\begin{lemma}
+  If $\flattenTerm{p}{C}$ then $C$ is $\lltip{\pat}~\rrtip{\pat}$-connected.
+  If $\flattenTerm{e}{C}$ then $C$ is $\lltip{\expr}~\rrtip{\expr}$-connected.
+  \note{todo: sort-indexed terms}
+\end{lemma}
+
+\input{piece-tips}
+\input{tip-tip-connected}
+
+These two properties of segments---intactness
+and connectedness---are in fact also \emph{sufficient} to
+guarantee there exists a term that disassembles to
+the segment in question.
+
+\begin{theorem} \label{thm:term-parseability}
+  A segment $\selection$ is intact and $\lltip{s}~\rrtip{s}$-connected
+  if and only if there exists a term $x$ of sort $s$ such that
+  $\flattenTerm{x}{\selection}$.
+  \note{todo: sort-indexed terms}
+\end{theorem}
+\noindent
+We call such a segment an \emph{opseq of sort $s$}.
+\note{move above theorem, state theorem in terms of that}
+
+\paragraph{Hole fixing}
+We have seen in Section \ref{sec:overview} how tile-based
+editing supports temporary departure from intactness of
+the edit state while selecting and restructuring.
+However, edit actions must take care to maintain
+connectedness at all times to preserve opseq structure
+upon reassembling shards and returning to pointing mode.
+
+\input{hole-fixing-judgment}
+
+Toward this end, we will see that actions make use of the hole fixing judgment
+$\fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}$
+given in Figure \ref{fig:fixholes-2},
+which takes a pair of segments $\selection_1$ and $\selection_2$
+and inserts and removes holes of sort $s$ to produce $\selection'_1$
+and $\selection'_2$.
+\note{add discussion of auxiliary judgment}
+Hole fixing is governed by the following lemma.
+
+\note{need to explain how I'm dropping holes along the way.}
+\note{examples for the two rules where holes are inserted in auxiliary judgment.}
+
+\begin{lemma}
+  Suppose $\selection_1$ and $\selection_2$ are connected segments
+  and $\fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}$.
+  Then,
+  \begin{enumerate}
+    \item $\selection'_1\selection'_2$ is $\lltip{s}\rrtip{s}$-connected;
+    \item $\selection'_1$ and $\selection'_2$ consist of the same non-hole pieces as
+        $\selection_1$ and $\selection_2$ respectively; and
+    \item there exist no neighboring holes in $\selection'_1\selection'_2$.
+  \end{enumerate}
+  \note{formalize 2 (note same order) and 3}
+\end{lemma}
+
 
 \subsubsection{Selecting}
 \[
@@ -180,6 +370,8 @@ to support linear traversal and partial selection.
     }
   }
 \]
+
+\input{move-selecting}
 
 \subsubsection{Restructuring}
 
@@ -227,6 +419,8 @@ to support linear traversal and partial selection.
     }
   }
 \]
+
+\input{move-restructuring}
 
 \subsection{Deleting}
 \[
