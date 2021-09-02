@@ -1,0 +1,244 @@
+\section{Tile-based Editor Calculus}\label{sec:formalism-2}
+
+We now precisely characterize tile-based editing
+as a calculus called \ty.
+The punchline of \ty~ is the action judgment
+$\performAction{\editState_1}{\action}{\editState_2}$,
+which sends edit state $\editState_1$ to $\editState_2$
+via action $\action$, and its governing invariant
+that actions preserve parsability into a well-formed
+program term.
+
+We will begin our presentation in Section ??
+by describing the syntax of edit states $Z$.
+Then, in Section ??, we will present each rule
+defining the action judgment
+$\performAction{\editState_1}{\action}{\editState_2}$,
+describing supporting judgments and their metatheory
+as needed along the way.
+
+\subsection{Zippers}
+
+Figure ?? shows the syntax of \ty~ edit states $\zip$,
+which follow a variant of the well-known
+\emph{zipper} pattern \cite{zipper}.
+In particular, they have a \emph{bottom-up} zipper
+structure---decomposing the total edit state $\zip$ into a
+focused substructure $\subject$ and its surrounding context
+$\zframe$---unlike the top-down structure used in other
+work \note{cite}.
+In this work, we refer to $B$ as the \emph{subject} and $M$
+as the \emph{frame}.
+
+\paragraph{Subjects}
+Subjects $\subject$ are \emph{modal}, the three
+variants corresponding to the pointing, selecting,
+and restructuring modes we described using \tylr~
+in Section \ref{sec:overview}.
+Each mode decomposes the total subject into two
+or three \emph{segments} $\selection$.
+This decomposition encodes text-like cursor
+placement between syntactic entities.
+For example, consider the following edit state
+in pointing mode in \tylr.
+
+\note{img}
+
+\noindent
+The corresponding subject in \ty~ is
+\note{(need to figure out under/overlines)}
+\[
+  \pointing{\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}}
+\]
+
+Segments $\selection$ are sequences of \emph{tiles}
+and \emph{shards}, collectively called \emph{pieces},
+as shown in Figure \ref{fig:segment-syntax}.
+The two segments $\optile{\snumlit{1}}\bintile{\tprod}$ and
+$\optile{\snumlit{2}}$ in the example above consist
+entirely of expression tiles $\tile^{\expr}$,
+the syntax for which was given in Figure \ref{fig:tile-syntax}.
+\note{give another tylr example with a selection containing
+a shard, introduce shards in Figure \ref{fig:shard-syntax-2},
+give tylrcore version of the edit state in selecting mode}
+
+
+\input{zipper-syntax}
+\input{segment-syntax}
+\input{shard-syntax-2}
+\input{frame-syntax}
+
+\paragraph{Frames}
+\emph{Frames} model the rest of the edit state not included
+in the subject.
+At a high level, frames may be understood as a
+bottom-up sequence of nested containers, where
+the head container immediately
+wraps the subject, and each container points to its
+parent container, up to the edit state root.
+
+The syntax for frames is given in Figure \ref{fig:frame-syntax}.
+At the top level, frames $\zframe$ are sort-indexed \emph{tile frames}
+$\tfrelem^s$, which represent tiles with a missing child of
+sort $s$.
+Other than the program root $\froot$, we annotate tile frame literals
+with $\framehole$ symbols in place of the missing children.
+Each tile frame $\tfrelem^s$ points to its parent
+\emph{sequence frame} $\tframe^{s'}$, which carries the tile frame's
+sibling tiles of sort $s'$.
+Each sequence frame $\tframe^s$ in turn points to its parent
+tile frame $\tfrelem^s$.
+\note{review both examples from subject section}
+
+
+\subsection{Actions}
+
+We now describe each of the eight rules defining the
+action judgment $\performAction{\editState_1}{\action}{\editState_2}$.
+
+\note{introduce action syntax}
+
+\note{remark on first two rules taking the longest to establish setup,
+after which remaining six rules build on top of that}
+
+\input{action-syntax}
+
+\subsubsection{Moving}
+Our design of zipper operations diverges from prior art
+in our pursuit of linear text-like interactivity.
+Prior zipper designs are strictly hierarchical and ask
+the client to navigate in a structure-aware two-dimensional
+fashion: left and right to traverse siblings,
+up and down to traverse parent-child relations.
+In contrast, we aim to support a one-dimensional interaction
+model:
+it should be possible to navigate freely by moving solely
+left and right \note{might need to clarify or change wording
+here to address comparison with ordered traversals of trees};
+furthermore it should be possible to specify
+arbitrary subranges of a one-dimensional serialization
+of the total structure.
+Toward these ends, actions in \ty~ rely
+on a form of incremental unparsing and reparsing by which
+hierarchical structures may be ``flattened'' as needed
+to support linear traversal and partial selection.
+
+\[
+  \inferrule[Move]{
+    \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
+  }{
+    \performAction{
+      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
+    }{
+      \actionlit{move}\ \direction
+    }{
+      \editState
+    }
+  }
+\]
+
+
+\subsubsection{Constructing}
+\[
+  \inferrule[Construct]{
+    \fixHolesSelections{\selection_1}{\tile^s\selection_2}{s}{\selection'_1}{\selection'_2}
+  }{
+    \performAction{
+      \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
+    }{
+      \actionlit{construct}\ \tile^s
+    }{
+      \zipper{\pointing{\selection'_1}{\selection'_2}}{\tfrelem^{s}}
+    }
+  }
+\]
+
+\subsubsection{Selecting}
+\[
+  \inferrule[StartSelecting]{
+  }{
+    \performAction{
+      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
+    }{
+      \actionlit{mark}
+    }{
+      \zipper{\selecting{\selection_1}{\strut~\cdot~}{\selection_2}}{\zframe}
+    }
+  }
+\]
+
+\[
+  \inferrule[Select]{
+    \smove{\zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
+  }{
+    \performAction{
+      \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}
+    }{
+      \actionlit{move}\ \direction
+    }{
+      \editState
+    }
+  }
+\]
+
+\subsubsection{Restructuring}
+
+\[
+  \inferrule[PickUp]{
+    \sortoftip{\leftTip{\selection_2}} = \sortoftip{\rightTip{\selection_2}} \\
+    \fixHolesSelections{\selection_1}{\selection_3}{s}{\selection'_1}{\selection'_3}
+  }{
+    \performAction{
+      \zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{mark}
+    }{
+      \zipper{\restructuring{\selection'_1}{\selection_2}{\selection'_3}}{\tfrelem^s}
+    }
+  }
+\]
+
+\[
+  \inferrule[Restructure]{
+    \rmove{\zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}
+    }{
+      \actionlit{move}\ \direction
+    }{
+      \editState
+    }
+  }
+\]
+
+\[
+  \inferrule[PutDown]{
+    \text{\note{not\ }}\wholeSelection{s'}{\selection_2}
+    \vee \wholeSelection{s}{\selection_2} \\
+    \fixHolesSelections{\selection_1}{\selection_2\selection_3}{s}{\selection_4}{\selection_5}
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{mark}
+    }{
+      \parseZipper{\zipper{\pointing{\selection_4}{\parseSelection{\selection_5}}}{\tfrelem^s}}
+    }
+  }
+\]
+
+\subsection{Deleting}
+\[
+  \inferrule[Delete]{
+    \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
+  }{
+    \performAction{
+      \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
+    }{
+      \actionlit{delete}
+    }{
+      \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^s}
+    }
+  }
+\]

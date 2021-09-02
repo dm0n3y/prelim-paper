@@ -1,24 +1,15 @@
 \begin{figure}
-  \vspace{-3px}
-  \[
-  \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{EditState} & \editState & ::= & \zip^{\pat} ~\vert~ \zip^{\expr} \\
-      \mathsf{Zipper} & \zip^s & ::= & \zipper{\subject}{\tfrelem^s} \\
-      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
-      %     % \tnum ~\vert~
-      %     \shole ~\vert~
-      %     \sbool ~\vert~
-      %     \snum ~\vert~
-      %     \sarr{}{} ~\vert~
-      %     \sprod{}{} ~\vert~
-      %     \sparen{\tiles^{\typ}}\\
-      \mathsf{Subject} & \subject & ::= &
+  \[\arraycolsep=3pt\begin{array}{rlrl}
+      \text{zipper} & \zip & ::= & \zipper{\subject}{\zframe} \\
+      \text{subject} & \subject & ::= &
         \pointing{\selection}{\selection} ~\vert~
         \selecting{\selection}{\selection}{\selection} ~\vert~
-        \restructuring{\selection}{\selection}{\selection}
-  \end{array}\]
+        \restructuring{\selection}{\selection}{\selection} \\
+      \text{frame} & \zframe & ::= &
+        \tfrelem^{\pat} ~\vert~ \tfrelem^{\expr}
+ \end{array}\]
   \caption{
-    Syntax of zippers \note{find different notation for selections/restructuring, explain directionality/minimality}
+    Zipper syntax
   }
   \label{fig:zipper-syntax}
 \end{figure}

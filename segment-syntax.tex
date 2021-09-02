@@ -1,0 +1,21 @@
+\begin{figure}
+\[\arraycolsep=3pt\begin{array}{rlrl}
+  \text{segment} & \selection & ::= &
+  \selem_1\dots\selem_n \\
+  \text{piece} & \selem & ::= &
+    \tile ~\vert~
+    \shard \\
+
+  \text{tile} & \tile & ::= &
+      \tile^{\pat} ~\vert~
+      \tile^{\expr} \\
+
+  \text{shard} & \shard & ::= &
+    \shard^{\pat} ~\vert~
+    \shard^{\expr}
+\end{array}\]
+\caption{
+  Syntax of segments
+}
+\label{fig:segment-syntax}
+\end{figure}

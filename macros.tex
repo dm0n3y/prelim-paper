@@ -71,11 +71,6 @@
 \end{tikzpicture}%
 }
 
-% \newcommand{\optile}[1]{\mbox{$\langle\overline{\underline{\text{#1\vphantom{|}}}}\rangle$}}
-% \newcommand{\pretile}[1]{\mbox{$\langle\overline{\underline{\text{#1\vphantom{|}}}}\langle$}}
-% \newcommand{\posttile}[1]{\mbox{$\rangle\overline{\underline{\text{#1\vphantom{|}}}}\rangle$}}
-% \newcommand{\bintile}[1]{\mbox{$\rangle\overline{\underline{\text{#1\vphantom{|}}}}\langle$}}
-
 \newcommand{\ltiletip}{{\color{gray}\langle}}
 \newcommand{\rtiletip}{{\color{gray}\rangle}}
 
@@ -84,6 +79,10 @@
 \newcommand{\tposttile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\rtiletip$}}
 \newcommand{\tbintile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\ltiletip$}}
 
+% \newcommand{\optile}[1]{\mbox{$\ltiletip\overline{#1\vphantom{|}}\rtiletip$}}
+% \newcommand{\pretile}[1]{\mbox{$\ltiletip\overline{#1\vphantom{|}}\ltiletip$}}
+% \newcommand{\posttile}[1]{\mbox{$\rtiletip\overline{#1\vphantom{|}}\rtiletip$}}
+% \newcommand{\bintile}[1]{\mbox{$\rtiletip\overline{#1\vphantom{|}}\ltiletip$}}
 \newcommand{\optile}[1]{\mbox{$\ltiletip\text{$#1$\vphantom{|}}\rtiletip$}}
 \newcommand{\pretile}[1]{\mbox{$\ltiletip\text{$#1$\vphantom{|}}\ltiletip$}}
 \newcommand{\posttile}[1]{\mbox{$\rtiletip\text{$#1$\vphantom{|}}\rtiletip$}}
@@ -111,7 +110,7 @@
 \newcommand{\ttframelit}{\rotatebox[origin=c]{90}{\textcolor{black!35!}{$\boldsymbol\gg$}}}
 \newcommand{\tframelit}[2]{#1\ \ \ttframelit\ \ #2}
 \newcommand{\framehole}{\textcolor{black!35!}{\bullet}}
-\newcommand{\froot}{\top}
+\newcommand{\froot}{\color{black!40!}\boldsymbol\top}
 
 \newcommand{\zip}{Z}
 \newcommand{\zipper}[2]{#1\ \rotatebox[origin=c]{90}{\textcolor{black!40!}{$\boldsymbol\gtrdot$}}\ #2}

@@ -12,7 +12,19 @@ via action $\action$; and its governing invariants,
 which state that every action-reachable edit state
 can be parsed into a well-formed program term.
 
-Edit states $Z$ follow a variant of the well-known \emph{zipper}
+\note{give an example of zippers going through a series
+of actions and what they parse into.
+couch this discussion in concrete examples, \eg,
+paint overall flow of examples.}
+\note{set up an initial example from Section 2
+and point to shards there, starting with something
+in selecting mode.}
+
+% $\slet{\svar{p}}{\sprod{\numlit{3}}{\numlit{4}}}{\svar{p}}$
+
+
+Edit states $Z$ follow a variant of the well-known \note{bottom-up}
+\emph{zipper}
 pattern \cite{zipper}, which decomposes a structure of interest
 into a focused substructure $B$ and its surrounding context $M$.
 In this work, we refer to $B$ as the \emph{subject}
@@ -41,6 +53,8 @@ Toward these ends, actions in \ty~ rely
 on a form of incremental unparsing and reparsing by which
 hierarchical structures may be ``flattened'' as needed
 to support linear traversal and partial selection.
+\note{give an example right away.}
+\note{would be helpful to mention shards right away}
 
 Our presentation in this section builds upon the term and tile syntax
 described earlier in Figure \ref{fig:term-tile-syntax} of
@@ -134,6 +148,7 @@ that we'll discuss this when we talk about extensions}
 Collectively we refer to shards and tiles as \emph{pieces};
 a sequence of pieces is called a \emph{segment}.
 \input{pieces-syntax}
+\note{add explicit reference back to where they are defined}
 
 % \noindent
 % \note{something about pieces being quite flexible, forward
@@ -281,6 +296,7 @@ the segment in question.
 \end{theorem}
 \noindent
 We call such a segment an \emph{opseq of sort $s$}.
+\note{move above theorem, state theorem in terms of that}
 
 \paragraph{Hole fixing}
 We have seen in Section \ref{sec:overview} how tile-based
@@ -301,6 +317,9 @@ and $\selection'_2$.
 \note{add discussion of auxiliary judgment}
 Hole fixing is governed by the following lemma.
 
+\note{need to explain how I'm dropping holes along the way.}
+\note{examples for the two rules where holes are inserted in auxiliary judgment.}
+
 \begin{lemma}
   Suppose $\selection_1$ and $\selection_2$ are connected segments
   and $\fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}$.
@@ -311,7 +330,7 @@ Hole fixing is governed by the following lemma.
         $\selection_1$ and $\selection_2$ respectively; and
     \item there exist no neighboring holes in $\selection'_1\selection'_2$.
   \end{enumerate}
-  \note{formalize 2 and 3}
+  \note{formalize 2 (note same order) and 3}
 \end{lemma}
 
 \subsection{Subjects and frames} \label{sec:subjects-and-frames}
@@ -609,9 +628,9 @@ be parsed into language term.
   \end{enumerate}
 \end{theorem}
 
-\begin{theorem}
-
-\end{theorem}
+\note{rewrite above so that it's a property preserved by actions.}
+\note{have the final theorem that is the mega composition.}
+\note{rename mark rules for actions.}
 
 % \subsection{Typechecking}
 % \note{

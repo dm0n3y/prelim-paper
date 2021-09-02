@@ -1,7 +1,7 @@
 \begin{figure*}
   \judgbox{\performAction{\editState_1}{\action}{\editState_2}}{$\editState_1$ transitions via $\action$ to $\editState_2$}
   \begin{mathpar}
-  \inferrule[MovePointing]{
+  \inferrule[Move]{
     \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
   }{
     \performAction{
@@ -25,7 +25,7 @@
     }
   }
 
-  \inferrule[MarkPointing]{
+  \inferrule[StartSelecting]{
   }{
     \performAction{
       \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
@@ -36,7 +36,7 @@
     }
   } \\\\\\
 
-  \inferrule[MoveSelecting]{
+  \inferrule[Select]{
     \smove{\zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
   }{
     \performAction{
@@ -48,7 +48,7 @@
     }
   }
 
-  \inferrule[MarkSelecting]{
+  \inferrule[PickUp]{
     \sortoftip{\leftTip{\selection_2}} = \sortoftip{\rightTip{\selection_2}} \\
     \fixHolesSelections{\selection_1}{\selection_3}{s}{\selection'_1}{\selection'_3}
   }{
@@ -61,7 +61,7 @@
     }
   } \\\\\\
 
-  \inferrule[MoveRestructuring]{
+  \inferrule[Restructure]{
     \rmove{\zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
   }{
     \performAction{
@@ -74,7 +74,7 @@
   }
 
   \inferrule[Delete]{
-    \fixHolesSelections{\filterTiles{s}{\selection_1}}{s}{\filterTiles{s}{\selection_3}}{\selection'_1}{\selection'_3}
+    \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
@@ -85,7 +85,7 @@
     }
   } \\
 
-  \inferrule[MarkRestructuring]{
+  \inferrule[PutDown]{
     \text{\note{not\ }}\wholeSelection{s'}{\selection_2}
     \vee \wholeSelection{s}{\selection_2} \\
     \fixHolesSelections{\selection_1}{\selection_2\selection_3}{s}{\selection_4}{\selection_5}

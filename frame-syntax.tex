@@ -1,30 +1,23 @@
 \begin{figure}
   \vspace{-3px}
-  \[
-  \arraycolsep=3pt\begin{array}{rlrl}
-      \mathsf{TileSeqFrame} & \tframe^s & ::= & \tframelit{\tiles^s\_\tiles^s}{\tfrelem^s} \\
-      % \mathsf{Tile}^{\typ} & \tile^{\typ} & ::= &
-      %     % \tnum ~\vert~
-      %     \shole ~\vert~
-      %     \sbool ~\vert~
-      %     \snum ~\vert~
-      %     \sarr{}{} ~\vert~
-      %     \sprod{}{} ~\vert~
-      %     \sparen{\tiles^{\typ}}\\
-      \mathsf{PatTileFrame} & \tfrelem^{\pat} & ::= &
-        \tframelit{\sparen{\_}}{\tframe^{\pat}} \\
-      & & \vert &
-        \tframelit{\slam{\_}{}}{\tframe^{\expr}} \\
-      & & \vert &
-        \tframelit{\slet{\_}{\tiles^{\expr}}{}}{\tframe^{\expr}} \\
-      \mathsf{ExpTileFrame} & \tfrelem^{\expr} & ::= &
-        \tframelit{\sparen{\_}}{\tframe^{\expr}} \\
-      & & \vert &
-        \tframelit{\slet{\tiles^{\pat}}{\_}{}}{\tframe^{\expr}}
-        % \scond{}{\tiles^{\expr}}{}
+  \[\arraycolsep=3pt\begin{array}{rlrl}
+    \text{sequence frame} & \tframe^s & ::= & \tframelit{\tiles^s\framehole\tiles^s}{\tfrelem^s} \\
+    \text{pattern tile frame} & \tfrelem^{\pat} & ::= &
+      \tframelit{\sparen{\framehole}}{\tframe^{\pat}} \\
+    & & \vert &
+      \tframelit{\tlam{\framehole}}{\tframe^{\expr}} \\
+    & & \vert &
+      \tframelit{\tlet{\framehole}{\tiles^{\expr}}}{\tframe^{\expr}} \\
+    \text{expression tile frame} & \tfrelem^{\expr} & ::= &
+      \froot \\
+    & & \vert &
+      \tframelit{\sparen{\framehole}}{\tframe^{\expr}} \\
+    & & \vert &
+      \tframelit{\tlet{\tiles^{\pat}}{\framehole}}{\tframe^{\expr}}
+      % \scond{}{\tiles^{\expr}}{}
   \end{array}\]
   \caption{
-    Syntax of pattern and expression frames.
+    Syntax of pattern and expression frames
   }
-  \label{fig:tile-syntax}
+  \label{fig:frame-syntax}
 \end{figure}
