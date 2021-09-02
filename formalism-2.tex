@@ -103,20 +103,6 @@ after which remaining six rules build on top of that}
 
 \input{action-syntax}
 
-\subsubsection{Moving}
-\[
-  \inferrule[Move]{
-    \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
-  }{
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
-    }{
-      \actionlit{move}\ \direction
-    }{
-      \editState
-    }
-  }
-\]
 Our design of zipper operations diverges from prior art
 in our pursuit of linear text-like interactivity.
 Prior zipper designs are strictly hierarchical and ask
@@ -135,6 +121,22 @@ Toward these ends, actions in \ty~ rely
 on a form of incremental unparsing and reparsing by which
 hierarchical structures may be ``flattened'' as needed
 to support linear traversal and partial selection.
+
+
+\subsubsection{Moving}
+\[
+  \inferrule[Move]{
+    \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
+  }{
+    \performAction{
+      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
+    }{
+      \actionlit{move}\ \direction
+    }{
+      \editState
+    }
+  }
+\]
 
 \input{move-pointing}
 

@@ -94,9 +94,9 @@
 
 \newcommand{\editState}{Z}
 \newcommand{\performAction}[3]{#1 \xlongrightarrow{#2} #3}
-\newcommand{\pmove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\texttt{p}} #3}
-\newcommand{\smove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\texttt{s}} #3}
-\newcommand{\rmove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\texttt{r}} #3}
+\newcommand{\pmove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\scriptscriptstyle\texttt{point}} #3}
+\newcommand{\smove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\scriptscriptstyle\texttt{select}} #3}
+\newcommand{\rmove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\scriptscriptstyle\texttt{restructure}} #3}
 
 \newcommand{\tiles}{T}
 \newcommand{\tile}{t}
@@ -171,6 +171,7 @@
 \newcommand{\pieceDisassembles}[2]{#1\tpiecedd#2}
 
 \newcommand{\tpiecesdd}{\searrow}
+\newcommand{\nsegmentdd}[1]{#1\searrow\times}
 
 \newcommand{\tframedu}{\Nearrow}
 \newcommand{\framedu}[2]{#1 \tframedu #2}
