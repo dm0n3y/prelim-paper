@@ -14,8 +14,8 @@ by describing the syntax of edit states $Z$.
 Then, in Section ??, we will present each rule
 defining the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
-describing supporting judgments and their metatheory
-as needed along the way.
+describing supporting judgments and relevant metatheory
+along the way.
 
 \subsection{Zippers}
 
@@ -91,39 +91,45 @@ tile frame $\tfrelem^s$.
 \note{review both examples from subject section}
 
 
-\subsection{Actions}
-
-We now describe each of the eight rules defining the
-action judgment $\performAction{\editState_1}{\action}{\editState_2}$.
-
-\note{introduce action syntax}
-
-\note{remark on first two rules taking the longest to establish setup,
-after which remaining six rules build on top of that}
+\subsection{Actions} \label{sec:actions-2}
 
 \input{action-syntax}
 
-Our design of zipper operations diverges from prior art
-in our pursuit of linear text-like interactivity.
-Prior zipper designs are strictly hierarchical and ask
-the client to navigate in a structure-aware two-dimensional
-fashion: left and right to traverse siblings,
-up and down to traverse parent-child relations.
-In contrast, we aim to support a one-dimensional interaction
-model:
-it should be possible to navigate freely by moving solely
-left and right \note{might need to clarify or change wording
-here to address comparison with ordered traversals of trees};
-furthermore it should be possible to specify
-arbitrary subranges of a one-dimensional serialization
-of the total structure.
-Toward these ends, actions in \ty~ rely
-on a form of incremental unparsing and reparsing by which
-hierarchical structures may be ``flattened'' as needed
-to support linear traversal and partial selection.
+Figure \ref{fig:action-syntax} gives the syntax of actions $a$.
+
+
+
+In this section, we will describe each of the eight rules defining the
+action judgment $\performAction{\editState_1}{\action}{\editState_2}$.
+
+% \note{introduce action syntax}
+
+% \note{remark on first two rules taking the longest to establish setup,
+% after which remaining six rules build on top of that}
+
+% Our design of zipper operations diverges from prior art
+% in our pursuit of linear text-like interactivity.
+% Prior zipper designs are strictly hierarchical and ask
+% the client to navigate in a structure-aware two-dimensional
+% fashion: left and right to traverse siblings,
+% up and down to traverse parent-child relations.
+% In contrast, we aim to support a one-dimensional interaction
+% model:
+% it should be possible to navigate freely by moving solely
+% left and right \note{might need to clarify or change wording
+% here to address comparison with ordered traversals of trees};
+% furthermore it should be possible to specify
+% arbitrary subranges of a one-dimensional serialization
+% of the total structure.
+% Toward these ends, actions in \ty~ rely
+% on a form of incremental unparsing and reparsing by which
+% hierarchical structures may be ``flattened'' as needed
+% to support linear traversal and partial selection.
 
 
 \subsubsection{Moving}
+
+
 \[
   \inferrule[Move]{
     \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}

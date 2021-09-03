@@ -1,13 +1,159 @@
 \section{Related Work}\label{sec:related-work}
 
+\paragraph{Structure editing}
+Structure editing has a long history, dating back
+to the introduction of the Cornell Program Synthesizer
+\cite{Cornell} in 1981.
+\note{add words}
+
+The most popular structure editors today
+are block-based editors such as Scratch \cite{scratch}, Snap!,
+App Inventor, Alice, and many more.
+In these editors, the user authors a program
+like the one shown to the right
+by dragging-and-dropping blocks together on a canvas.
+Each block corresponds to a syntactic form of
+the underlying language and is shaped, based on its
+sort, to visually indicate how it should be placed relative
+to other blocks.
+\tylr~ employs a similar metaphor of syntactic-forms-as-puzzle-pieces,
+but uses a uniform shape system across all sorts,
+thereby simplifying potential language extensions.
+
+Block-based editors have seen great success in recent years
+at introducing children to programming, but they soon
+become unwieldy once users start creating and maintaining
+larger or more expression-oriented programs.
+For example---adapting an observation by
+Brown \etal \cite{no-keyboard-cripples}---constructing
+the small calculation shown in
+Figure ?? involves assembling seven blocks, each
+requiring a sequence of gestures to find and
+drag-and-drop the appropriate block into the right spot
+in the canvas;
+the equivalent construction in a text editor or \tylr~ would
+take seven keypresses, summing to much less effort.
+\note{need to make linear construction theme more explicit}
+
+Meanwhile, in a user study of block-based editing
+involving large refactoring tasks,
+Holwerda and Hermans elicited post-task user responses
+on the cognitive dimensions of block-based editing and
+found that \emph{viscosity} was the most commented-on
+dimension with 24 remarks.
+Half (12) were positive, a majority of which
+were about the ease of refactoring when the selected
+elements corresponded to complete syntactic terms.
+Of the negative half, half (6) were about the difficulty
+of refactoring when the desired selection
+does not correspond to a complete term;
+for example, in Figure ??, dragging the \code{move} block out of
+the \code{repeat} block drags all the statements below
+along with it, thereby requiring multiple gestures
+in sum to select and remove the single \code{move} block.
+
+The issue of inexpressive selection is not particular to
+block-based editors.
+Any structure editor that directly uses the
+concrete or abstract language syntax to model
+its edit state fundamentally limits selections to complete
+language terms.
+\note{add words + figure comparing text, structure, and tile
+editing model}
+
+
+Recognizing the pitfalls of strictly term-based
+editing, some structure editors
+employ hybrid editing models, using structural editing
+for large syntactic forms while deferring to text
+editing at the leaves.
+\note{talk about how this approach eases linear construction
+of operator sequences, supports arbitrary selections within
+a text leaf, but loses the benefits of structure editing
+at those levels, moreover cannot extend arbitrary selections
+beyond a given text leaf}
+
+\note{talk about MPS being a strict structure editor
+with extensive additional design and engineering to
+support certain text-like editing capabilities, \eg,
+linear construction of opseqs (using side transforms),
+dangling parentheses AST annotations to support
+parenthesizing arbitrary ranges}
+
+Text-like keyboard-driven structure editors
+like MPS and \tylr~ carry additional usability challenges
+compared to block-based editors due to the lack of an
+open canvas...
+\note{talk about how deletion is forced to be destructive,
+MPS mitigates by saving first child if same sort,
+otherwise removes everything }
+
+Hazelnut \cite{Hazelnut} is a structure editor calculus
+similar in spirit to \ty, but with the aim of
+preserving well-typedness of its edit states.
+Hazelnut achieves this aim by developing a typed
+expression language featuring non-empty holes, which
+are automatically inserted by its type-directed action
+semantics to cordon off ill-typed portions of the program
+as they arise during editing.
+Editing in Hazelnut is strictly term-based, however, posing
+the same usability issues described earlier.
+In contrast, \ty~ and \tylr~ are untyped, the focus in
+this work being on developing more ergonomic interactions
+for maintaining syntactic well-formedness.
+
+\note{paragraph on structural editing plug-ins for text editors}
+
+\paragraph{Nested words}
+\ty~ segments are closely related to \emph{nested words},
+a data representation that encodes both linear
+ordering and hierarchically nested matching
+of items.
+A nested word consists of a sequence of letters,
+some pairs of which are matching and organized
+in a well nested fashion, \ie, pairs do not cross.
+Segments encode a similar matching between the
+constituent shards of tiles contained therein,
+though \ty~ permits $n$-ary matching as opposed
+to the strictly binary matching of nested words.
+Nested words are well-studied from the lens of
+formal language theory, but we are not aware of
+any prior work that has studied editing of nested words
+\ala restructuring in \tylr.
+
+\paragraph{Zippers}
+The zipper pattern, first documented by Huet
+\cite{zipper}, has been used to model a range of systems,
+including text editors \cite{lazy-functional-incremental-parsing},
+file systems \cite{zipper-fs}, and window managers \cite{window-manager}.
+If the underlying structure is hierarchical,
+zippers typically ask the client to navigate
+in a structure-enforcing two-dimensional manner: left and right to traverse
+sibling nodes, up and down to traverse parent-child relations.
+In contrast, \ty~ supports a one-dimensional interaction model
+in the presence of hierarchy, using disassembly to flatten
+hierarchical structures as needed to support linear traversal
+and partial selection.
+We note that this model is distinct from using an ordered tree
+traversal to linearize movement, which is still structure-enforcing.
+
+Some work on zippers focuses on the mechanistic \cite{derivative-zippers,clowns-jokers}
+and automatic \cite{syz} generation of zipper forms
+from datatypes;
+these techniques are orthogonal to our tile-based zipper design
+and may prove useful in future work on
+automatically generating tile-based zippers
+from a given syntax.
+
+\paragraph{Incremental parsing}
+Zipper operations in \ty~ rely on incremental and partial
+parsing to reassemble shards as the opportunity arises.
+Existing incremental parsing techniques
 
 
 \begin{itemize}
   \item structure editing
   \begin{itemize}
-    \item blocks-based editors
-    \item MPS
-    \item Fructure
     \item Design Requirements for More Flexible Structured Editors from a Study of Programmers' Text Editing
       by Amy Ko \& Brad Myers
     \begin{itemize}
@@ -27,6 +173,4 @@
           modifying names
     \end{itemize}
   \end{itemize}
-  \item zippers
-  \item nested words
 \end{itemize}

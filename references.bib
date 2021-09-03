@@ -1,3 +1,141 @@
+@article{clowns-jokers,
+author = {McBride, Conor},
+title = {Clowns to the Left of Me, Jokers to the Right (Pearl): Dissecting Data Structures},
+year = {2008},
+issue_date = {January 2008},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {43},
+number = {1},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/1328897.1328474},
+doi = {10.1145/1328897.1328474},
+abstract = {This paper introduces a small but useful generalisation to the 'derivative' operation
+on datatypes underlying Huet's notion of 'zipper', giving a concrete representation
+to one-hole contexts in data which is undergoing transformation. This operator, 'dissection',
+turns a container-like functor into a bifunctor representing a one-hole context in
+which elements to the left of the hole are distinguished in type from elements to
+its right.I present dissection here as a generic program, albeit for polynomial functors
+only. The notion is certainly applicable more widely, but here I prefer to concentrate
+on its diverse applications. For a start, map-like operations over the functor and
+fold-like operations over the recursive data structure it induces can be expressed
+by tail recursion alone. Further, the derivative is readily recovered from the dissection.
+Indeed, it is the dissection structure which delivers Huet's operations for navigating
+zippers.The original motivation for dissection was to define 'division', capturing
+the notion of leftmost hole, canonically distinguishing values with no elements from
+those with at least one. Division gives rise to an isomorphism corresponding to the
+remainder theorem in algebra. By way of a larger example, division and dissection
+are exploited to give a relatively efficient generic algorithm for abstracting all
+occurrences of one term from another in a first-order syntax. The source code for
+the paper is available online and compiles with recent extensions to the Glasgow Haskell
+Compiler.},
+journal = {SIGPLAN Not.},
+month = jan,
+pages = {287–295},
+numpages = {9},
+keywords = {stack, polynomial, zipper, datatype, iteration, traversal, generic programming, division, dissection, differentiation, tail recursion}
+}
+
+
+@InProceedings{zipper-fs,
+author="Kiselyov, Oleg
+and Shan, Chung-chieh",
+editor="Kokinov, Boicho
+and Richardson, Daniel C.
+and Roth-Berghofer, Thomas R.
+and Vieu, Laure",
+title="Delimited Continuations in Operating Systems",
+booktitle="Modeling and Using Context",
+year="2007",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="291--302",
+abstract="Delimited continuations are the meanings of delimited evaluation contexts in programming languages. We show they offer a uniform view of many scenarios that arise in systems programming, such as a request for a system service, an event handler for input/ output, a snapshot of a process, a file system being read and updated, and a Web page. Explicitly recognizing these uses of delimited continuations helps us design a system of concurrent, isolated transactions where desirable features such as snapshots, undo, copy-on-write, reconciliation, and interposition fall out by default. It also lets us take advantage of efficient implementation techniques from programming-language research. The Zipper File System prototypes these ideas.",
+isbn="978-3-540-74255-5"
+}
+
+@inproceedings{lazy-functional-incremental-parsing,
+author = {Bernardy, Jean-Philippe},
+title = {Lazy Functional Incremental Parsing},
+year = {2009},
+isbn = {9781605585086},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1596638.1596645},
+doi = {10.1145/1596638.1596645},
+abstract = {Structured documents are commonly edited using a free-form editor. Even though every
+string is an acceptable input, it makes sense to maintain a structured representation
+of the edited document. The structured representation has a number of uses: structural
+navigation (and optional structural editing), structure highlighting, etc. The construction
+of the structure must be done incrementally to be efficient: the time to process an
+edit operation should be proportional to the size of the change, and (ideally) independent
+of the total size of the document. We show that combining lazy evaluation and caching
+of intermediate (partial) results enables incremental parsing. We build a complete
+incremental parsing library for interactive systems with support for error-correction.},
+booktitle = {Proceedings of the 2nd ACM SIGPLAN Symposium on Haskell},
+pages = {49–60},
+numpages = {12},
+keywords = {incremental computing, haskell, parsing, editor, lazy evaluation, dynamic programming, polish representation},
+location = {Edinburgh, Scotland},
+series = {Haskell '09}
+}
+
+@inproceedings{syz,
+author = {Adams, Michael D.},
+title = {Scrap Your Zippers: A Generic Zipper for Heterogeneous Types},
+year = {2010},
+isbn = {9781450302517},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi-org.proxy.lib.umich.edu/10.1145/1863495.1863499},
+doi = {10.1145/1863495.1863499},
+abstract = {The zipper type provides the ability to efficiently edit tree-shaped data in a purely
+functional setting by providing constant time edits at a focal point in an immutable
+structure. It is used in a number of applications and is widely applicable for manipulating
+tree-shaped data structures.The traditional zipper suffers from two major limitations,
+however. First, it operates only on homogeneous types. That is to say, every node
+the zipper visits must have the same type. In practice, many tree-shaped types do
+not satisfy this condition, and thus cannot be handled by the traditional zipper.
+Second, the traditional zipper involves a significant amount of boilerplate code.
+A custom implementation must be written for each type the zipper traverses. This is
+error prone and must be updated whenever the type being traversed changes.The generic
+zipper presented in this paper overcomes these limitations. It operates over any type
+and requires no boilerplate code to be written by the user. The only restriction is
+that the types traversed must be instances of the Data class from the Scrap your Boilerplate
+framework},
+booktitle = {Proceedings of the 6th ACM SIGPLAN Workshop on Generic Programming},
+pages = {13–24},
+numpages = {12},
+keywords = {heterogeneous types, generic programming, zippers, scrap your boilerplate},
+location = {Baltimore, Maryland, USA},
+series = {WGP '10}
+}
+
+@unpublished{derivative-zippers,
+author={McBride, Conor},
+title={The Derivative of a Regular Type is its Type of One-Hole Contexts},
+url={http://strictlypositive.org/diff.pdf},
+note={unpublished manuscript},
+}
+
+@unpublished{window-manager,
+author={Stewart, Don},
+title={Roll Your Own Window Manager: Tracking Focus with a Zipper},
+url={https://donsbot.wordpress.com/2007/05/17/roll-your-own-window-manager-tracking-focus-with-a-zipper/},
+note={unpublished blog post},
+}
+
+@INPROCEEDINGS{no-keyboard-cripples,
+author={Brown, Neil C. C. and Kolling, Michael and Altadmri, Amjad},
+booktitle={2015 IEEE Blocks and Beyond Workshop (Blocks and Beyond)},
+title={Position paper: Lack of keyboard support cripples block-based programming},
+year={2015},
+volume={},
+number={},
+pages={59-61},
+doi={10.1109/BLOCKS.2015.7369003}
+}
+
 @inproceedings{BlocksFingertips,
  author = {Monig, Jens and Ohshima, Yoshiki and Maloney, John},
  title = {Blocks at Your Fingertips: Blurring the Line Between Blocks and Text in GP},
