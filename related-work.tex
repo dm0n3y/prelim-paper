@@ -4,7 +4,7 @@
 Structure editing has a long history, dating back
 to the introduction of the Cornell Program Synthesizer
 \cite{Cornell} in 1981.
-\note{add words}
+Here we focus our attention on contemporary editors.
 
 The most popular structure editors today
 are block-based editors such as Scratch \cite{scratch}, Snap!,
@@ -51,88 +51,101 @@ for example, in Figure ??, dragging the \code{move} block out of
 the \code{repeat} block drags all the statements below
 along with it, thereby requiring multiple gestures
 in sum to select and remove the single \code{move} block.
+These results help motivate the expressive selection
+capabilities of tile-based editing.
 
-The issue of inexpressive selection is not particular to
+The issue of restricted selection is not particular to
 block-based editors.
 Any structure editor that directly uses the
-concrete or abstract language syntax to model
+language term syntax to model
 its edit state fundamentally limits selections to complete
-language terms.
-\note{add words + figure comparing text, structure, and tile
-editing model}
+terms.
 
+% \note{add words + figure comparing text, structure, and tile
+% editing model}
 
 Recognizing the pitfalls of strictly term-based
 editing, some structure editors
+\cite{Cornell,greenfoot}
 employ hybrid editing models, using structural editing
 for large syntactic forms while deferring to text
 editing at the leaves.
-\note{talk about how this approach eases linear construction
-of operator sequences, supports arbitrary selections within
-a text leaf, but loses the benefits of structure editing
-at those levels, moreover cannot extend arbitrary selections
-beyond a given text leaf}
+This approach loses the benefits of structure editing
+at those levels, \eg, unrestricted language composition
+at the expression level.
+Moreover, while arbitrary text selections are possible
+within a text leaf, they cannot extend beyond those
+bounds and partially select any strictly structural forms.
 
-\note{talk about MPS being a strict structure editor
-with extensive additional design and engineering to
-support certain text-like editing capabilities, \eg,
-linear construction of opseqs (using side transforms),
-dangling parentheses AST annotations to support
-parenthesizing arbitrary ranges}
+JetBrains MPS \cite{DBLP:conf/icse/VoelterP12} is unique
+among prior structure editors and similar to \tylr~ in
+its aim to support keyboard-driven text-like interactions while
+maintaining well-formedness at all times.
+It uses an array of techniques to support text-like
+editing flows, such as side tranforms to rearrange
+trees in operator sequences while constructing them
+linearly; and dangling parenthesis annotations in the
+edit state to support constructing parentheses individually.
+Despite these techniques, as a term-based editor, MPS
+does not support directly selecting partial terms.
+For example, having typed \code{2 + 3 * 4} into MPS, it would
+not be possible to select \code{2 + 3} because this cuts
+across the parsed associative structure.
+Such a restriction is particularly pernicious in
+an interface like MPS that is made to look like text, as observed
+both in this example and our discussion of
+difficult-to-predict deletion in Section \ref{sec:intro}.
 
-Text-like keyboard-driven structure editors
-like MPS and \tylr~ carry additional usability challenges
-compared to block-based editors due to the lack of an
-open canvas...
-\note{talk about how deletion is forced to be destructive,
-MPS mitigates by saving first child if same sort,
-otherwise removes everything }
-
-\note{------start pasted overview content------}
-
-\note{rework following so it's \tylr-centered,
-talk about how \tylr~ improves on deletion in other editors}
-
-
-which warrants first a preliminary critique of how it
-works in existing term-based editors.
-
-As with selection, term-based editors typically
-limit delete operations so they can only act on
-complete terms, which can force preemptive and tedious
-maneuvering to prevent excessive removal.
+Term-based editors as a whole can be unexpectedly
+destructive when removing syntactic elements.
 For example, removing a block in a block-based editor
 removes all of its descendant blocks as well.
-If you intended only to delete a specific block
-while preserving its descendants, you are forced
-to save its children first by moving them elsewhere
-before you can actually delete the block.
-JetBrains MPS, a mature text-like structure editor,
-mitigates this by preserving the first child of a deleted term
+MPS mitigates this by preserving the first child of a deleted term
 if they happen to share the same sort,
 but cannot preserve more than one child in a generic
 structure-preserving way.
+Owing to its more flexible tile structure---in particular,
+the convenient use of operator holes to concatenate
+multiple children---\tylr~ can minimize removal
+by preserving all children of the
+same sort as the deleted tile.
 
-Meanwhile, it can be difficult to predict the
-effects of term-based deletion in a text-like
-interface, like MPS, that provides less visual
-indication of term structure than a block-based editor.
-Consequently a delete operation can be much
-more destructive than expected, \eg,
-pressing Backspace on a token
-causes a large containing range to disappear.
-Indeed, a (controlled) user study of MPS revealed
-that even \emph{experts} feel that deletion in MPS
-is relatively inaccurate (compared to corresponding
-subjective assessments made by text editor users),
-which we interpret to mean they have difficulty
-predicting its behavior.
+% As with selection, term-based editors typically
+% limit delete operations so they can only act on
+% complete terms, which can force preemptive and tedious
+% maneuvering to prevent excessive removal.
+% For example, removing a block in a block-based editor
+% removes all of its descendant blocks as well.
+% If you intended only to delete a specific block
+% while preserving its descendants, you are forced
+% to save its children first by moving them elsewhere
+% before you can actually delete the block.
+% JetBrains MPS, a mature text-like structure editor,
+% mitigates this by preserving the first child of a deleted term
+% if they happen to share the same sort,
+% but cannot preserve more than one child in a generic
+% structure-preserving way.
+
+% Meanwhile, it can be difficult to predict the
+% effects of term-based deletion in a text-like
+% interface, like MPS, that provides less visual
+% indication of term structure than a block-based editor.
+% Consequently a delete operation can be much
+% more destructive than expected, \eg,
+% pressing Backspace on a token
+% causes a large containing range to disappear.
+% Indeed, a (controlled) user study of MPS revealed
+% that even \emph{experts} feel that deletion in MPS
+% is relatively inaccurate (compared to corresponding
+% subjective assessments made by text editor users),
+% which we interpret to mean they have difficulty
+% predicting its behavior.
 
 
-Tile-based editing reduces the destructive effect of deletions
-compared to term-based editing; moreover \tylr~ explicitly
-highlights everything that will be removed upon your deletion
-so that you never have to guess or reason through it.
+% Tile-based editing reduces the destructive effect of deletions
+% compared to term-based editing; moreover \tylr~ explicitly
+% highlights everything that will be removed upon your deletion
+% so that you never have to guess or reason through it.
 
 % \note{discuss a bit following a text editing like flow as much
 % as possible, but using restructuring to guide you in cases
@@ -142,9 +155,23 @@ so that you never have to guess or reason through it.
 % in limitation section, possibly mention statements, lean into
 % our philosophy but here are some thoughts}
 
-\note{------end pasted content------}
-
-\note{paragraph on structural editing plug-ins for text editors}
+Fructure is a structure editor for the Lisp family of
+programming languages.
+Similarly motivated to reduce the viscosity of structure
+editing, Fructure features a novel \emph{transformation mode}
+by which the user may select a term
+and replace it with suggestions from an autocomplete menu.
+This menu supports interactive and arbitrarily deep
+construction of the replacement term before committing
+the replacement; meanwhile, at each
+step, the originally selected term is present in the
+list of suggestions, thereby supporting expressive
+wrapping of selections over the course of transformation.
+The user may also ``paint'' multiple terms before
+entering transformation mode, in which case the painted
+terms also appear in the menu suggestions.
+Fructure is strictly term-based and moreover restricted
+to S-expression syntax, which has no infix operator sequences.
 
 Hazelnut \cite{Hazelnut} is a structure editor calculus
 similar in spirit to \ty, but with the aim of
@@ -159,6 +186,8 @@ the same usability issues described earlier.
 In contrast, \ty~ and \tylr~ are untyped, the focus in
 this work being on developing more ergonomic interactions
 for maintaining syntactic well-formedness.
+
+\note{paragraph on structural editing plug-ins for text editors}
 
 \paragraph{Nested words}
 \ty~ segments are closely related to \emph{nested words}

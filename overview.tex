@@ -369,8 +369,8 @@ it is disassembled into individual \emph{shards}.
 Then, once they are all within or without the selection,
 the shards are reassembled into the original tile.
 
-Collectively we call tiles and shards \emph{pieces};
-a sequence of pieces is a \emph{segment}.
+Collectively we call tiles and shards \emph{pieces},
+a sequence of pieces a \emph{segment}.
 A segment containing only tiles is called \emph{intact},
 otherwise \emph{cracked}.
 We may understand restructuring mode, not simply as a tile insertion
@@ -490,6 +490,11 @@ disassembling the \code{let}-tile in the process;
 move right once; and put it down,
 upon which \tylr~ reassembles the \code{let}-tile
 and returns us to pointing mode.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{img/placeholder-restructuring-hungry.png}
+\end{figure}
 
 % \note{figure out a way to introduce hole fixing, why operand hole
 % disappears rather than operator hole being introduced, might be
