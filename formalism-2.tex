@@ -69,13 +69,13 @@ give tylrcore version of the edit state in selecting mode}
 \input{frame-syntax}
 
 \paragraph{Frames}
-\emph{Frames} model the rest of the edit state not included
+Frames model the rest of the edit state not included
 in the subject.
 At a high level, frames may be understood as a
-bottom-up sequence of nested containers, where
-the head container immediately
-wraps the subject, and each container points to its
-parent container, up to the edit state root.
+list of nested containers,
+arranged bottom-up such that the first container immediately
+wraps the subject, each container other than the last points to its
+parent container, and the last represents the edit state root.
 
 The syntax for frames is given in Figure \ref{fig:frame-syntax}.
 At the top level, frames $\zframe$ are sort-indexed \emph{tile frames}

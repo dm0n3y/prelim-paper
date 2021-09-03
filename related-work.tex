@@ -123,8 +123,8 @@ any prior work that has studied editing of nested words
 \ala restructuring in \tylr.
 
 \paragraph{Zippers}
-The zipper pattern, first documented by Huet
-\cite{zipper}, has been used to model a range of systems,
+First documented by Huet
+\cite{zipper}, the zipper pattern has been used to model a range of systems,
 including text editors \cite{lazy-functional-incremental-parsing},
 file systems \cite{zipper-fs}, and window managers \cite{window-manager}.
 If the underlying structure is hierarchical,
@@ -136,7 +136,9 @@ in the presence of hierarchy, using disassembly to flatten
 hierarchical structures as needed to support linear traversal
 and partial selection.
 We note that this model is distinct from using an ordered tree
-traversal to linearize movement, which is still structure-enforcing.
+traversal to linearize movement, which is still involves
+strictly hierarchical navigation rather than
+left-to-right navigation through a serialization of the edit state.
 
 Some work on zippers focuses on the mechanistic \cite{derivative-zippers,clowns-jokers}
 and automatic \cite{syz} generation of zipper forms

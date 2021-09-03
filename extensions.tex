@@ -10,6 +10,29 @@ editing to support larger-scale program authoring.
 
 \subsection{From \ty~ to \tylr}
 
+\ty~ does not model \tylr~ full feature set.
+In particular, it doesn not support left-to-right selecting
+multi-selection restructuring, or automatic restructuring
+upon construction.
+
+The first limitation is easily overcome by adding
+a new variant $\selectingRight{\selection}{\selection}{\selection}$
+to the subjects $\subject$ in Figure \ref{fig:zipper-syntax}
+and extending the auxiliary movement judgment
+$\smove{\editState_1}{\direction}{\editState_2}$
+in Figure \ref{fig:move-selecting}
+with mirror forms of its current rules.
+
+The second and third limitations are related
+and can be overcome together.
+This involves extending
+the restructuring variant $\restructuring{\selection}{\selection}{\selection}$...
+\note{talk about extending backpack to be zippered list
+carrying multiple selections, extending intact vs cracked
+check in restructuring rules to full vs hungry,
+and adding intermediate same-sort-ended shard variants}
+
+
 \subsection{Ongoing work}
 
 \note{talk about evaluation plans}
