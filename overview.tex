@@ -155,7 +155,7 @@ to editing.
 % visibly pushdown languages \note{cite}, which we discuss
 % further in Section \ref{sec:related-work}.
 
-\subsection{Inserting and removing} \label{sec:inserting-removing}
+\subsection{Inserting and removing tiles} \label{sec:inserting-removing}
 By having us edit the tile structure, and only
 indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
@@ -355,7 +355,7 @@ but not any other syntactic forms also with matching delimiters.
 In contrast, as we will see next, \tylr~ has well-defined
 restructuring behavior for arbitrary range selections.
 
-\subsection{Selecting and restructuring}
+\subsection{Selecting and restructuring} \label{sec:selecting-restructuring}
 
 Using the arrow keys while holding
 Shift enters \tylr's \emph{selecting mode}.
@@ -365,15 +365,17 @@ Shift enters \tylr's \emph{selecting mode}.
 Selecting mode lets us specify arbitrary range selections up
 to token boundaries.
 Notice how, when a tile is divided by a selection boundary,
-it is disassembled into individual \emph{shards};
-then, once they are all within or without the selection,
+it is disassembled into individual \emph{shards}.
+Then, once they are all within or without the selection,
 the shards are reassembled into the original tile.
-A selection containing no shards is called \emph{intact}, otherwise
-\emph{cracked}.
 
+Collectively we call tiles and shards \emph{pieces};
+a sequence of pieces is a \emph{segment}.
+A segment containing only tiles is called \emph{intact},
+otherwise \emph{cracked}.
 We may understand restructuring mode, not simply as a tile insertion
 and removal aid, but more generally as a structured variant of
-cut-and-paste on range selections, regulated by their intact versus
+cut-and-paste of selected segments, regulated by their intact versus
 cracked structure.
 
 % Tiles not only simplify linear \emph{insertion} in a structured
@@ -420,7 +422,7 @@ cracked structure.
 In Section \ref{sec:inserting-removing}, we updated the circle drawing tracing the
 parabola $y = x^2/9$ to its reflection $x = y^2/9$ by deleting
 and re-inserting tiles.
-Alternatively, we could have selected those tiles---an impossible
+Alternatively, we could have selected the inserted tiles---an impossible
 selection in a term-based editor---and used
 restructuring mode to move them. \note{need to add more steps below}
 % Say you update your circle drawing
@@ -459,24 +461,20 @@ restructuring mode to move them. \note{need to add more steps below}
 
 % \note{define intact selections}
 
-We say that your backpack is \emph{full} whenever
-its contents are, or can be assembled into, whole tiles.
-If your backpack is full, then you may move freely,
-since you may insert a selection of whole tiles anywhere
+We say that the backpack is \emph{full} whenever
+its contents are, or could be assembled into, an intact selection.
+If the backpack is full, then we may move freely,
+since we may insert a selection of whole tiles anywhere
 without compromising the existing shard-balanced structure.
 
 % \note{define cracked selections}
 
-Often, however, your backpack's contents are not an intact
+Often, however, the backpack's contents are not an intact
 selection, nor can they be assembled into one, as we observed
-in the parentheses insertion and removal examples in the
-previous section.
-In that case, we say that your backpack is \emph{hungry}...
+in the parentheses insertion and removal examples in Section \ref{sec:inserting-removing}.
+In that case, we say that the backpack is \emph{hungry}...
 
 \paragraph{Restructuring with a hungry backpack}
-
-\note{add back brief paragraph describing constructing let tile,
-compress into single row in edit sequence}
 
 Now we would like the circles' radii to grow
 with their origin coordinates; accordingly,
@@ -484,7 +482,7 @@ as shown at the top of Figure ??,
 we have inserted
 a let tile introducing variables \code{x} and \code{y}
 in the function body.
-Our remaining task is to restructure our code so that \code{x}
+Our next task is to restructure our code so that \code{x}
 and \code{y} are bound to the origin coordinates
 \code{( n * n / 9 , n )} currently in the body of the let term.
 We select the \code{in} delimiter,
@@ -508,14 +506,14 @@ and returns us to pointing mode.
 % when you moved right.
 Notice that we skipped all cursor positions within
 the parentheses tile when we moved right.
-The \code{in}-shard in our backpack cannot be assembled into
+The \code{in}-shard in our backpack could not be assembled into
 a whole tile on its own, meaning at least one matching shard---in
-this case, \code{let x , y =}---is
+this case, \code{let x , y =}---was
 anchored within the current tile sequence.
-This restricts our movement of the \texttt{in}
-shard to cursor positions of the same sequence,
+This restricted our movement of the \texttt{in}-shard
+to cursor positions of the same sequence,
 as placing it in any other position would
-violate proper shard balancing.
+violate proper nesting of matching shards.
 
 % \note{add back some discussion comparing to text editing
 % and other structure editors;
@@ -529,7 +527,7 @@ We call the backpack full or hungry as a way
 to narrativize its control of our movement.
 When the backpack is full, it is satisfied
 and lets us move freely and leisurely through
-your code.
+our code.
 When the backpack is hungry, it accelerates our
 movement through the current tile sequence
 in its impatience to end its hunger, which can happen in one of two ways.
@@ -556,28 +554,49 @@ or we may feed it.
 % \end{itemize}
 
 \paragraph{Feeding a hungry backpack}
-Say you have filled the hole in Figure ?? with
-the variables \texttt{x} and \texttt{y} you defined
-in the previous example, as shown in Figure ??.
-Upon reviewing the term structure, however, you
-discover that pairs are right-associative in \tylr,
-so you need to wrap \texttt{x , y} in parentheses
-in order to satisfy the expected return type.
-\note{maybe just say we've created a triple but we
-really want a pair of a pair on left}
-You also notice that the parentheses in the definition
-of the \texttt{let} tile are now redundant
-and decide to recycle them.
-You move your cursor to the right parenthesis,
-select it, and pick it up into your backpack.
-At this point your backpack is hungry and restricts
-your movement to the tile sequence within the
+Now we rewrite the radius in terms of the variables
+\code{x} and \code{y}, as shown at the top of
+Figure ??.
+Along the way, however, we forget to parenthesize
+the origin coordinates.
+We also notice that the parentheses in the definition
+of the \code{let}-tile are now redundant and decide
+to recycle them.
+At this point the backpack is hungry and restricts
+our movement to the tile sequence within the
 let definition.
-Instead of emptying your backpack like in the
-last example, this time you move over to the
-left parenthesis and pick it up as well (Figure ??).
+Instead of emptying our backpack like in the
+last example, this time we move over to the
+left parenthesis and pick it up as well.
+Now our backpack is full, as it carries both shards
+needed to assemble a parentheses tile, and we may
+now move freely out of the let definition
+to put down the parentheses around the origin coordinates.
+\note{add labels to edit states,
+label sentences here}
 
-\note{make note of pattern not having parentheses}
+% Say you have filled the hole in Figure ?? with
+% the variables \texttt{x} and \texttt{y} you defined
+% in the previous example, as shown in Figure ??.
+% Upon reviewing the term structure, however, you
+% discover that pairs are right-associative in \tylr,
+% so you need to wrap \texttt{x , y} in parentheses
+% in order to satisfy the expected return type.
+% \note{maybe just say we've created a triple but we
+% really want a pair of a pair on left}
+% You also notice that the parentheses in the definition
+% of the \texttt{let} tile are now redundant
+% and decide to recycle them.
+% You move your cursor to the right parenthesis,
+% select it, and pick it up into your backpack.
+% At this point your backpack is hungry and restricts
+% your movement to the tile sequence within the
+% let definition.
+% Instead of emptying your backpack like in the
+% last example, this time you move over to the
+% left parenthesis and pick it up as well (Figure ??).
+
+% \note{make note of pattern not having parentheses}
 
 % When your backpack carries multiple selections,
 % it dictates the order in which you can put them down.
@@ -586,7 +605,7 @@ left parenthesis and pick it up as well (Figure ??).
 % deviations
 
 Now your backpack is full, as it carries both shards
-needed to assemble a whole parenthesis tile,
+needed to assemble a whole parentheses tile,
 and you may move freely again.
 You carry the parentheses over to the body of the
 let term and wrap \texttt{x , y} to complete your
@@ -604,36 +623,36 @@ elsewhere.
 \note{either remove this or rewrite when it's more as
 an emergent phenomenon}
 
-\paragraph{Staging tile insertion}
-\note{maybe just call restructuring on insertion}
+% \paragraph{Staging tile insertion}
+% \note{maybe just call restructuring on insertion}
 
-\note{add connecting intro connecting to node-centric perspective}
-Say you have completed an initial draft of your goal program,
-where each circle's radius is the sum of its origin
-coordinates, as shown in Figure ??.
-You discover, however, that the circles are so large that
-they fill your viewport, so you would like to make them smaller.
-You begin by inserting a left parenthesis
-before \texttt{x + y}, your intention being to wrap
-the sum and divide it by a constant factor.
-Upon this insertion, \tylr~ automatically enters
-restructuring mode with the matching right parenthesis
-in your backpack.
-You move right, put down the right parenthesis,
-and complete your desired transformation.
+% \note{add connecting intro connecting to node-centric perspective}
+% Say you have completed an initial draft of your goal program,
+% where each circle's radius is the sum of its origin
+% coordinates, as shown in Figure ??.
+% You discover, however, that the circles are so large that
+% they fill your viewport, so you would like to make them smaller.
+% You begin by inserting a left parenthesis
+% before \texttt{x + y}, your intention being to wrap
+% the sum and divide it by a constant factor.
+% Upon this insertion, \tylr~ automatically enters
+% restructuring mode with the matching right parenthesis
+% in your backpack.
+% You move right, put down the right parenthesis,
+% and complete your desired transformation.
 
-\note{add discussion}
+% \note{add discussion}
 
-\note{note how other structure editors force you to select
-child first before constructing}
+% \note{note how other structure editors force you to select
+% child first before constructing}
 
-
-\paragraph{Picky eater}
+\paragraph{Picky eating}
+Not all selections can be picked up.
 We call the cursor positions marking the ends of a selection
 the selection's \emph{caps}.
 So far we have only encountered selections with caps
 of the same sort.
-Your backpack is a ``picky eater'' in that
+Your backpack is a picky eater in that
 it will refuse to carry any selections with caps of
 different sort.
 
@@ -656,60 +675,76 @@ selection with caps of different sort}
 with pattern caps cutting across expressions}
 
 \subsection{Removing selections}
-Finally, we turn our attention to removal.
+
+Lastly, we turn our attention to selection removal,
+generalizing our understanding of tile removal
+in pointing mode as discussed in
+Section \ref{sec:inserting-removing}.
+% Pressing Backspace on a selection
+% has one of two effects:
+% (1) if it is intact, remove the selection
+%     and return to pointing mode;
+% (2) otherwise, enter restructuring mode with
+%     the smallest containing same-sort-capped selection
+%     in your backpack.
+% Pressing Backspace again in restructuring mode
+% removes all highlighted tiles and selections.
 Removing a selection works in one of two ways,
-depending on whether your selection is intact or fragmentary.
+depending on whether the selection is intact or cracked.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{img/test-wide.png}
+\end{figure}
 
 \paragraph{Removing intact selections}
-Say you fiddled some more with your last circle drawing
-and discovered a similar drawing you like a bit better,
+Say we fiddled some more with our last circle drawing
+and discovered a similar drawing we like a bit better,
 shown in Figure ??.
-Upon reviewing your code, you realize you no longer
-need to define variables \texttt{x} and \texttt{y},
+Upon reviewing our code, we realize we no longer
+need to define variables \code{x} and \code{y},
 since they are each used only once, and can inline
 their definition.
-You begin by removing the uses of \texttt{x} and \texttt{y},
-selecting \texttt{x , y} in the body of the \texttt{let}
+We begin by removing the uses of \code{x} and \code{y},
+selecting \code{x , y} in the body of the \code{let}
 term and hitting Backspace.
-In this case, because your selection is intact, \tylr~
-immediately removes your selection, as you might
-expect from your experience with text editors.
+In this case, because our selection is intact, \tylr~
+immediately removes our selection, as we might
+expect from our experience with text editors.
 
-\paragraph{Removing fragmentary selections}
-Now you would like to remove the \texttt{let} tile,
-but you want to preserve its definition so you
+\paragraph{Removing cracked selections}
+Now we would like to remove the \code{let}-tile,
+but we want to preserve its definition so we
 can inline it.
-You select the \texttt{in} shard and hit Backspace.
-Because your selection is fragmentary, removing
-your selection would require also removing the
-matching \texttt{let} shard that you have not
-explicitly selected yourself.
-\note{something about removal at a distance, also
-mention prior designs here}
-\tylr~ does not remove both shards immediately, but
-instead enters restructuring mode as a staging ground
-in which you are shown explicitly the affected
-selections.
-\note{referencing back to restructuring we've already seen,
-which then gives you the option to...}
-You confirm the total removal by hitting Backspace again,
-leaving behind the let definition and body expressions
+We select the \code{in}-shard and hit Backspace.
+Because our selection is cracked, removing
+our selection would require also removing the
+matching \code{let}-shard that we have not
+explicitly selected ourselves.
+
+\tylr~ does not remove both shards immediately but
+instead enters restructuring mode, giving us the option
+to move the \code{in}-shard like in Section \ref{sec:selecting-restructuring},
+or to proceed with removal of the highlighted pieces
+like in Section \ref{sec:inserting-removing}.
+We confirm the total removal by hitting Backspace again,
+leaving behind the let definition and body
 separated by an operator hole.
 
-In general, pressing Backspace on a selection
-has one of two effects:
-\begin{enumerate}
-  \item[(1)] remove the selection if it is intact
-    and return to pointing mode;
-  \item[(2)] otherwise entering restructuring mode with
-    the smallest containing selection with same-sort caps
-    in your backpack.
-\end{enumerate}
-Pressing Backspace again in restructuring mode
-removes all highlighted tiles and selections.
-In sum: if your selection is intact then you can
-remove it with a single tap of Backspace; otherwise
-you need to double tap.
+% In general, pressing Backspace on a selection
+% has one of two effects:
+% \begin{enumerate}
+%   \item[(1)] remove the selection if it is intact
+%     and return to pointing mode;
+%   \item[(2)] otherwise entering restructuring mode with
+%     the smallest containing selection with same-sort caps
+%     in your backpack.
+% \end{enumerate}
+% Pressing Backspace again in restructuring mode
+% removes all highlighted tiles and selections.
+% In sum: if your selection is intact then you can
+% remove it with a single tap of Backspace; otherwise
+% you need to double tap.
 
 % If your selection is fragmentary, then removing
 % your selection would require also removing matching shards
@@ -719,7 +754,7 @@ you need to double tap.
 % ground in which you may confirm the total removal
 % by hitting Backspace again (or otherwise proceed
 % with restructuring).
-\note{draw parallel with staged insertion}
+% \note{draw parallel with staged insertion}
 % In sum: if your selection is intact then you can
 % remove it with a single tap of Backspace; otherwise
 % you need to double tap.
