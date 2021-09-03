@@ -403,7 +403,7 @@ and returns us to pointing mode.
 
 Notice that we skipped all cursor positions within
 the parentheses tile when we moved right.
-The `in`-shard in your backpack cannot be assembled into
+The `in`-shard in our backpack cannot be assembled into
 an intact selection on its own, meaning at least one matching shard—in
 this case, `let x , y =`—is
 anchored within the current tile sequence.

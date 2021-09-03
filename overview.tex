@@ -155,7 +155,7 @@ to editing.
 % visibly pushdown languages \note{cite}, which we discuss
 % further in Section \ref{sec:related-work}.
 
-\subsection{Inserting and removing}
+\subsection{Inserting and removing} \label{sec:inserting-removing}
 By having us edit the tile structure, and only
 indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
@@ -317,7 +317,7 @@ wrapping the origin coordinates in \tylr.
 
 Where a text editor would simply remove the closing parenthesis
 on the first Backspace, leaving us with a syntax error,
-`tylr` first enters an intermediate state in which it has
+\tylr~ first enters an intermediate state in which it has
 "picked up" the closing parenthesis and highlighted the
 matching opening parenthesis.
 Pressing Backspace again then removes both parentheses.
@@ -356,167 +356,189 @@ In contrast, as we will see next, \tylr~ has well-defined
 restructuring behavior for arbitrary range selections.
 
 \subsection{Selecting and restructuring}
-Tiles not only simplify linear \emph{insertion} in a structured
-context but also enable text-like \emph{selecting}
-and \emph{restructuring} (e.g. cut and paste) of existing code.
-While the former problem is relatively well-studied
-\note{cite MPS, modeless structure editing},
-almost no attention has been paid to the latter.
-In particular, all prior structure editors restrict
-structured selections to complete concrete syntactic terms,
-a severe limitation compared to the arbitrary range
-selections of text editors.
 
-\tylr~ recovers much of this lost flexibility.
-Using \tylr's \emph{selecting mode}, you can
-make arbitrary range selections up to token boundaries,
-disassembling tiles into \emph{shards} as needed.
-Using \tylr's \emph{restructuring mode},
-you can pick up your selections into your
-\emph{backpack} and put them down elsewhere,
-à la cut-and-paste using the clipboard.
-Unlike the usual clipboard, however,
-your backpack is structure-aware and guides your
-movement toward valid paste targets, \ie,
-you can only put down your backpack's contents
-where the result can be reassembled into well-formed tiles.
+Using the arrow keys while holding
+Shift enters \tylr's \emph{selecting mode}.
 
-\note{add another paragraph header focused on selecting}
+\note{figure}
 
-\note{see if I can talk about intact vs cracked selections here,
-perhaps by changing the direction of the first selection and
-introducing shards when right parens get selected}
+Selecting mode lets us specify arbitrary range selections up
+to token boundaries.
+Notice how, when a tile is divided by a selection boundary,
+it is disassembled into individual \emph{shards};
+then, once they are all within or without the selection,
+the shards are reassembled into the original tile.
+A selection containing no shards is called \emph{intact}, otherwise
+\emph{cracked}.
 
-\note{so far we have been in pointing mode...}
+We may understand restructuring mode, not simply as a tile insertion
+and removal aid, but more generally as a structured variant of
+cut-and-paste on range selections, regulated by their intact versus
+cracked structure.
+
+% Tiles not only simplify linear \emph{insertion} in a structured
+% context but also enable text-like \emph{selecting}
+% and \emph{restructuring} (e.g. cut and paste) of existing code.
+% While the former problem is relatively well-studied
+% \note{cite MPS, modeless structure editing},
+% almost no attention has been paid to the latter.
+% In particular, all prior structure editors restrict
+% structured selections to complete concrete syntactic terms,
+% a severe limitation compared to the arbitrary range
+% selections of text editors.
+
+% \tylr~ recovers much of this lost flexibility.
+% Using \tylr's \emph{selecting mode}, you can
+% make arbitrary range selections up to token boundaries,
+% disassembling tiles into \emph{shards} as needed.
+% Using \tylr's \emph{restructuring mode},
+% you can pick up your selections into your
+% \emph{backpack} and put them down elsewhere,
+% à la cut-and-paste using the clipboard.
+% Unlike the usual clipboard, however,
+% your backpack is structure-aware and guides your
+% movement toward valid paste targets, \ie,
+% you can only put down your backpack's contents
+% where the result can be reassembled into well-formed tiles.
+
+% \note{add another paragraph header focused on selecting}
+
+% \note{see if I can talk about intact vs cracked selections here,
+% perhaps by changing the direction of the first selection and
+% introducing shards when right parens get selected}
+
+% \note{so far we have been in pointing mode...}
+
+% \setlength\intextsep{0pt}
+% \begin{wrapfigure}{r}{0.08\columnwidth}
+%   \centering
+%   \hspace*{-0.07\columnwidth}
+%   \includegraphics[width=0.15\columnwidth]{img/circles-parabola-transpose.png}
+% \end{wrapfigure}
 
 \paragraph{Restructuring with a full backpack}
-Say you update your circle drawing
-to its transposition, i.e., draw the circles along
-the parabola $x = y^2/9$.
-Entering selecting mode, you anchor the selection's right
-end and move left to select the tiles you just
-inserted in the $y$-coordinate---an impossible
-selection in prior structure editors.
+In Section \ref{sec:inserting-removing}, we updated the circle drawing tracing the
+parabola $y = x^2/9$ to its reflection $x = y^2/9$ by deleting
+and re-inserting tiles.
+Alternatively, we could have selected those tiles---an impossible
+selection in a term-based editor---and used
+restructuring mode to move them. \note{need to add more steps below}
+% Say you update your circle drawing
+% to its transposition, i.e., draw the circles along
+% the parabola $x = y^2/9$.
+% Entering selecting mode, you anchor the selection's right
+% end and move left to select the tiles you just
+% inserted in the $y$-coordinate---an impossible
+% selection in prior structure editors.
 
-\noindent
-\begin{minipage}[t]{0.2\columnwidth}
-  \includegraphics[width=\textwidth]{img/circles-parabola-transpose.png}
-\end{minipage}
-\hfill
-\begin{minipage}{0.65\columnwidth}
-  \includegraphics[width=\textwidth]{img/selection-whole-0.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-1.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-2.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-3.png}
-  \includegraphics[width=\textwidth]{img/selection-whole-4.png}
-\end{minipage}
-You then pick it up into your backpack to enter
-restructuring mode.
-Moving left to the $x$-coordinate and putting down
-the selection completes the desired transformation.
+\begin{figure}[h]
+  \includegraphics[width=0.65\columnwidth]{img/selection-whole-0.png}
+  \includegraphics[width=0.65\columnwidth]{img/selection-whole-1.png}
+  \includegraphics[width=0.65\columnwidth]{img/selection-whole-2.png}
+  \includegraphics[width=0.65\columnwidth]{img/selection-whole-3.png}
+  \includegraphics[width=0.65\columnwidth]{img/selection-whole-4.png}
+\end{figure}
+% You then pick it up into your backpack to enter
+% restructuring mode.
+% Moving left to the $x$-coordinate and putting down
+% the selection completes the desired transformation.
 
-\noindent
-\begin{tabular}{cp{7cm}}
-\includegraphics[width=2cm]{img/circles-parabola-transpose.png}
-&
-{
-\begin{align*}
-  & \texttt{$\lambda$ n . ( n , n[* n / 9]) , 1} \\
-  & \texttt{$\lambda$ n . ( n ,[* n / 9]n ) , 1} \\
-  & \texttt{$\lambda$ n . ( n[* n / 9], n ) , 1} \\
-  & \texttt{$\lambda$ n . ( n|* n / 9 , n ) , 1}
-\end{align*}
-}
-\end{tabular}
+% \noindent
+% \begin{tabular}{cp{7cm}}
+% \includegraphics[width=2cm]{img/circles-parabola-transpose.png}
+% &
+% {
+% \begin{align*}
+%   & \texttt{$\lambda$ n . ( n , n[* n / 9]) , 1} \\
+%   & \texttt{$\lambda$ n . ( n ,[* n / 9]n ) , 1} \\
+%   & \texttt{$\lambda$ n . ( n[* n / 9], n ) , 1} \\
+%   & \texttt{$\lambda$ n . ( n|* n / 9 , n ) , 1}
+% \end{align*}
+% }
+% \end{tabular}
 
-\note{define intact selections}
+% \note{define intact selections}
 
 We say that your backpack is \emph{full} whenever
 its contents are, or can be assembled into, whole tiles.
 If your backpack is full, then you may move freely,
-since you may insert a selection of whole tiles anywhere and
-still have a valid nested tile structure.
-\tylr~ would have prevented you from putting
-down your selection of expression tiles in a pattern
-position; we discuss sort conversions in Section ??.
-\note{awkward ending}
+since you may insert a selection of whole tiles anywhere
+without compromising the existing shard-balanced structure.
 
-\note{define cracked selections}
+% \note{define cracked selections}
 
-Often, however, your backpack's contents are not whole
-tiles, nor can they be assembled into tiles.
-In that case, we say that your backpack is \emph{hungry}.
+Often, however, your backpack's contents are not an intact
+selection, nor can they be assembled into one, as we observed
+in the parentheses insertion and removal examples in the
+previous section.
+In that case, we say that your backpack is \emph{hungry}...
 
 \paragraph{Restructuring with a hungry backpack}
 
 \note{add back brief paragraph describing constructing let tile,
 compress into single row in edit sequence}
 
-Say now you would like the circles' radii to grow
+Now we would like the circles' radii to grow
 with their origin coordinates; accordingly,
 as shown at the top of Figure ??,
-you have inserted
-a let tile introducing variables \texttt{x} and \texttt{y}
+we have inserted
+a let tile introducing variables \code{x} and \code{y}
 in the function body.
-Your remaining task is to restructure your code so that \texttt{x}
-and \texttt{y} are bound to the origin coordinates
-\texttt{( n * n / 9 , n )} currently in the body of the let term.
-You begin by selecting the \texttt{in} delimiter,
-which disassembles the \texttt{let}-tile into a pair of \emph{shards}.
-You then pick up the \texttt{in} shard into your backpack,
-move right once, and put it down,
-upon which \tylr~ reassembles the \texttt{let}-tile
-and returns you to pointing mode.
+Our remaining task is to restructure our code so that \code{x}
+and \code{y} are bound to the origin coordinates
+\code{( n * n / 9 , n )} currently in the body of the let term.
+We select the \code{in} delimiter,
+disassembling the \code{let}-tile in the process;
+move right once; and put it down,
+upon which \tylr~ reassembles the \code{let}-tile
+and returns us to pointing mode.
 
-\note{figure out a way to introduce hole fixing, why operand hole
-disappears rather than operator hole being introduced, might be
-here or worked in before}
+% \note{figure out a way to introduce hole fixing, why operand hole
+% disappears rather than operator hole being introduced, might be
+% here or worked in before}
 
-\note{when discussing hole minimality, distinguish from other
-interfaces where you insert holes manually, so you shouldn't
-remove automatically}
+% \note{when discussing hole minimality, distinguish from other
+% interfaces where you insert holes manually, so you shouldn't
+% remove automatically}
 
 % Your editing workflow was similar to what you might
 % have done in a text editor---delete the \texttt{in}
 % delimiter, move right, re-type---except that \tylr~
 % skipped all cursor positions within the parentheses tile
 % when you moved right.
-Notice that you skipped all cursor positions within
-the parentheses tile when you moved right.
-The \texttt{in} shard in your backpack cannot be assembled into
+Notice that we skipped all cursor positions within
+the parentheses tile when we moved right.
+The \code{in}-shard in our backpack cannot be assembled into
 a whole tile on its own, meaning at least one matching shard---in
-this case, \texttt{let x , y =}---is
+this case, \code{let x , y =}---is
 anchored within the current tile sequence.
-This restricts your movement of the \texttt{in}
+This restricts our movement of the \texttt{in}
 shard to cursor positions of the same sequence,
 as placing it in any other position would
-violate proper tile nesting on reassembly.
-\note{say something explicitly of the form "when your backpack
-is hungry... blah blah"}
+violate proper shard balancing.
 
+% \note{add back some discussion comparing to text editing
+% and other structure editors;
+% similarity with text workflow,
+% while making it more efficient + less cognitive load;
+% other structure editors would force you to translate
+% edits into term-based selections, can be awkward or
+% not the most efficient in terms of selection size}
 
-\note{add back some discussion comparing to text editing
-and other structure editors;
-similarity with text workflow,
-while making it more efficient + less cognitive load;
-other structure editors would force you to translate
-edits into term-based selections, can be awkward or
-not the most efficient in terms of selection size}
-
-We call your backpack full or hungry as a way
-to narrativize its control of your movement.
-When your backpack is full, it is satisfied
-and lets you move freely and leisurely through
+We call the backpack full or hungry as a way
+to narrativize its control of our movement.
+When the backpack is full, it is satisfied
+and lets us move freely and leisurely through
 your code.
-When your backpack is hungry, it accelerates your
+When the backpack is hungry, it accelerates our
 movement through the current tile sequence
-in impatience to end its hunger, which can happen in one of two ways.
-Either, like in the last example, you can empty your backpack,
+in its impatience to end its hunger, which can happen in one of two ways.
+Either, like in the last example, we can empty the backpack,
 freeing it of all earthly possessions and desires;
-or you may feed it.
+or we may feed it.
 
-\note{add forward reference to discussing alternatives, eg,
-not skipping cursor positions}
+% \note{add forward reference to discussing alternatives, eg,
+% not skipping cursor positions}
 
 % We hypothesize that such a restriction would lead to both greater
 % editing efficiency and reduced cognitive load compared to
@@ -533,7 +555,7 @@ not skipping cursor positions}
 %     a valid paste/restructure target.
 % \end{itemize}
 
-\paragraph{Feeding your hungry backpack}
+\paragraph{Feeding a hungry backpack}
 Say you have filled the hole in Figure ?? with
 the variables \texttt{x} and \texttt{y} you defined
 in the previous example, as shown in Figure ??.
