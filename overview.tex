@@ -155,67 +155,84 @@ to editing.
 % visibly pushdown languages \note{cite}, which we discuss
 % further in Section \ref{sec:related-work}.
 
-\subsection{Inserting tiles}
+\subsection{Inserting and removing}
 By having us edit the tile structure, and only
 indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
 which we are accustomed in text editors.
 
-\paragraph{Constructing left-to-right}
+\setlength\intextsep{0pt}
+\begin{wrapfigure}{r}{0.08\columnwidth}
+  \centering
+  \hspace*{-0.07\columnwidth}
+  \includegraphics[width=0.15\columnwidth]{img/circles-parabola.png}
+\end{wrapfigure}
+
+\paragraph{Leaf tiles}
 We update the function to
-draw circles along the parabola $y = x^2/9$
-using the following edit sequence:
+draw circles along the parabola $y = x^2/9$,
+as depicted on the right,
+using the edit sequence below.
 
-\noindent
-\begin{minipage}[t]{0.2\columnwidth}
-  \includegraphics[width=\textwidth]{img/circles-parabola.png}
-\end{minipage}
-\hfill
-\begin{minipage}{0.65\columnwidth}
-  \includegraphics[width=\textwidth]{img/linear-insertion-0.png}
-  \includegraphics[width=\textwidth]{img/linear-insertion-1.png}
-  \includegraphics[width=\textwidth]{img/linear-insertion-2.png}
-  \includegraphics[width=\textwidth]{img/linear-insertion-3.png}
-  \includegraphics[width=\textwidth]{img/linear-insertion-4.png}
-\end{minipage}
+\begin{figure}[h]
+  \centering
+% \begin{minipage}[t]{0.2\columnwidth}
+%   \includegraphics[width=\textwidth]{img/circles-parabola.png}
+% \end{minipage}
+% \hfill
+% \begin{minipage}{0.65\columnwidth}
+  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-0.png}
+  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-1.png}
+  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-2.png}
+  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-3.png}
+  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-4.png}
+  % \caption{Inserting}
+% \end{minipage}
+\end{figure}
 
-\note{add one more final snapshot in term view, showing
-how tylr parses precedence/associativity}
+\setlength\intextsep{0pt}
+\begin{wrapfigure}{r}{0.08\columnwidth}
+  \centering
+  \hspace*{-0.07\columnwidth}
+  \includegraphics[width=0.15\columnwidth]{img/circles-parabola-transpose.png}
+\end{wrapfigure}
 
-\note{pause after constructing the times and note how
-precedence is re-parsed}
+If we decided now to draw circles along the reflected
+parabola $x = y^2/9$, we could similarly remove the inserted
+tiles right-to-left from the $y$-coordinate and re-insert
+them in the $x$-coordinate.
 
-We constructed the arithmetic expression \code{n * n / 9}
-by typing left-to-right, like in a text editor, without any
-required consideration for its term structure.
-Such an affordance is not trivial
-in traditional term-based structure editors because,
+\note{figure of linear removal}
+
+These simple editing workflows are not trivial
+in traditional term-based editors because,
 from the perspective of the AST, linear construction of
 operator sequences is a complex, context-sensitive operation.
 Existing structure editors either embrace strictly tree-based
-construction of operator sequences;
-defer to text at the expression level,
+construction of operator sequences \cite{scratch};
+defer to text at the expression level \cite{Cornell,greenfoot},
 recovering linearity at the cost of structure;
 or solve the problem at the cost of complexity
-(e.g. side transforms in MPS).
-Tiles enable linear editing of operator sequences,
-while continuously maintaining structure and
-relying on simple precedence parsing
-to update the operator sequence's associative structure
-as you type.
+\cite{GrammarCells}.
+In contrast, tiles combined with automatic hole fixing
+make it easy to define linear editing operations
+without compromising structure.
 
-\note{note that this is insertion, not ``hole filling'' as
-it is traditionally conceived in structure editors}
+% \note{add one more final snapshot in term view, showing
+% how tylr parses precedence/associativity}
 
-\note{figure out way to say wholesale but not being whole program}
+% \note{pause after constructing the times and note how
+% precedence is re-parsed}
 
-\note{insert a comment somewhere about no performance claims}
+% \note{note that this is insertion, not ``hole filling'' as
+% it is traditionally conceived in structure editors}
 
-\note{review side transforms and make sure I'm not BSing}
+% \note{insert a comment somewhere about no performance claims}
 
+% \note{review side transforms and make sure I'm not BSing}
 
-\note{figure out where to talk about hole insertion based on tips
-somewhere here}
+% \note{figure out where to talk about hole insertion based on tips
+% somewhere here}
 
 % \tylr~ takes a different approach to this problem.
 % Where traditional structure editors simply expose editing
@@ -288,6 +305,55 @@ somewhere here}
   }
   \end{tabular}
 \end{figure*}
+
+\paragraph{Non-leaf tiles}
+While insertion and removal of leaf tiles closely mimics the
+text editing experience, this begins to change as we turn our
+attention to non-leaf tiles.
+For example, consider below how we would remove the parentheses
+wrapping the origin coordinates in \tylr.
+
+\note{figure}
+
+Where a text editor would simply remove the closing parenthesis
+on the first Backspace, leaving us with a syntax error,
+`tylr` first enters an intermediate state in which it has
+"picked up" the closing parenthesis and highlighted the
+matching opening parenthesis.
+Pressing Backspace again then removes both parentheses.
+
+This intermediate state is called \emph{restructuring mode},
+and we picked up the closing parenthesis into the \emph{backpack};
+we will soon discuss these at greater length.
+For now, notice how restructuring mode served as a
+sort of confirmation dialog, showing us that removing
+the token on which we hit Backspace would require
+deleting other tokens.
+We believe such explicit confirmation is important to
+prevent ``spooky action at a distance'', especially
+in light of the MPS user data discussed in Section \ref{sec:intro}.
+
+Now consider how we might re-insert the parentheses
+around the origin coordinates.
+
+\note{figure}
+
+\noindent
+In a dual fashion to removal, inserting
+an opening parenthesis enters restructuring mode with its
+matching closing parenthesis in the backpack.
+Restructuring mode then allows us to move the parenthesis
+to the right and put it down.
+Notice the similarity to the text editing experience,
+which has an invoke-then-configure flow, whereas a typical
+structure editor would require you to select the body before
+parenthesizing, forcing preemptive configuration before
+invocation.
+
+MPS supports a similar editing flow for parentheses in particular,
+but not any other syntactic forms also with matching delimiters.
+In contrast, as we will see next, \tylr~ has well-defined
+restructuring behavior for arbitrary range selections.
 
 \subsection{Selecting and restructuring}
 Tiles not only simplify linear \emph{insertion} in a structured
