@@ -774,59 +774,8 @@ enter restructuring mode with the parenthesis in tow.
 You move left to the other side of the origin coordinates,
 then put down the parenthesis to complete the transformation.
 
-\vspace{0.5cm}
+\note{more words here to wrap up}
 
-\note{rework following so it's \tylr-centered,
-talk about how \tylr~ improves on deletion in other editors}
-
-
-which warrants first a preliminary critique of how it
-works in existing term-based editors.
-
-As with selection, term-based editors typically
-limit delete operations so they can only act on
-complete terms, which can force preemptive and tedious
-maneuvering to prevent excessive removal.
-For example, removing a block in a block-based editor
-removes all of its descendant blocks as well.
-If you intended only to delete a specific block
-while preserving its descendants, you are forced
-to save its children first by moving them elsewhere
-before you can actually delete the block.
-JetBrains MPS, a mature text-like structure editor,
-mitigates this by preserving the first child of a deleted term
-if they happen to share the same sort,
-but cannot preserve more than one child in a generic
-structure-preserving way.
-
-Meanwhile, it can be difficult to predict the
-effects of term-based deletion in a text-like
-interface, like MPS, that provides less visual
-indication of term structure than a block-based editor.
-Consequently a delete operation can be much
-more destructive than expected, \eg,
-pressing Backspace on a token
-causes a large containing range to disappear.
-Indeed, a (controlled) user study of MPS revealed
-that even \emph{experts} feel that deletion in MPS
-is relatively inaccurate (compared to corresponding
-subjective assessments made by text editor users),
-which we interpret to mean they have difficulty
-predicting its behavior.
-
-
-Tile-based editing reduces the destructive effect of deletions
-compared to term-based editing; moreover \tylr~ explicitly
-highlights everything that will be removed upon your deletion
-so that you never have to guess or reason through it.
-
-\note{discuss a bit following a text editing like flow as much
-as possible, but using restructuring to guide you in cases
-where you can't just do the text thing}
-
-\note{acknowledge sort-based limitations of tile structure
-in limitation section, possibly mention statements, lean into
-our philosophy but here are some thoughts}
 
 %\note{consider doing insertion, selection, deletion, then
 %restructuring as a better progression}
