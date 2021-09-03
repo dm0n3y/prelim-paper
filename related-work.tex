@@ -148,32 +148,33 @@ and may prove useful in future work on
 automatically generating tile-based zippers
 from a given syntax.
 
-\paragraph{Incremental parsing}
-Zipper operations in \ty~ rely on incremental and partial
-parsing to reassemble shards as the opportunity arises.
-Existing incremental parsing techniques
+\note{mention Parsing With Zippers}
 
+% \paragraph{Incremental parsing}
+% Zipper operations in \ty~ rely on incremental and partial
+% parsing to reassemble shards as the opportunity arises.
+% Existing incremental parsing techniques
 
-\begin{itemize}
-  \item structure editing
-  \begin{itemize}
-    \item Design Requirements for More Flexible Structured Editors from a Study of Programmers' Text Editing
-      by Amy Ko \& Brad Myers
-    \begin{itemize}
-        \item list edits (23\%):
-          removing a list element and its delimiter (8\%);
-          moving the right list delimiter(3\%);
-          ``flattening'' a list inside of a list (2\%)
-        \item infix expressions (15\%):
-            replacing the infix expression with its left (8\%) or right (1\%) operand;
-            ``wrapping'' a left or right operand (4\%);
-            unwrapping a left or right operand (2\%)
-        \item prefix expressions (1\%):
-            applying a prefix operator to an expression (81\%);
-            ``unwrapping'' a prefix operand (11\%)
-        \item that amounts to 6\% of edits clearly involving selecting and
-          moving/removing non-term selections, or 10\% of edits not involving
-          modifying names
-    \end{itemize}
-  \end{itemize}
-\end{itemize}
+% \begin{itemize}
+%   \item structure editing
+%   \begin{itemize}
+%     \item Design Requirements for More Flexible Structured Editors from a Study of Programmers' Text Editing
+%       by Amy Ko \& Brad Myers
+%     \begin{itemize}
+%         \item list edits (23\%):
+%           removing a list element and its delimiter (8\%);
+%           moving the right list delimiter(3\%);
+%           ``flattening'' a list inside of a list (2\%)
+%         \item infix expressions (15\%):
+%             replacing the infix expression with its left (8\%) or right (1\%) operand;
+%             ``wrapping'' a left or right operand (4\%);
+%             unwrapping a left or right operand (2\%)
+%         \item prefix expressions (1\%):
+%             applying a prefix operator to an expression (81\%);
+%             ``unwrapping'' a prefix operand (11\%)
+%         \item that amounts to 6\% of edits clearly involving selecting and
+%           moving/removing non-term selections, or 10\% of edits not involving
+%           modifying names
+%     \end{itemize}
+%   \end{itemize}
+% \end{itemize}
