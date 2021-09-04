@@ -1,5 +1,7 @@
 \section{Tile-based Editor Calculus}\label{sec:formalism-2}
 
+goodbye $\soptile{testaldskjflkasdjlfkjda}$ heyo
+
 We now precisely characterize tile-based editing
 as a calculus called \ty.
 The punchline of \ty~ is the action judgment
@@ -44,7 +46,7 @@ placement between syntactic entities.
 For example, consider the \tylr~ edit state
 in pointing mode shown in Figure \ref{fig:pointing-zipper-example};
 the corresponding subject in \ty~ is
-$\pointing{\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}}$.
+$\pointing{\soptile{\snumlit{1}}\sbintile{\tprod}}{\soptile{\snumlit{2}}}$.
 
 \begin{figure}
 \centering
@@ -66,8 +68,8 @@ $\pointing{\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}}$.
 Segments $\selection$ are sequences of \emph{tiles}
 and \emph{shards}, collectively called \emph{pieces},
 as shown in Figure \ref{fig:segment-syntax}.
-The two segments $\optile{\snumlit{1}}\bintile{\tprod}$ and
-$\optile{\snumlit{2}}$ in the example above consist
+The two segments $\soptile{\snumlit{1}}\sbintile{\tprod}$ and
+$\soptile{\snumlit{2}}$ in the example above consist
 entirely of expression tiles $\tile^{\expr}$,
 the syntax for which was given in Figure \ref{fig:tile-syntax}.
 Meanwhile, the subject of the \tylr~ edit state shown in
@@ -77,9 +79,9 @@ Figure \ref{fig:selecting-zipper-example}
 %   \includegraphics[width=0.65\columnwidth]{img/zipper-example-2.png}
 % \end{figure}
 is represented in \ty~ as
-$\selecting{\shardlit{(}\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}\shardlit{)}}{\cdot}$.
-In this case, the first two segments $\shardlit{(}\optile{\snumlit{1}}\bintile{\tprod}$
-and $\optile{\snumlit{2}}\shardlit{)}$
+$\selecting{\shardlit{(}\soptile{\snumlit{1}}\sbintile{\tprod}}{\soptile{\snumlit{2}}\shardlit{)}}{\cdot}$.
+In this case, the first two segments $\shardlit{(}\soptile{\snumlit{1}}\sbintile{\tprod}$
+and $\soptile{\snumlit{2}}\shardlit{)}$
 % (the third segment is the empty segment $\cdot$)
 contain expression shards $\shard^{\expr}$,
 the syntax for which is given in Figure \ref{fig:shard-syntax-2}.
@@ -113,7 +115,7 @@ as, respectively,
   \tframelit{\sparen{\framehole}}{
     \tframelit{\cdot\framehole\cdot}{
       \tframelit{\tlet{\sprod{\svar{x}}{\svar{y}}}{\framehole}}{
-        \tframelit{\cdot\framehole\optile{\ophole}}{\froot}
+        \tframelit{\cdot\framehole\soptile{\ophole}}{\froot}
       }
     }
   }
@@ -121,7 +123,7 @@ as, respectively,
 and
 \[
   \tframelit{\tlet{\sprod{\svar{x}}{\svar{y}}}{\framehole}}{
-    \tframelit{\cdot\framehole\optile{\ophole}}{\froot}
+    \tframelit{\cdot\framehole\soptile{\ophole}}{\froot}
   }.
 \]
 

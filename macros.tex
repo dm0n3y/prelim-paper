@@ -74,6 +74,40 @@
 \newcommand{\ltiletip}{{\color{gray}\langle}}
 \newcommand{\rtiletip}{{\color{gray}\rangle}}
 
+\newlength{\myl}
+\newcommand{\soptile}[1]{%
+  \settowidth{\myl}{$#1$}%
+  \vcenter{\hbox{%
+  \begin{tikzpicture}%
+    \draw[line width=0.75pt,black!40!]
+      (-0.5ex,0)
+      -- (0,1.4ex)
+      -- (\the\myl,1.4ex)
+      -- ($ (\the\myl+0.5ex,0) $)
+      -- (\the\myl,-1.4ex)
+      -- (0,-1.4ex)
+      -- cycle;%
+    \node at ($ (\the\myl/2,0)$) {$#1$\vphantom{|}};
+  \end{tikzpicture}%
+  }}
+}
+\newcommand{\sbintile}[1]{%
+  \settowidth{\myl}{$#1$}%
+  \vcenter{\hbox{%
+  \begin{tikzpicture}%
+    \draw[line width=0.75pt,black!40!]
+      (0,0)
+      -- (-0.5ex,1.4ex)
+      -- ($ (\the\myl+0.5ex,1.4ex) $)
+      -- (\the\myl,0)
+      -- ($ (\the\myl+0.5ex,-1.4ex) $)
+      -- (-0.5ex,-1.4ex)
+      -- cycle;%
+    \node at ($ (\the\myl/2,0)$) {$#1$\vphantom{|}};
+  \end{tikzpicture}%
+  }}%
+}
+
 \newcommand{\toptile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\rtiletip$}}
 \newcommand{\tpretile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\ltiletip$}}
 \newcommand{\tposttile}[1]{\mbox{$\rtiletip\text{#1\vphantom{|}}\rtiletip$}}
@@ -83,6 +117,7 @@
 % \newcommand{\pretile}[1]{\mbox{$\ltiletip\overline{#1\vphantom{|}}\ltiletip$}}
 % \newcommand{\posttile}[1]{\mbox{$\rtiletip\overline{#1\vphantom{|}}\rtiletip$}}
 % \newcommand{\bintile}[1]{\mbox{$\rtiletip\overline{#1\vphantom{|}}\ltiletip$}}
+
 \newcommand{\optile}[1]{\mbox{$\ltiletip\text{$#1$\vphantom{|}}\rtiletip$}}
 \newcommand{\pretile}[1]{\mbox{$\ltiletip\text{$#1$\vphantom{|}}\ltiletip$}}
 \newcommand{\posttile}[1]{\mbox{$\rtiletip\text{$#1$\vphantom{|}}\rtiletip$}}
