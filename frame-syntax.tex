@@ -1,19 +1,19 @@
 \begin{figure}
   \vspace{-3px}
   \[\arraycolsep=3pt\begin{array}{rlrl}
-    \text{sequence frame} & \tframe^s & ::= & \tframelit{\tiles^s\framehole\tiles^s}{\tfrelem^s} \\
+    \text{sequence frame} & \tframe^s & ::= & \sframelit{\tiles^s\framehole\tiles^s}{\tfrelem^s} \\
     \text{pattern tile frame} & \tfrelem^{\pat} & ::= &
-      \tframelit{\sparen{\framehole}}{\tframe^{\pat}} \\
+      \tframelit{\soptile{\sparen{\framehole}}}{\tframe^{\pat}} \\
     & & \vert &
-      \tframelit{\tlam{\framehole}}{\tframe^{\expr}} \\
+      \tframelit{\spretile{\tlam{\framehole}}}{\tframe^{\expr}} \\
     & & \vert &
-      \tframelit{\tlet{\framehole}{\tiles^{\expr}}}{\tframe^{\expr}} \\
+      \tframelit{\spretile{\tlet{\framehole}{\tiles^{\expr}}}}{\tframe^{\expr}} \\
     \text{expression tile frame} & \tfrelem^{\expr} & ::= &
       \froot \\
     & & \vert &
-      \tframelit{\sparen{\framehole}}{\tframe^{\expr}} \\
+      \tframelit{\soptile{\sparen{\framehole}}}{\tframe^{\expr}} \\
     & & \vert &
-      \tframelit{\tlet{\tiles^{\pat}}{\framehole}}{\tframe^{\expr}}
+      \tframelit{\spretile{\tlet{\tiles^{\pat}}{\framehole}}}{\tframe^{\expr}}
       % \scond{}{\tiles^{\expr}}{}
   \end{array}\]
   \caption{

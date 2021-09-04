@@ -46,6 +46,87 @@
 \newcommand{\actionlit}[1]{\texttt{#1}}
 \newcommand{\direction}{d}
 
+\newlength{\tilelen}
+\newcommand{\theight}{1.3ex}
+\newcommand{\tiplen}{0.45ex}
+
+\newcommand{\soptile}[1]{%
+  \settowidth{\tilelen}{$#1$}%
+  \vcenter{\hbox{%
+  \begin{tikzpicture}%
+    \draw[line width=0.75pt,black!40!]
+      (0,-\theight)
+      -- (-\tiplen,0)
+      -- (0,\theight)
+      -- (\tilelen,\theight)
+      -- ($ (\tilelen+\tiplen,0) $)
+      -- (\the\tilelen,-\theight)
+      -- cycle;
+    \node at ($ (\tilelen/2,0)$) {$#1$\vphantom{|}};
+  \end{tikzpicture}%
+  }}%
+}
+\newcommand{\spretile}[1]{%
+  \settowidth{\tilelen}{$#1$}%
+  \vcenter{\hbox{%
+  \begin{tikzpicture}%
+    \draw[line width=0.75pt,black!40!]
+      (0,-\theight)
+      -- (-\tiplen,0)
+      -- (0,\theight)
+      -- ($ (\tilelen+\tiplen,\theight) $)
+      -- (\the\tilelen,0)
+      -- ($ (\tilelen+\tiplen,-\theight) $)
+      -- cycle;
+    \node at ($ (\tilelen/2,0)$) {$#1$\vphantom{|}};
+  \end{tikzpicture}%
+  }}%
+}
+\newcommand{\sbintile}[1]{%
+  \settowidth{\tilelen}{$#1$}%
+  \vcenter{\hbox{%
+  \begin{tikzpicture}%
+    \draw[line width=0.75pt,black!40!]
+      (-\tiplen,-\theight)
+      -- (0,0)
+      -- (-\tiplen,\theight)
+      -- ($ (\tilelen+\tiplen,\theight) $)
+      -- (\the\tilelen,0)
+      -- ($ (\tilelen+\tiplen,-\theight) $)
+      -- cycle;
+    \node at ($ (\tilelen/2,0)$) {$#1$\vphantom{|}};
+  \end{tikzpicture}%
+  }}%
+}
+
+\newcommand{\holeheight}{0.45ex}
+\newcommand{\holewidth}{0.25ex}
+\newcommand{\holetip}{0.18ex}
+
+\newcommand{\tophole}{%
+\settowidth{\tilelen}{$x$}%
+\vcenter{\hbox{%
+\begin{tikzpicture}%
+\draw[line width=0.75pt,black!40!]
+  (-\tiplen,0)
+  -- (0,\theight)
+  -- (\tilelen,\theight)
+  -- ($ (\tilelen+\tiplen,0) $)
+  -- (\the\tilelen,-\theight)
+  -- (0,-\theight)
+  -- cycle;%
+ \draw[line width=0.75pt,gray]
+  ($ (\tilelen/2-\holewidth-\holetip,0) $)
+  -- ($ (\tilelen/2-\holewidth,\holeheight) $)
+  -- ($ (\tilelen/2+\holewidth,\holeheight) $)
+  -- ($ (\tilelen/2+\holewidth+\holetip,0) $)
+  -- ($ (\tilelen/2+\holewidth,-\holeheight) $)
+  -- ($ (\tilelen/2-\holewidth,-\holeheight) $)
+  -- cycle;%
+\end{tikzpicture}%
+}}%
+}
+
 \newcommand{\ophole}{%
 \begin{tikzpicture}%
 \draw[line width=0.75pt,gray]
@@ -58,6 +139,7 @@
   -- cycle;%
 \end{tikzpicture}%
 }
+
 \newcommand{\binhole}{%
 \begin{tikzpicture}%
 \draw[line width=0.65pt,gray]
@@ -71,42 +153,42 @@
 \end{tikzpicture}%
 }
 
+\newcommand{\tbinhole}{%
+\settowidth{\tilelen}{$x$}%
+\vcenter{\hbox{%
+\begin{tikzpicture}%
+\draw[line width=0.75pt,black!40!]
+  (0,0)
+  -- (-\tiplen,\theight)
+  -- ($ (\tilelen+\tiplen,\theight) $)
+  -- (\the\tilelen,0)
+  -- ($ (\tilelen+\tiplen,-\theight) $)
+  -- (-\tiplen,-\theight)
+  -- cycle;%
+\draw[line width=0.65pt,gray]
+  ($ (\tilelen/2-\holewidth,0) $)
+  -- ($ (\tilelen/2-\holewidth-\holetip,\holeheight) $)
+  -- ($ (\tilelen/2+\holewidth+\holetip,\holeheight) $)
+  -- ($ (\tilelen/2+\holewidth,0) $)
+  -- ($ (\tilelen/2+\holewidth+\holetip,-\holeheight) $)
+  -- ($ (\tilelen/2-\holewidth-\holetip,-\holeheight) $)
+  -- cycle;%
+% \draw[line width=0.65pt,gray]
+%   (0,0.5ex)
+%   -- (-0.25ex,1ex)
+%   -- (0.75ex,1ex)
+%   -- (0.5ex,0.5ex)
+%   -- (0.75ex,0)
+%   -- (-0.25ex,0)
+%   -- cycle;%
+\end{tikzpicture}%
+}}%
+}
+
 \newcommand{\ltiletip}{{\color{gray}\langle}}
 \newcommand{\rtiletip}{{\color{gray}\rangle}}
 
-\newlength{\myl}
-\newcommand{\soptile}[1]{%
-  \settowidth{\myl}{$#1$}%
-  \vcenter{\hbox{%
-  \begin{tikzpicture}%
-    \draw[line width=0.75pt,black!40!]
-      (-0.5ex,0)
-      -- (0,1.4ex)
-      -- (\the\myl,1.4ex)
-      -- ($ (\the\myl+0.5ex,0) $)
-      -- (\the\myl,-1.4ex)
-      -- (0,-1.4ex)
-      -- cycle;%
-    \node at ($ (\the\myl/2,0)$) {$#1$\vphantom{|}};
-  \end{tikzpicture}%
-  }}
-}
-\newcommand{\sbintile}[1]{%
-  \settowidth{\myl}{$#1$}%
-  \vcenter{\hbox{%
-  \begin{tikzpicture}%
-    \draw[line width=0.75pt,black!40!]
-      (0,0)
-      -- (-0.5ex,1.4ex)
-      -- ($ (\the\myl+0.5ex,1.4ex) $)
-      -- (\the\myl,0)
-      -- ($ (\the\myl+0.5ex,-1.4ex) $)
-      -- (-0.5ex,-1.4ex)
-      -- cycle;%
-    \node at ($ (\the\myl/2,0)$) {$#1$\vphantom{|}};
-  \end{tikzpicture}%
-  }}%
-}
+\newcommand{\emptyseg}{\epsilon}
 
 \newcommand{\toptile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\rtiletip$}}
 \newcommand{\tpretile}[1]{\mbox{$\ltiletip\text{#1\vphantom{|}}\ltiletip$}}
@@ -142,13 +224,17 @@
 \newcommand{\tframe}{F}
 \newcommand{\tfrelem}{f}
 % \newcommand{\tframelit}[2]{#1 ~\gg~ #2}
-\newcommand{\ttframelit}{\rotatebox[origin=c]{90}{\textcolor{black!35!}{$\boldsymbol\gg$}}}
+\newcommand{\ttframelit}{{\color{black!35!}\boldsymbol\gg}}
+% \newcommand{\tsframelit}{\rotatebox[origin=c]{90}{\textcolor{black!35!}{$\boldsymbol\ggg$}}}
+\newcommand{\tsframelit}{{\color{black!35!}\boldsymbol\ggg}}
 \newcommand{\tframelit}[2]{#1\ \ \ttframelit\ \ #2}
+\newcommand{\sframelit}[2]{#1\ \ \tsframelit\ \ #2}
 \newcommand{\framehole}{\textcolor{black!35!}{\bullet}}
 \newcommand{\froot}{\color{black!40!}\boldsymbol\top}
 
 \newcommand{\zip}{Z}
-\newcommand{\zipper}[2]{#1\ \rotatebox[origin=c]{90}{\textcolor{black!40!}{$\boldsymbol\gtrdot$}}\ #2}
+% \newcommand{\zipper}[2]{#1\ \rotatebox[origin=c]{90}{\textcolor{black!40!}{$\boldsymbol\gtrdot$}}\ #2}
+\newcommand{\zipper}[2]{#1~{\color{black!40!}\boldsymbol\gtrdot}~#2}
 \newcommand{\subject}{B}
 \newcommand{\zframe}{M}
 \newcommand{\pointing}[2]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}#2}

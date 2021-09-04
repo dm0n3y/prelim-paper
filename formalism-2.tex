@@ -1,7 +1,5 @@
 \section{Tile-based Editor Calculus}\label{sec:formalism-2}
 
-goodbye $\soptile{testaldskjflkasdjlfkjda}$ heyo
-
 We now precisely characterize tile-based editing
 as a calculus called \ty.
 The punchline of \ty~ is the action judgment
@@ -18,6 +16,11 @@ defining the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 describing supporting judgments and relevant metatheory
 along the way.
+Our discussion will use concrete examples
+centered around edit states of the following program.
+\begin{center}
+  \texttt{\textbf{let} f = $\boldsymbol{\lambda}$ a , b \textbf{.} \textbf{(} a + b \textbf{)} / \textbf{(} a * b \textbf{)} \textbf{in} $\ophole$}
+\end{center}
 
 \subsection{Zippers} \label{sec:zippers}
 
@@ -44,23 +47,26 @@ or three \emph{segments} $\selection$.
 This decomposition encodes text-like cursor
 placement between syntactic entities.
 For example, consider the \tylr~ edit state
-in pointing mode shown in Figure \ref{fig:pointing-zipper-example};
+in pointing mode shown below;
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/zipper-example-1.png}
+\end{center}
 the corresponding subject in \ty~ is
-$\pointing{\soptile{\snumlit{1}}\sbintile{\tprod}}{\soptile{\snumlit{2}}}$.
+$\pointing{\soptile{\svar{a}}}{\sbintile{\tplus}\soptile{\svar{b}}}$.
 
-\begin{figure}
-\centering
-\begin{subfigure}[c]{0.65\columnwidth}
-  \includegraphics[width=\textwidth]{img/zipper-example-1.png}
-  \caption{}\label{fig:pointing-zipper-example}
-\end{subfigure}
-\begin{subfigure}[c]{0.65\columnwidth}
-  \includegraphics[width=\textwidth]{img/zipper-example-2.png}
-  \caption{}\label{fig:selecting-zipper-example}
-\end{subfigure}
-\caption{\note{todo}}
-\label{fig:zipper-examples}
-\end{figure}
+% \begin{figure}
+% \centering
+% \begin{subfigure}[c]{0.65\columnwidth}
+%   \includegraphics[width=\textwidth]{img/zipper-example-1.png}
+%   \caption{}\label{fig:pointing-zipper-example}
+% \end{subfigure}
+% \begin{subfigure}[c]{0.65\columnwidth}
+%   \includegraphics[width=\textwidth]{img/zipper-example-2.png}
+%   \caption{}\label{fig:selecting-zipper-example}
+% \end{subfigure}
+% \caption{\note{todo}}
+% \label{fig:zipper-examples}
+% \end{figure}
 
 \input{segment-syntax}
 \input{shard-syntax-2}
@@ -68,22 +74,37 @@ $\pointing{\soptile{\snumlit{1}}\sbintile{\tprod}}{\soptile{\snumlit{2}}}$.
 Segments $\selection$ are sequences of \emph{tiles}
 and \emph{shards}, collectively called \emph{pieces},
 as shown in Figure \ref{fig:segment-syntax}.
-The two segments $\soptile{\snumlit{1}}\sbintile{\tprod}$ and
-$\soptile{\snumlit{2}}$ in the example above consist
+The two segments $\soptile{\svar{a}}$ and
+$\sbintile{\tplus}\soptile{\svar{b}}$ in the last example consist
 entirely of expression tiles $\tile^{\expr}$,
 the syntax for which was given in Figure \ref{fig:tile-syntax}.
-Meanwhile, the subject of the \tylr~ edit state shown in
-Figure \ref{fig:selecting-zipper-example}
+Meanwhile, the subject of the \tylr~ edit state shown below
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/zipper-example-2.png}
+\end{center}
 % \begin{figure}[h]
 %   \centering
 %   \includegraphics[width=0.65\columnwidth]{img/zipper-example-2.png}
 % \end{figure}
 is represented in \ty~ as
-$\selecting{\shardlit{(}\soptile{\snumlit{1}}\sbintile{\tprod}}{\soptile{\snumlit{2}}\shardlit{)}}{\cdot}$.
-In this case, the first two segments $\shardlit{(}\soptile{\snumlit{1}}\sbintile{\tprod}$
-and $\soptile{\snumlit{2}}\shardlit{)}$
-% (the third segment is the empty segment $\cdot$)
-contain expression shards $\shard^{\expr}$,
+\newcommand{\lamab}{\spretile{\tlam{\sprod{\svar{a}}{\svar{b}}}}}
+\newcommand{\parenaplusb}{\soptile{\sparen{\splus{\svar{a}}{\svar{b}}}}}
+\newcommand{\parenamultb}{\soptile{\sparen{\smult{\svar{a}}{\svar{b}}}}}
+\[
+  \selecting{\shardlit{let}}{\soptile{\svar{f}}\shardlit{=}}{%
+    \lamab
+    \parenaplusb
+    \sbintile{\tdiv}
+    \parenamultb
+  }.
+\]
+(We elide the grey-outline decorations on nested pieces
+for visual clarity.)
+% $\selecting{\shardlit{(}\soptile{\snumlit{1}}\sbintile{\tprod}}{\soptile{\snumlit{2}}\shardlit{)}}{\cdot}$.
+In this case, the three segments $\shardlit{let}$,
+$\soptile{\svar{f}}\shardlit{=}$, and
+$\lamab\parenaplusb\sbintile{\tdiv}\parenamultb$
+each contain an expression shard $\shard^{\expr}$,
 the syntax for which is given in Figure \ref{fig:shard-syntax-2}.
 
 \input{frame-syntax}
@@ -97,10 +118,11 @@ arranged bottom-up such that the first container immediately
 wraps the subject, each container other than the last points to its
 parent container, and the last represents the edit state root.
 
-The syntax for frames is given in Figure \ref{fig:frame-syntax}.
-At the top level, frames $\zframe$ are sort-indexed \emph{tile frames}
-$\tfrelem^s$, which represent tiles with a missing child of
-sort $s$.
+Revisiting Figure \ref{fig:zipper-syntax},
+frames $\zframe$ are sort-indexed \emph{tile frames}
+$\tfrelem^s$, the syntax for which is given in Figure \ref{fig:frame-syntax}.
+Tile frames $\tfrelem^s$ represent tiles with a missing
+child of sort $s$.
 Other than the program root $\froot$, we annotate tile frame literals
 with $\framehole$ symbols in place of the missing children.
 Each tile frame $\tfrelem^s$ points to its parent
@@ -108,41 +130,24 @@ Each tile frame $\tfrelem^s$ points to its parent
 sibling tiles of sort $s'$.
 Each sequence frame $\tframe^s$ in turn points to its parent
 tile frame $\tfrelem^s$.
-For example, the frames of the \tylr~ edit states in
-Figure \ref{fig:zipper-examples} are represented in \ty~
-as, respectively,
-\[
-  \tframelit{\sparen{\framehole}}{
-    \tframelit{\cdot\framehole\cdot}{
-      \tframelit{\tlet{\sprod{\svar{x}}{\svar{y}}}{\framehole}}{
-        \tframelit{\cdot\framehole\soptile{\ophole}}{\froot}
-      }
-    }
-  }
-\]
-and
-\[
-  \tframelit{\tlet{\sprod{\svar{x}}{\svar{y}}}{\framehole}}{
-    \tframelit{\cdot\framehole\soptile{\ophole}}{\froot}
-  }.
-\]
+For example, the frames corresponding to the two
+subject examples described earlier are, respectively,
+\begin{align*}
+  & \tframelit{\soptile{\sparen{\framehole}}}{\lamab\framehole\sbintile{\tdiv}\parenamultb} \\
+  \tsframelit\ \ & \tframelit{\spretile{\tlet{\svar{f}}{\framehole}}}{\emptyseg\framehole\tophole} \\
+  \tsframelit\ \ & \froot
+\end{align*}
+and $\froot$.
 
 \subsection{Actions} \label{sec:actions}
 
 \input{action-syntax}
 
 Figure \ref{fig:action-syntax} gives the syntax of actions $\action$.
-We will now describe each of the eight rules defining the
-action judgment $\performAction{\editState_1}{\action}{\editState_2}$.
-
-In these rules, we aim to support a one-dimensional interaction
-model, where the client may view the total edit
-state as its serialization, navigate through it
-in a linear fashion, and select arbitrary subranges.
-Toward these ends, actions in \ty~ rely
-on a form of incremental unparsing and reparsing by which
-hierarchical structures may be temporarily ``flattened'' as needed,
-as we will first encounter in the next section.
+Actions are given meaning by the action judgment
+$\performAction{\editState_1}{\action}{\editState_2}$,
+whose eight defining rules we will describe in
+this section.
 
 % \note{introduce action syntax}
 
@@ -172,9 +177,6 @@ as we will first encounter in the next section.
 \subsubsection{Moving}
 
 We start with basic movement, the rule for which is shown below.
-Movement in each mode defers to an internally recursive auxiliary
-judgment, in this case $\pmove{\editState_1}{\direction}{\editState_2}$,
-defined in Figure \ref{fig:move-pointing}.
 \[
   \inferrule[Move]{
     \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
@@ -188,6 +190,21 @@ defined in Figure \ref{fig:move-pointing}.
     }
   }
 \]
+Movement in each mode defers to an internally recursive auxiliary
+judgment, in this case $\pmove{\editState_1}{\direction}{\editState_2}$,
+defined in Figure \ref{fig:move-pointing}.
+
+We designed movement in \ty~ with the aim of supporting
+a one-dimensional interaction model, where the client may
+view the total edit state as its serialization, navigate through it
+in a linear fashion, and select arbitrary subranges.
+Toward these ends, actions in \ty~ rely
+on a form of incremental unparsing and reparsing by which
+hierarchical structures may be temporarily serialized
+as needed for linear traversal or partial selection.
+
+
+
 
 \input{move-pointing}
 
