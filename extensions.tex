@@ -1,4 +1,4 @@
-\section{Extensions \& Limitations}
+\section{Extensions \& Ongoing Work}
 
 \tylr~ is a minimal demonstration of tile-based
 editing, optimized for exposition rather than practical use,
@@ -47,17 +47,59 @@ upon with the matching same-sort-tipped shards in the backpack.
 
 \subsection{Ongoing work}
 
-\note{talk about evaluation plans}
+\tylr~ demonstrates novel structural selection and restructuring
+methods, but as an expository tool, it is limited
+as a practical authoring tool in several respects.
+\tylr~ edit states are visually rendered as a single line
+no matter their size.
+Construction is invoked with single keypresses (\eg,
+a \code{let}-tile is constructed using the \texttt{=} key)
+and number literals and variables are limited to
+single digits and characters.
+Moreover, \tylr's underlying language is tiny and
+features neither a type system nor an evaluation semantics.
 
-\begin{itemize}
-\item pilot study of earlier ad hoc design, Hazel implementation in progress for user study of latest design
-\item parsed structure should be maintained with edit state
-\item dealing with text literals
-\item empty delimiters
-\item sequences eg blocks of statements
-\item automatic selection and restructuring
-\item rematching delimiters
-\item shared delimiters (eg parenthesized vs fn tight ap)
-\item 2d layout
-\item free floating comments
-\end{itemize}
+We developed \tylr~ with the intention of scaling up
+its editing techniques to Hazel \note{cite},
+a more mature structure editor that renders
+edit states in the usual multi-line text-like layout.
+Scaling up tile-based editing to multi-line output
+poses new design and engineering challenges
+such as integrating with pretty printed layout,
+often computationally expensive to produce;
+visually summarizing large selections in the backpack;
+and animating layout transitions, which
+we believe will become necessary to
+comprehend the rearrangement of multiple large program
+components in the course of restructuring.
+
+Hazel additionally maintains strong
+\emph{semantic} guarantees: every edit state
+has a well-defined type and can be run to
+produce a well-defined result.
+The underlying expression language features, in
+addition to empty holes in like \tylr, non-empty
+holes that cordon off ill-typed portions
+of the program.
+Hazel is currently designed around
+a type-directed action semantics, which
+propagates contextual typing information
+down to the subject of its edit state
+so that it can insert and remove non-empty holes
+as needed to maintain well-formedness.
+We are currently working on theoretically decoupling
+Hazel's typing concerns from the editing concerns
+so that we may modularly extend tile-based editing
+with Hazel-style semantic invariants.
+
+We implemented and ran a small pilot study on an early limited
+prototype of restructuring mode in July 2019, which indicated
+users quickly understood and appreciated the workflow.
+In the coming months, we plan to run a more thorough, controlled user study in which
+we compare the efficiency of and user sentiment
+toward text editing and tile-based editing in Hazel.
+In the long run, we would like to integrate Hazel into
+select assignments of EECS 490, the programming languages
+course at the University of Michigan, to evaluate the
+usability and effectiveness of tile-based structure editing
+in an educational context.
