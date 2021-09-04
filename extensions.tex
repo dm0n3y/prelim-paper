@@ -10,8 +10,8 @@ editing to support larger-scale program authoring.
 
 \subsection{From \ty~ to \tylr}
 
-\ty~ does not model \tylr~ full feature set.
-In particular, it doesn not support left-to-right selecting
+\ty~ does not model \tylr's full feature set.
+In particular, it doesn not support left-to-right selecting,
 multi-selection restructuring, or automatic restructuring
 upon construction.
 
@@ -24,13 +24,25 @@ in Figure \ref{fig:move-selecting}
 with mirror forms of its current rules.
 
 The second and third limitations are related
-and can be overcome together.
-This involves extending
-the restructuring variant $\restructuring{\selection}{\selection}{\selection}$...
-\note{talk about extending backpack to be zippered list
-carrying multiple selections, extending intact vs cracked
-check in restructuring rules to full vs hungry,
-and adding intermediate same-sort-ended shard variants}
+and are overcome together.
+First, the restructuring variant $\restructuring{\selection}{\selection}{\selection}$
+of subjects is replaced with $\restructuring{\selection}{\mathcal{C}}\selection$,
+where $\mathcal{C}$ is a zippered list of selections in the backpack,
+the focused selection being the one to put down next.
+Second, the sort-specific shard datatypes in Figure \ref{fig:shard-syntax-2}
+are extended with
+the new form $\shardlit{\texttt{let}~\tiles^{\pat}~\texttt{=}}$.
+More generally, shards are extended with new forms
+representing intermediate assemblies of shards that
+bidelimit a tile's children of different sort.
+Such intermediate shards have the useful property of having same-sort
+tips and represent the minimal restructurable units of the
+parent tile.
+Finally we extend the action datatype in Figure \ref{fig:action-syntax}
+so that the $\actionlit{construct}$ action takes a shard instead of
+a complete tile---specifically, we expect this shard to have same-sort tips.
+Constructing such a shard then enters restructuring mode
+upon with the matching same-sort-tipped shards in the backpack.
 
 
 \subsection{Ongoing work}
