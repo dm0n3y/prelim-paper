@@ -33,7 +33,7 @@ In this work, we refer to $B$ as the \emph{subject} and $M$
 as the \emph{frame}.
 
 \paragraph{Subjects}
-Subjects $\subject$ are \emph{modal}, the three
+Subjects $\subject$ are modal, the three
 variants corresponding to the pointing, selecting,
 and restructuring modes we described using \tylr~
 in Section \ref{sec:overview}.
@@ -106,7 +106,7 @@ Each tile frame $\tfrelem^s$ points to its parent
 sibling tiles of sort $s'$.
 Each sequence frame $\tframe^s$ in turn points to its parent
 tile frame $\tfrelem^s$.
-For example, the frames of the edit states in
+For example, the frames of the \tylr~ edit states in
 Figure \ref{fig:zipper-examples} are represented in \ty~
 as, respectively,
 \[
@@ -129,12 +129,18 @@ and
 
 \input{action-syntax}
 
-Figure \ref{fig:action-syntax} gives the syntax of actions $a$.
-
-
-
-In this section, we will describe each of the eight rules defining the
+Figure \ref{fig:action-syntax} gives the syntax of actions $\action$.
+We will now describe each of the eight rules defining the
 action judgment $\performAction{\editState_1}{\action}{\editState_2}$.
+
+In these rules, we aim to support a one-dimensional interaction
+model, where the client may view the total edit
+state as its serialization, navigate through it
+in a linear fashion, and select arbitrary subranges.
+Toward these ends, actions in \ty~ rely
+on a form of incremental unparsing and reparsing by which
+hierarchical structures may be temporarily ``flattened'' as needed,
+as we will first encounter in the next section.
 
 % \note{introduce action syntax}
 
@@ -163,7 +169,10 @@ action judgment $\performAction{\editState_1}{\action}{\editState_2}$.
 
 \subsubsection{Moving}
 
-
+We start with basic movement, the rule for which is shown below.
+Movement in each mode defers to an internally recursive auxiliary
+judgment, in this case $\pmove{\editState_1}{\direction}{\editState_2}$,
+defined in Figure \ref{fig:move-pointing}.
 \[
   \inferrule[Move]{
     \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
