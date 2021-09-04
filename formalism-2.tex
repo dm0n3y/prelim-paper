@@ -9,24 +9,26 @@ via action $\action$, and its governing invariant
 that actions preserve parsability into a well-formed
 program term.
 
-We will begin our presentation in Section ??
+We will begin our presentation in Section \ref{sec:zippers}
 by describing the syntax of edit states $Z$.
-Then, in Section ??, we will present each rule
+Then, in Section \ref{sec:actions}, we will present each rule
 defining the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 describing supporting judgments and relevant metatheory
 along the way.
 
-\subsection{Zippers}
+\subsection{Zippers} \label{sec:zippers}
 
-Figure ?? shows the syntax of \ty~ edit states $\zip$,
+\input{zipper-syntax}
+
+Figure \ref{fig:zipper-syntax} shows the syntax of \ty~ edit states $\zip$,
 which follow a variant of the well-known
 \emph{zipper} pattern \cite{zipper}.
 In particular, they have a \emph{bottom-up} zipper
 structure---decomposing the total edit state $\zip$ into a
 focused substructure $\subject$ and its surrounding context
 $\zframe$---unlike the top-down structure used in other
-work \note{cite}.
+work \cite{Hazelnut}.
 In this work, we refer to $B$ as the \emph{subject} and $M$
 as the \emph{frame}.
 
@@ -42,14 +44,17 @@ placement between syntactic entities.
 For example, consider the following edit state
 in pointing mode in \tylr.
 
-\note{img}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\columnwidth]{img/zipper-example-1.png}
+\end{figure}
 
 \noindent
 The corresponding subject in \ty~ is
-\note{(need to figure out under/overlines)}
-\[
-  \pointing{\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}}
-\]
+$\pointing{\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}}$.
+
+\input{segment-syntax}
+\input{shard-syntax-2}
 
 Segments $\selection$ are sequences of \emph{tiles}
 and \emph{shards}, collectively called \emph{pieces},
@@ -58,14 +63,22 @@ The two segments $\optile{\snumlit{1}}\bintile{\tprod}$ and
 $\optile{\snumlit{2}}$ in the example above consist
 entirely of expression tiles $\tile^{\expr}$,
 the syntax for which was given in Figure \ref{fig:tile-syntax}.
-\note{give another tylr example with a selection containing
-a shard, introduce shards in Figure \ref{fig:shard-syntax-2},
-give tylrcore version of the edit state in selecting mode}
+Meanwhile, the subject of the following edit state in \tylr
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.65\columnwidth]{img/zipper-example-2.png}
+\end{figure}
 
-\input{zipper-syntax}
-\input{segment-syntax}
-\input{shard-syntax-2}
+\noindent
+is represented in \ty~ as
+$\selecting{\shardlit{(}\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}\shardlit{)}}{\cdot}$.
+In this case, the first two segments $\shardlit{(}\optile{\snumlit{1}}\bintile{\tprod}$
+and $\optile{\snumlit{2}}\shardlit{)}$
+% (the third segment is the empty segment $\cdot$)
+contain expression shards $\shard^{\expr}$,
+the syntax for which is given in Figure \ref{fig:shard-syntax-2}.
+
 \input{frame-syntax}
 
 \paragraph{Frames}
@@ -91,7 +104,7 @@ tile frame $\tfrelem^s$.
 \note{review both examples from subject section}
 
 
-\subsection{Actions} \label{sec:actions-2}
+\subsection{Actions} \label{sec:actions}
 
 \input{action-syntax}
 
@@ -430,7 +443,7 @@ Hole fixing is governed by the following lemma.
 
 \input{move-restructuring}
 
-\subsection{Deleting}
+\subsubsection{Deleting}
 \[
   \inferrule[Delete]{
     \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
