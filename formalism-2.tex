@@ -41,17 +41,24 @@ Each mode decomposes the total subject into two
 or three \emph{segments} $\selection$.
 This decomposition encodes text-like cursor
 placement between syntactic entities.
-For example, consider the following edit state
-in pointing mode in \tylr.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.65\columnwidth]{img/zipper-example-1.png}
-\end{figure}
-
-\noindent
-The corresponding subject in \ty~ is
+For example, consider the \tylr~ edit state
+in pointing mode shown in Figure \ref{fig:pointing-zipper-example};
+the corresponding subject in \ty~ is
 $\pointing{\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}}$.
+
+\begin{figure}
+\centering
+\begin{subfigure}[c]{0.65\columnwidth}
+  \includegraphics[width=\textwidth]{img/zipper-example-1.png}
+  \caption{}\label{fig:pointing-zipper-example}
+\end{subfigure}
+\begin{subfigure}[c]{0.65\columnwidth}
+  \includegraphics[width=\textwidth]{img/zipper-example-2.png}
+  \caption{}\label{fig:selecting-zipper-example}
+\end{subfigure}
+\caption{\note{todo}}
+\label{fig:zipper-examples}
+\end{figure}
 
 \input{segment-syntax}
 \input{shard-syntax-2}
@@ -63,14 +70,12 @@ The two segments $\optile{\snumlit{1}}\bintile{\tprod}$ and
 $\optile{\snumlit{2}}$ in the example above consist
 entirely of expression tiles $\tile^{\expr}$,
 the syntax for which was given in Figure \ref{fig:tile-syntax}.
-Meanwhile, the subject of the following edit state in \tylr
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.65\columnwidth]{img/zipper-example-2.png}
-\end{figure}
-
-\noindent
+Meanwhile, the subject of the \tylr~ edit state shown in
+Figure \ref{fig:selecting-zipper-example}
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=0.65\columnwidth]{img/zipper-example-2.png}
+% \end{figure}
 is represented in \ty~ as
 $\selecting{\shardlit{(}\optile{\snumlit{1}}\bintile{\tprod}}{\optile{\snumlit{2}}\shardlit{)}}{\cdot}$.
 In this case, the first two segments $\shardlit{(}\optile{\snumlit{1}}\bintile{\tprod}$
@@ -101,8 +106,24 @@ Each tile frame $\tfrelem^s$ points to its parent
 sibling tiles of sort $s'$.
 Each sequence frame $\tframe^s$ in turn points to its parent
 tile frame $\tfrelem^s$.
-\note{review both examples from subject section}
-
+For example, the frames of the edit states in
+Figure \ref{fig:zipper-examples} are represented in \ty~
+as, respectively,
+\[
+  \tframelit{\sparen{\framehole}}{
+    \tframelit{\cdot\framehole\cdot}{
+      \tframelit{\tlet{\sprod{\svar{x}}{\svar{y}}}{\framehole}}{
+        \tframelit{\cdot\framehole\optile{\ophole}}{\froot}
+      }
+    }
+  }
+\]
+and
+\[
+  \tframelit{\tlet{\sprod{\svar{x}}{\svar{y}}}{\framehole}}{
+    \tframelit{\cdot\framehole\optile{\ophole}}{\froot}
+  }.
+\]
 
 \subsection{Actions} \label{sec:actions}
 
