@@ -182,7 +182,7 @@ the course of this section.
 
 \subsubsection{Moving}
 
-\ty's actions are designed to support
+\ty's actions are designed around
 a one-dimensional interaction model, where the client may
 view the total edit state as its serialization, navigate through it
 in a linear fashion, and select arbitrary subranges.
@@ -277,8 +277,8 @@ $\tpiecesdd$ we call \emph{segment disassembly}.
 
 Segment disassembly is analogous to string derivation for a
 context-free grammar (CFG),
-where a string containing terminal and nonterminal symbols is iteratively
-rewritten according to the grammar rules.
+where nonterminal symbols in a string
+are iteratively rewritten according to the grammar rules.
 A parser for a CFG may then be characterized as a function
 that takes a string of terminal symbols and identifies,
 if any exist,
@@ -319,8 +319,8 @@ We define disassembly and assembly of zippers in a similar fashion.
 Figure \ref{fig:frame-disassembly} defines the step-disassembly
 judgments for frames and zippers.
 The first judgment $\framedu{\zframe}{\zip}$ takes a frame $\zframe$
-and disassembles its head frame tile to produce a pointing zipper
-whose subject consists of the frame tile's shards and sibling tiles,
+and disassembles the head tile frame to produce a pointing zipper
+whose subject consists of the tile frame's shards and sibling tiles,
 \eg,
 \[
   \framedu{
@@ -360,9 +360,9 @@ disassembling to it.
 \noindent
 We say that the operator $\parseZipper{\cdot}$ performs \emph{zipper assembly}.
 
-\note{------break------}
-
-The rule for movement in pointing mode is shown below.
+With the machinery of assembly and disassembly in hand,
+we may now define movement in pointing mode, the rule
+for which is shown below.
 \[
   \inferrule[Move]{
     \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
@@ -388,111 +388,25 @@ iteratively disassemble in-place whatever is to the
 right of the cursor until that is no longer possible,
 move past an atomic piece, and reassemble the pieces.
 
-\begin{figure*}
-  \begin{minipage}[t]{0.45\textwidth}
-  \centering
-  \[
-    \zip\ =\ \zipper{
-      \pointing{
-        \prefixtwo\shardlit{(}
-      }{
-        \threefour\shardlit{)}
-      }
-    }{
-      \froot
-    }
-    % \zip'\ &=\ \zipper{
-    %   \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
-    % }{
-    %   \soptile{\sparen{\framehole}}
-    %   ~\ttframelit~
-    %   \prefixtwo\framehole~\emptyseg
-    % }
-  \]
-  \end{minipage}
-  \begin{minipage}[t]{0.45\textwidth}
-  \centering
-    \[
-      \zip'\ =\ \zipper{
-        \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
-      }{
-        \soptile{\sparen{\framehole}}
-        ~\ttframelit~
-        \prefixtwo\framehole~\emptyseg
-      }
-    \]
-  \end{minipage}
-  \begin{minipage}[t]{0.88\textwidth}
-    \begin{mathpar}
-      \inferrule* [left=\texttt{PMoveRightDisassembles}] {
-        \inferrule*{}{\pieceDisassembles{
-          \parenthreefour
-        }{
-          \shardlit{(}\threefour\shardlit{)}
-        }} \\
-        \inferrule* [lab=\texttt{PMoveRightAtomic}]{
-          \inferrule*{}{\nsegmentdd{\shardlit{(}}}
-          % \parseSelection{\prefixtwo\shardlit{(}} = \prefixtwo\shardlit{(} \\
-          % \parseZipper{
-          %   \zipper{
-          %     \pointing{
-          %       \prefixtwo\shardlit{(}
-          %     }{
-          %       \threefour\shardlit{)}
-          %     }
-          %   }{
-          %     \froot
-          %   }
-          % } = \zip
-        }{
-          \pmove{
-            \zipper{
-              \pointing{\prefixtwo}{\shardlit{(}\threefour\shardlit{)}}
-            }{\froot}
-          }{\texttt{right}}{
-            \zip
-          }
-        } \\
-        \inferrule*{}{\parseZipper{
-            \zip
-          } = \zip'}
-      }{
-        \pmove{
-          \zipper{
-            \pointing{\prefixtwo}{\parenthreefour}
-          }{
-            \froot
-          }
-        }{\texttt{right}}{
-          \zip'
-        }
-      }
-    \end{mathpar}
-  \end{minipage}
-  \caption{\note{todo}}
-  \label{fig:pmove-derivation}
-  \end{figure*}
+\input{move-pointing-derivation}
 
-More concretely, consider the derivation in Figure \ref{fig:pmove-derivation},
-which moves the cursor right starting with the zipper
+More concretely, consider the derivation of the
+rightward movement in Figure \ref{fig:pmove-derivation},
+which we tour from an implementator's perspective,
+starting with the input edit state
 $\zipper{\pointing{\prefixtwo}{\parenthreefour}}{\froot}$.
-The first antecedent of the applied rule \\ \texttt{PMoveRightDisassembles}
-tells us that the piece $\parenthreefour$ \emph{step-disassembles}
-to the segment $\shardlit{(}\threefour\shardlit{)}$.
-Step-disassembly is the core relation by which shards are produced
-from tiles; the full definition is given in Figure \ref{fig:subject-disassembly}
-\note{(split figure apart)}.
-
-The second antecedent tells us that moving right
-on the zipper $\zipper{
-  \pointing{\prefixtwo}{\shardlit{(}\threefour\shardlit{)}}
-}{\froot}$ moves the cursor past the atomic shard $\shardlit{(}$
-to produce $Z$ (defined at the top of
-Figure \ref{fig:pmove-derivation}).
-Finally the third antecedent tells us that calling
-\emph{zipper assembly} on $Z$ produces $Z'$, the final
-result of this movement.
-
+Looking to the right of the cursor, we find a piece
+$\parenthreefour$ that step-disassembles to
+$\shardlit{(}\threefour\shardlit{)}$, as shown
+in the first antecedent of the applied rule \\
+\texttt{PMoveRightDisassembles}.
+We accordingly replace the piece with its step-disassemblage
+and recursively invoke rightward movement.
+Now the piece $\shardlit{(}$ to the right of the cursor is atomic,
+as shown in the antecedent of \texttt{PMoveRightAtomic},
+so we simply move it to the left of the cursor to produce $\zip$.
+Finally, we invoke zipper assembly on $\zip$ to reassemble
+the parentheses shards into a tile frame.
 
 \subsubsection{Constructing}
 \[

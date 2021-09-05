@@ -1,0 +1,94 @@
+\begin{figure*}
+  \begin{minipage}[t]{0.1\textwidth}
+  \centering
+  \[\arraycolsep=3pt\begin{array}{ccl}
+    \zip & = & \zipper{
+      \pointing{
+        \prefixtwo\shardlit{(}
+      }{
+        \threefour\shardlit{)}
+      }
+    }{
+      \froot
+    } \\
+    \parseZipper{\zip} & = &
+    \zipper{
+        \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+      }{
+        \soptile{\sparen{\framehole}}
+        ~\ttframelit~
+        \prefixtwo\framehole~\emptyseg
+      }
+    % \zip'\ &=\ \zipper{
+    %   \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+    % }{
+    %   \soptile{\sparen{\framehole}}
+    %   ~\ttframelit~
+    %   \prefixtwo\framehole~\emptyseg
+    % }
+  \end{array}\]
+  \end{minipage}
+  % \begin{minipage}[t]{0.45\textwidth}
+  % \centering
+  %   \begin{align*}
+  %     \zip'\ =\ \zipper{
+  %       \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+  %     }{
+  %       \soptile{\sparen{\framehole}}
+  %       ~\ttframelit~
+  %       \prefixtwo\framehole~\emptyseg
+  %     }
+  %   \end{align*}
+  % \end{minipage}
+  \begin{minipage}[t]{0.88\textwidth}
+    \vspace{10pt}
+    \begin{mathpar}
+      \inferrule* [left=\texttt{PMoveRightDisassembles}] {
+        \inferrule*{}{\pieceDisassembles{
+          \parenthreefour
+        }{
+          \shardlit{(}\threefour\shardlit{)}
+        }} \\
+        \inferrule* [lab=\texttt{PMoveRightAtomic}]{
+          \inferrule*{}{\nsegmentdd{\shardlit{(}}}
+          % \parseSelection{\prefixtwo\shardlit{(}} = \prefixtwo\shardlit{(} \\
+          % \parseZipper{
+          %   \zipper{
+          %     \pointing{
+          %       \prefixtwo\shardlit{(}
+          %     }{
+          %       \threefour\shardlit{)}
+          %     }
+          %   }{
+          %     \froot
+          %   }
+          % } = \zip
+        }{
+          \pmove{
+            \zipper{
+              \pointing{\prefixtwo}{\shardlit{(}\threefour\shardlit{)}}
+            }{\froot}
+          }{\texttt{right}}{
+            \zip
+          }
+        }
+        % \\
+        % \inferrule*{}{\parseZipper{
+        %     \zip
+        %   } = \zip'}
+      }{
+        \pmove{
+          \zipper{
+            \pointing{\prefixtwo}{\parenthreefour}
+          }{
+            \froot
+          }
+        }{\texttt{right}}{
+          \parseZipper{\zip}
+        }
+      }
+    \end{mathpar}
+  \end{minipage}
+  \caption{\note{todo}}
+  \label{fig:pmove-derivation}
+\end{figure*}
