@@ -61,8 +61,22 @@
         \tfrelem^{\expr}
       }
   \end{array}\]
+  \vspace{0.1cm}
+
+  \judgbox{\zipperdu{\editState_1}{\editState_2}}{$\editState_1$ step-disassembles to $\editState_2$}
+  \begin{mathpar}
+    \inferrule[]{
+      \framedu{\zframe}{\zipper{\pointing{\selection'_1}{\selection'_2}}{\zframe'}}
+    }{
+      \zipperdu{
+        \zipper{\pointing{\selection_1}{\selection_2}}{\zframe}
+      }{
+        \zipper{\pointing{\selection'_1\selection_1}{\selection_2\selection'_2}}{\zframe'}
+      }
+    }
+  \end{mathpar}
   \caption{
-    Disassembling a tile frame. \note{fix spacing}
+    Step-disassembly of frames and zippers.
   }
-  \label{fig:disassemble-tile}
+  \label{fig:frame-disassembly}
 \end{figure}

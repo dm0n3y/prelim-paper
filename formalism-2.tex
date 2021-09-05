@@ -152,8 +152,8 @@ end of non-root frames.
 Figure \ref{fig:action-syntax} gives the syntax of actions $\action$.
 Actions are given meaning by the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
-whose eight defining rules we will describe in
-this section.
+whose eight defining rules we will describe over
+the course of this section.
 
 % \note{introduce action syntax}
 
@@ -190,8 +190,177 @@ Toward these ends, actions rely
 on a form of incremental unparsing and reparsing by which
 hierarchical structures may be temporarily serialized
 as needed for linear traversal or partial selection.
-We will first encounter this pattern as we turn our attention
-to movement in pointing mode.
+In this section, we will introduce the operations of
+\emph{disassembly} and \emph{assembly} of segments
+and zippers, then show how these operations are used
+to define movement in pointing mode.
+
+
+% We will first encounter this pattern as we turn our attention
+% to movement in pointing mode.
+
+
+
+
+% The tile $\parenthreefour$ to the right of the cursor disassembles
+% to $\shardlit{(}\threefour\shardlit{)}$, so
+% the rule \texttt{PMoveRightDisassembles} defers to
+% result of moving
+
+% \newcommand{\aplusb}{\soptile{\svar{a}}\sbintile{\tplus}\soptile{\svar{b}}}
+% \begin{figure*}
+% \begin{mathpar}
+%   \inferrule*{
+%     \pieceDisassembles{\parenaplusb}{\shardlit{(}\aplusb\shardlit{)}}
+%   }{
+%     \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~\zframe\
+% \tpmove{\texttt{right}}\  \pointing{\emptyseg}{\aplusb}\
+% \tzipper\  \parenfrm\
+% \tsframelit\  \zframe
+%   }
+% \end{mathpar}
+% \end{figure*}
+
+
+% From an implementation standpoint, we may understand this judgment
+% as, given an input zipper $\zip$ in pointing mode
+% and a direction $\direction$ to move,
+
+
+
+% Consider how we would derive the conclusion
+% \begin{align*}
+% & \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~\zframe \\
+% \tpmove{\texttt{right}}\ \ & \pointing{\emptyseg}{\aplusb} \\
+% \tzipper\ \ & \parenfrm \\
+% \tsframelit\ \ & \zframe
+% \end{align*}
+% Reasoning backward, we  have last applied either
+% \texttt{PMoveRightAtomic} or \texttt{PMoveRightDisassembles}
+% because the suffix of the initial state is non-empty.
+
+% \[
+%   \pmove{
+%     \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~M
+%   }{
+%     \texttt{right}
+%   }{
+%     yo
+%   }
+% \]
+
+
+% Suppose we have the edit state
+% \begin{align*}
+%   \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~M
+% \end{align*}
+% and we perform the action $\actionlit{move}\ \texttt{right}$.
+
+% \input{piece-disassembly}
+\input{subject-disassembly}
+
+\newcommand{\prefixtwo}{\soptile{\snumlit{2}}\sbintile{\tmult}}
+\newcommand{\parenthreefour}{\soptile{\sparen{\splus{\snumlit{3}}{\snumlit{4}}}}}
+\newcommand{\threefour}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+
+Figure \ref{fig:subject-disassembly} defines the \emph{step-disassembly}
+judgments for pieces and segments.
+The first judgment $\pieceDisassembles{\selem}{\selection}$
+takes a piece $\selem$ and produces a segment $\selection$ of its constituent
+shards and children tiles, \eg,
+$\pieceDisassembles{\parenthreefour}{\shardlit{(}\threefour\shardlit{)}}$.
+The second judgment $\stepDisassembleSelection{\selection_1}{\selection_2}$
+chooses a piece in $\selection_1$ and step-disassembles it
+in-place to produce $\selection_2$.
+The reflexive transitive closure $\tpiecesdd^*$ of
+$\tpiecesdd$ we call \emph{segment disassembly}.
+
+Segment disassembly is analogous to string derivation for a
+context-free grammar (CFG),
+where a string containing terminal and nonterminal symbols is iteratively
+rewritten according to the grammar rules.
+A parser for a CFG may then be characterized as a function
+that takes a string of terminal symbols and identifies,
+if any exist,
+a derivation from the grammar's starting nonterminal
+symbol to the input string.
+We may similarly characterize a parser on pieces according
+to the disassembly relation.
+In this case, however, our parsing goal is maximal,
+not maximum, structure, \ie, the parser
+need not identify a disassembly connecting the input
+shards to unbroken tiles, but need only assemble shards
+together opportunistically.
+% \note{too hand-wavey, come back and revise}
+
+More precisely, we can show that segment disassembly is a
+partial order, and that every segment in this order
+has a unique maximal segment that disassembles to it.
+\begin{lemma}
+  $\tpiecesdd^*$ is a partial order.
+\end{lemma}
+\begin{lemma}\label{lemma:unique-parsed-selection}
+  For every segment $\selection$, there exists a unique
+  segment $\parseSelection{\selection}$ such that:
+  \begin{itemize}
+  \item $\parseSelection{\selection}\searrow^*\selection$, and
+  \item $\parseSelection{\selection}$ is maximal: if $\selection'\searrow^*\parseSelection{\selection}$ then $\selection' = \parseSelection{\selection}$.
+  \end{itemize}
+\end{lemma}
+\noindent
+We say that the operator $\parseSelection{\cdot}$ performs \emph{segment assembly}.
+We defer presenting a constructive implementation of segment
+assembly to the yet-imaginary appendix.
+
+\input{disassemble-frame-tile}
+% \input{step-disassemble-zipper}
+
+We define disassembly and assembly of zippers in a similar fashion.
+Figure \ref{fig:frame-disassembly} defines the step-disassembly
+judgments for frames and zippers.
+The first judgment $\framedu{\zframe}{\zip}$ takes a frame $\zframe$
+and disassembles its head frame tile to produce a pointing zipper
+whose subject consists of the frame tile's shards and sibling tiles,
+\eg,
+\[
+  \framedu{
+    \soptile{\sparen{\framehole}}~\ttframelit~\prefixtwo\framehole~\emptyseg~\tsframelit~\froot~
+  }{
+    ~\zipper{\pointing{\prefixtwo\shardlit{(}}{\shardlit{)}}}{\froot}
+  }.
+\]
+The second judgment $\zipperdu{\editState_1}{\editState_2}$
+step-disassembles the frame of a pointing zipper $\editState_1$
+and splices in the subject, \eg,
+\begin{align*}
+  & \zipper{
+      \pointing{\threefour}{\emptyseg}
+    }{
+      \soptile{\sparen{\framehole}}~\ttframelit~\prefixtwo\framehole~\emptyseg~\tsframelit~\froot
+    } \\
+  \tzipperdu\ \ &
+    \zipper{\pointing{\prefixtwo\shardlit{(}\threefour}{\shardlit{)}}}{\froot}
+\end{align*}
+The reflexive transitive closure $\nearrow^*$ of $\nearrow$
+we call \emph{zipper disassembly}.
+We can show that zipper disassembly is a partial order,
+and that every zipper in this order has a unique minimal element
+disassembling to it.
+\begin{lemma}
+  $\nearrow^*$ is a partial order.
+\end{lemma}
+\begin{lemma}\label{lemma:unique-parsed-editstate}
+  For every pointing zipper $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$,
+  there exists a unique zipper $\parseZipper{\editState}$ such that
+  \begin{itemize}
+  \item $\parseZipper{\editState} \nearrow^* \editState$, and
+  \item $\parseZipper{\editState}$ is minimal: if $\editState' \nearrow^* \parseZipper{\editState}$ then $\editState' = \parseZipper{\editState}$.
+  \end{itemize}
+\end{lemma}
+\noindent
+We say that the operator $\parseZipper{\cdot}$ performs \emph{zipper assembly}.
+
+\note{------break------}
 
 The rule for movement in pointing mode is shown below.
 \[
@@ -212,10 +381,6 @@ judgment, in this case $\pmove{\editState_1}{\direction}{\editState_2}$,
 an excerpt of which is presented in Figure \ref{fig:move-pointing}.
 
 \input{move-pointing}
-
-\newcommand{\prefixtwo}{\soptile{\snumlit{2}}\sbintile{\tmult}}
-\newcommand{\parenthreefour}{\soptile{\sparen{\splus{\snumlit{3}}{\snumlit{4}}}}}
-\newcommand{\threefour}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
 
 At a high level, this excerpt tells us that, to move
 the cursor right in pointing mode, the system should
@@ -328,146 +493,6 @@ Finally the third antecedent tells us that calling
 \emph{zipper assembly} on $Z$ produces $Z'$, the final
 result of this movement.
 
-% The tile $\parenthreefour$ to the right of the cursor disassembles
-% to $\shardlit{(}\threefour\shardlit{)}$, so
-% the rule \texttt{PMoveRightDisassembles} defers to
-% result of moving
-
-\newcommand{\aplusb}{\soptile{\svar{a}}\sbintile{\tplus}\soptile{\svar{b}}}
-% \begin{figure*}
-% \begin{mathpar}
-%   \inferrule*{
-%     \pieceDisassembles{\parenaplusb}{\shardlit{(}\aplusb\shardlit{)}}
-%   }{
-%     \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~\zframe\
-% \tpmove{\texttt{right}}\  \pointing{\emptyseg}{\aplusb}\
-% \tzipper\  \parenfrm\
-% \tsframelit\  \zframe
-%   }
-% \end{mathpar}
-% \end{figure*}
-
-
-% From an implementation standpoint, we may understand this judgment
-% as, given an input zipper $\zip$ in pointing mode
-% and a direction $\direction$ to move,
-
-
-
-% Consider how we would derive the conclusion
-% \begin{align*}
-% & \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~\zframe \\
-% \tpmove{\texttt{right}}\ \ & \pointing{\emptyseg}{\aplusb} \\
-% \tzipper\ \ & \parenfrm \\
-% \tsframelit\ \ & \zframe
-% \end{align*}
-% Reasoning backward, we  have last applied either
-% \texttt{PMoveRightAtomic} or \texttt{PMoveRightDisassembles}
-% because the suffix of the initial state is non-empty.
-
-% \[
-%   \pmove{
-%     \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~M
-%   }{
-%     \texttt{right}
-%   }{
-%     yo
-%   }
-% \]
-
-
-% Suppose we have the edit state
-% \begin{align*}
-%   \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~M
-% \end{align*}
-% and we perform the action $\actionlit{move}\ \texttt{right}$.
-
-
-
-\note{---break---}
-
-We can produce shards from tiles via \emph{step-disassembly},
-as defined for pieces and segments in Figure \ref{fig:subject-disassembly}.
-The first judgment $\pieceDisassembles{\selem}{\selection}$
-step-disassembles a piece $\selem$ into a segment of
-its constituent shards and children tiles.
-The second judgment $\stepDisassembleSelection{\selection_1}{\selection_2}$
-chooses a piece in $\selection_1$ and replaces it with its
-step-disassemblage to produce $\selection_2$.
-The reflexive transitive closure $\tpiecesdd^*$ of
-$\tpiecesdd$ we call \emph{disassembly}.
-\note{give examples from overview}
-
-\input{subject-disassembly}
-
-Disassembly of segments is analogous to string derivation for a
-context-free grammar (CFG),
-where a string containing terminal and nonterminal symbols is iteratively
-rewritten according to the grammar rules.
-A parser for a CFG may then be characterized as a function
-that takes a string of terminal symbols and identifies,
-if any exist,
-a derivation from the grammar's starting nonterminal
-symbol to the input string.
-We may similarly characterize a parser on pieces according
-to the disassembly relation.
-In this case, however, our parsing goal is maximal,
-not maximum, structure, \ie, the parser
-need not identify a disassembly connecting the input
-shards to unbroken tiles (the start symbol), but need only assemble shards
-together opportunistically.
-\note{too hand-wavey, come back and revise}
-
-More precisely, we can show that disassembly is a
-partial order, and that every segment in this order
-has a unique maximal segment that disassembles to it.
-\begin{lemma}
-  $\tpiecesdd^*$ is a partial order.
-\end{lemma}
-\begin{lemma}\label{lemma:unique-parsed-selection}
-  For every segment $\selection$, there exists a unique
-  segment $\parseSelection{\selection}$ such that:
-  \begin{itemize}
-  \item $\parseSelection{\selection}\searrow^*\selection$, and
-  \item $\parseSelection{\selection}$ is maximal: if $\selection'\searrow^*\parseSelection{\selection}$ then $\selection' = \parseSelection{\selection}$.
-  \end{itemize}
-\end{lemma}
-\noindent
-We say that the operator $\parseSelection{\cdot}$ performs \emph{segment assembly}.
-We defer presenting a constructive implementation of segment
-assembly to the yet-imaginary appendix.
-
-\note{---break---}
-
-Like tiles, frames may be decomposed into their
-lexically constituent tiles and tokens via the
-\emph{frame disassembly} function $\disassembleTileFrame{\cdot}$,
-defined in Figure \note{ref}.
-Similar to how we lift tile disassembly to selection
-disassembly, we can lift frame disassembly to
-\emph{edit state step-disassembly}, defined in Figure \note{ref}.
-We can show that the reflexive transitive closure
-$\nearrow^*$ of $\nearrow$, which we call \emph{edit state disassembly},
-is a partial order in
-which every edit state with a subject in pointing mode
-has a unique minimal element that disassembles to it:
-\begin{lemma}
-  $\nearrow^*$ is a partial order.
-\end{lemma}
-\begin{lemma}\label{lemma:unique-parsed-editstate}
-  For every zipper $\editState = \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}$
-  in pointing mode,
-  there exists a unique zipper $\parseZipper{\editState}$ such that
-  \begin{itemize}
-  \item $\parseZipper{\editState} \nearrow^* \editState$, and
-  \item $\parseZipper{\editState}$ is minimal: if $\editState' \nearrow^* \parseZipper{\editState}$ then $\editState' = \parseZipper{\editState}$.
-  \end{itemize}
-\end{lemma}
-\noindent
-We say that the operator $\parseZipper{\cdot}$ performs \emph{zipper assembly}.
-
-\input{disassemble-frame-tile}
-\input{step-disassemble-zipper}
 
 \subsubsection{Constructing}
 \[
