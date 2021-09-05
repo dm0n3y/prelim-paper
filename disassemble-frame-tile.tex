@@ -6,21 +6,21 @@
     \def\arraystretch{1.2}
     \begin{array}{rl}
       & \tframelit{
-        \sparen{\_}
+        \soptile{\sparen{\framehole}}
       }{
-        \tframelit{\tiles^s_1\_\tiles^s_2}{\tfrelem^{\pat}}
+        \sframelit{\tiles^s_1\framehole\tiles^s_2}{\tfrelem^{\pat}}
       } \\
       \tframedu
       & \zipper{
-        \pointing{\tiles^s_1\shardlit{\texttt{(}}~}{~\shardlit{\texttt{)}}\tiles^s_2}
+        \pointing{\tiles^s_1\shardlit{\texttt{(}}}{\shardlit{\texttt{)}}\tiles^s_2}
       }{
         \tfrelem^{\pat}
       } \vstretch \\
 
       & \tframelit{
-        \slam{\_}{}
+        \spretile{\tlam{\framehole}}
       }{
-        \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
+        \sframelit{\tiles^{\expr}_1\framehole\tiles^{\expr}_2}{\tfrelem^{\expr}}
       } \\
       \tframedu
       & \zipper{
@@ -30,32 +30,32 @@
       } \vstretch \\
 
       & \tframelit{
-        \slet{\_}{\tiles^{\expr}_0}{}
+        \spretile{\tlet{\framehole}{\tiles^{\expr}_0}}
       }{
-        \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
+        \sframelit{\tiles^{\expr}_1\framehole\tiles^{\expr}_2}{\tfrelem^{\expr}}
       } \\
       \tframedu
       & \zipper{
         \pointing{
-          \tiles^{\expr}_1\shardlit{\texttt{let}}~
+          \tiles^{\expr}_1\shardlit{\texttt{let}}
         }{
-          ~\shardlit{\texttt{=}}~\tiles^{\expr}_0\shardlit{\texttt{in}}~\tiles^{\expr}_2
+          \shardlit{\texttt{=}}~\tiles^{\expr}_0\shardlit{\texttt{in}}~\tiles^{\expr}_2
         }
       }{
         \tfrelem^{\expr}
       } \vstretch \\
 
       & \tframelit{
-        \slet{\tiles^{\pat}}{\_}{}
+        \spretile{\tlet{\tiles^{\pat}}{\framehole}}
       }{
-        \tframelit{\tiles^{\expr}_1\_\tiles^{\expr}_2}{\tfrelem^{\expr}}
+        \sframelit{\tiles^{\expr}_1\framehole\tiles^{\expr}_2}{\tfrelem^{\expr}}
       } \\
       \tframedu
       & \zipper{
         \pointing{
-          \tiles^{\expr}_1\shardlit{\texttt{let}}~\tiles^{\pat}~\shardlit{\texttt{=}}~
+          \tiles^{\expr}_1\shardlit{\texttt{let}}~\tiles^{\pat}~\shardlit{\texttt{=}}
         }{
-          ~\shardlit{\texttt{in}}~\tiles^{\expr}_2
+          \shardlit{\texttt{in}}~\tiles^{\expr}_2
         }
       }{
         \tfrelem^{\expr}
