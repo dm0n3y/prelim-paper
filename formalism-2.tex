@@ -96,6 +96,8 @@ is represented in \ty~ as
     \parenaplusb
     \sbintile{\tdiv}
     \parenamultb
+    \shardlit{in}
+    \soptile{\ophole}
   }.
 \]
 (We elide the grey-outline decorations on nested pieces
@@ -124,20 +126,24 @@ $\tfrelem^s$, the syntax for which is given in Figure \ref{fig:frame-syntax}.
 Tile frames $\tfrelem^s$ represent tiles with a missing
 child of sort $s$.
 Other than the program root $\froot$, we annotate tile frame literals
-with $\framehole$ symbols in place of the missing children.
-Each tile frame $\tfrelem^s$ points to its parent
+with $\framehole$ symbols in place of the missing child.
+Each tile frame $\tfrelem^s$ additionally points to its parent
 \emph{sequence frame} $\tframe^{s'}$, which carries the tile frame's
-sibling tiles of sort $s'$.
+sibling tiles of sort $s'$ (possibly different from $s$).
 Each sequence frame $\tframe^s$ in turn points to its parent
 tile frame $\tfrelem^s$.
 For example, the frames corresponding to the two
 subject examples described earlier are, respectively,
+\newcommand{\parenfrm}{\tframelit{\soptile{\sparen{\framehole}}}{\lamab\framehole\sbintile{\tdiv}\parenamultb}}
+\newcommand{\letfrm}{\tframelit{\spretile{\tlet{\svar{f}}{\framehole}}}{\emptyseg\framehole\tophole}}
 \begin{align*}
-  & \tframelit{\soptile{\sparen{\framehole}}}{\lamab\framehole\sbintile{\tdiv}\parenamultb} \\
-  \tsframelit\ \ & \tframelit{\spretile{\tlet{\svar{f}}{\framehole}}}{\emptyseg\framehole\tophole} \\
+  & \parenfrm \\
+  \tsframelit\ \ & \letfrm \\
   \tsframelit\ \ & \froot
 \end{align*}
 and $\froot$.
+Moving forward, for brevity, we will elide $\tsframelit~\froot$ from the
+end of non-root frames.
 
 \subsection{Actions} \label{sec:actions}
 
@@ -176,7 +182,18 @@ this section.
 
 \subsubsection{Moving}
 
-We start with basic movement, the rule for which is shown below.
+\ty's actions are designed to support
+a one-dimensional interaction model, where the client may
+view the total edit state as its serialization, navigate through it
+in a linear fashion, and select arbitrary subranges.
+Toward these ends, actions rely
+on a form of incremental unparsing and reparsing by which
+hierarchical structures may be temporarily serialized
+as needed for linear traversal or partial selection.
+We will first encounter this pattern as we turn our attention
+to movement in pointing mode.
+
+The rule for movement in pointing mode is shown below.
 \[
   \inferrule[Move]{
     \pmove{\zipper{\pointing{\selection_1}{\selection_2}}{\zframe}}{\direction}{\editState}
@@ -190,23 +207,182 @@ We start with basic movement, the rule for which is shown below.
     }
   }
 \]
-Movement in each mode defers to an internally recursive auxiliary
+The movement rule for each subject mode defers to an internally recursive auxiliary
 judgment, in this case $\pmove{\editState_1}{\direction}{\editState_2}$,
-defined in Figure \ref{fig:move-pointing}.
-
-We designed movement in \ty~ with the aim of supporting
-a one-dimensional interaction model, where the client may
-view the total edit state as its serialization, navigate through it
-in a linear fashion, and select arbitrary subranges.
-Toward these ends, actions in \ty~ rely
-on a form of incremental unparsing and reparsing by which
-hierarchical structures may be temporarily serialized
-as needed for linear traversal or partial selection.
-
-
-
+an excerpt of which is presented in Figure \ref{fig:move-pointing}.
 
 \input{move-pointing}
+
+\newcommand{\prefixtwo}{\soptile{\snumlit{2}}\sbintile{\tmult}}
+\newcommand{\parenthreefour}{\soptile{\sparen{\splus{\snumlit{3}}{\snumlit{4}}}}}
+\newcommand{\threefour}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+
+At a high level, this excerpt tells us that, to move
+the cursor right in pointing mode, the system should
+iteratively disassemble in-place whatever is to the
+right of the cursor until that is no longer possible,
+move past an atomic piece, and reassemble the pieces.
+
+\begin{figure*}
+  \begin{minipage}[t]{0.45\textwidth}
+  \centering
+  \[
+    \zip\ =\ \zipper{
+      \pointing{
+        \prefixtwo\shardlit{(}
+      }{
+        \threefour\shardlit{)}
+      }
+    }{
+      \froot
+    }
+    % \zip'\ &=\ \zipper{
+    %   \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+    % }{
+    %   \soptile{\sparen{\framehole}}
+    %   ~\ttframelit~
+    %   \prefixtwo\framehole~\emptyseg
+    % }
+  \]
+  \end{minipage}
+  \begin{minipage}[t]{0.45\textwidth}
+  \centering
+    \[
+      \zip'\ =\ \zipper{
+        \pointing{\emptyseg}{\soptile{\snumlit{3}}\sbintile{\tplus}\soptile{\snumlit{4}}}
+      }{
+        \soptile{\sparen{\framehole}}
+        ~\ttframelit~
+        \prefixtwo\framehole~\emptyseg
+      }
+    \]
+  \end{minipage}
+  \begin{minipage}[t]{0.88\textwidth}
+    \begin{mathpar}
+      \inferrule* [left=\texttt{PMoveRightDisassembles}] {
+        \inferrule*{}{\pieceDisassembles{
+          \parenthreefour
+        }{
+          \shardlit{(}\threefour\shardlit{)}
+        }} \\
+        \inferrule* [lab=\texttt{PMoveRightAtomic}]{
+          \inferrule*{}{\nsegmentdd{\shardlit{(}}}
+          % \parseSelection{\prefixtwo\shardlit{(}} = \prefixtwo\shardlit{(} \\
+          % \parseZipper{
+          %   \zipper{
+          %     \pointing{
+          %       \prefixtwo\shardlit{(}
+          %     }{
+          %       \threefour\shardlit{)}
+          %     }
+          %   }{
+          %     \froot
+          %   }
+          % } = \zip
+        }{
+          \pmove{
+            \zipper{
+              \pointing{\prefixtwo}{\shardlit{(}\threefour\shardlit{)}}
+            }{\froot}
+          }{\texttt{right}}{
+            \zip
+          }
+        } \\
+        \inferrule*{}{\parseZipper{
+            \zip
+          } = \zip'}
+      }{
+        \pmove{
+          \zipper{
+            \pointing{\prefixtwo}{\parenthreefour}
+          }{
+            \froot
+          }
+        }{\texttt{right}}{
+          \zip'
+        }
+      }
+    \end{mathpar}
+  \end{minipage}
+  \caption{\note{todo}}
+  \label{fig:pmove-derivation}
+  \end{figure*}
+
+More concretely, consider the derivation in Figure \ref{fig:pmove-derivation},
+which moves the cursor right starting with the zipper
+$\zipper{\pointing{\prefixtwo}{\parenthreefour}}{\froot}$.
+The first antecedent of the applied rule \\ \texttt{PMoveRightDisassembles}
+tells us that the piece $\parenthreefour$ \emph{step-disassembles}
+to the segment $\shardlit{(}\threefour\shardlit{)}$.
+Step-disassembly is the core relation by which shards are produced
+from tiles; the full definition is given in Figure \ref{fig:subject-disassembly}
+\note{(split figure apart)}.
+
+The second antecedent tells us that moving right
+on the zipper $\zipper{
+  \pointing{\prefixtwo}{\shardlit{(}\threefour\shardlit{)}}
+}{\froot}$ moves the cursor past the atomic shard $\shardlit{(}$
+to produce $Z$ (defined at the top of
+Figure \ref{fig:pmove-derivation}).
+Finally the third antecedent tells us that calling
+\emph{zipper assembly} on $Z$ produces $Z'$, the final
+result of this movement.
+
+% The tile $\parenthreefour$ to the right of the cursor disassembles
+% to $\shardlit{(}\threefour\shardlit{)}$, so
+% the rule \texttt{PMoveRightDisassembles} defers to
+% result of moving
+
+\newcommand{\aplusb}{\soptile{\svar{a}}\sbintile{\tplus}\soptile{\svar{b}}}
+% \begin{figure*}
+% \begin{mathpar}
+%   \inferrule*{
+%     \pieceDisassembles{\parenaplusb}{\shardlit{(}\aplusb\shardlit{)}}
+%   }{
+%     \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~\zframe\
+% \tpmove{\texttt{right}}\  \pointing{\emptyseg}{\aplusb}\
+% \tzipper\  \parenfrm\
+% \tsframelit\  \zframe
+%   }
+% \end{mathpar}
+% \end{figure*}
+
+
+% From an implementation standpoint, we may understand this judgment
+% as, given an input zipper $\zip$ in pointing mode
+% and a direction $\direction$ to move,
+
+
+
+% Consider how we would derive the conclusion
+% \begin{align*}
+% & \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~\zframe \\
+% \tpmove{\texttt{right}}\ \ & \pointing{\emptyseg}{\aplusb} \\
+% \tzipper\ \ & \parenfrm \\
+% \tsframelit\ \ & \zframe
+% \end{align*}
+% Reasoning backward, we  have last applied either
+% \texttt{PMoveRightAtomic} or \texttt{PMoveRightDisassembles}
+% because the suffix of the initial state is non-empty.
+
+% \[
+%   \pmove{
+%     \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~M
+%   }{
+%     \texttt{right}
+%   }{
+%     yo
+%   }
+% \]
+
+
+% Suppose we have the edit state
+% \begin{align*}
+%   \pointing{\lamab}{\parenaplusb\sbintile{\tdiv}\parenamultb}~\tzipper~M
+% \end{align*}
+% and we perform the action $\actionlit{move}\ \texttt{right}$.
+
+
 
 \note{---break---}
 

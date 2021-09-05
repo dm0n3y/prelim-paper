@@ -9,12 +9,13 @@
     }{
       \texttt{right}
     }{
-      \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_2}}{\zframe}}
+      % \parseZipper{\zipper{\pointing{\parseSelection{\selection_1\selem}}{\selection_2}}{\zframe}}
+      \zipper{\pointing{\selection_1\selem}{\selection_2}}{\zframe}
     }
   }
 
   \inferrule[PMoveRightDisassembles]{
-    \disassemblesDown{\selem}{\selection_3} \\
+    \pieceDisassembles{\selem}{\selection_3} \\
     \pmove{
       \zipper{\pointing{\selection_1}{\selection_3\selection_2}}{\zframe}
     }{
@@ -28,30 +29,31 @@
     }{
       \texttt{right}
     }{
-      \zip
+      \parseZipper{\zip}
     }
   }
 
   \inferrule[PMoveRightFrame]{
-    \disassemblesUp{
+    \framedu{
       \zframe
     }{
-      \zipper{\pointing{\selection_2}{\selection_3}}{\zframe'}
+      \zipper{\pointing{\selection_1}{\selection_2}}{\zframe'}
     } \\
     \pmove{
-      \zipper{\pointing{\selection_2\selection_1}{\selection_3}}{\zframe'}
+      \zipper{\pointing{\selection_1\selection}{\selection_2}}{\zframe'}
     }{
       \texttt{right}
     }{
-      \zip
+      \zipper{\pointing{\selection'_1}{\selection'_2}}{\zframe''}
     }
   }{
     \pmove{
-      \zipper{\pointing{\selection_1}{\cdot}}{\zframe}
+      \zipper{\pointing{\selection}{\cdot}}{\zframe}
     }{
       \texttt{right}
     }{
-      \zip
+      % \zip
+      \parseZipper{\zipper{\pointing{\parseSelection{\selection'_1}}{\selection'_2}}{\zframe''}}
     }
   }
 \end{mathpar}

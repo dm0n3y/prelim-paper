@@ -211,14 +211,15 @@
 
 \newcommand{\editState}{Z}
 \newcommand{\performAction}[3]{#1 \xlongrightarrow{#2} #3}
-\newcommand{\pmove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\scriptscriptstyle\texttt{point}} #3}
+\newcommand{\tpmove}[1]{\xlongrightarrow{\actionlit{move}~#1}_{\scriptscriptstyle\texttt{point}}}
+\newcommand{\pmove}[3]{#1 \tpmove{#2} #3}
 \newcommand{\smove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\scriptscriptstyle\texttt{select}} #3}
 \newcommand{\rmove}[3]{#1 \xlongrightarrow{\actionlit{move}~#2}_{\scriptscriptstyle\texttt{restructure}} #3}
 
 \newcommand{\tiles}{T}
 \newcommand{\tile}{t}
 \newcommand{\shard}{h}
-\newcommand{\shardlit}[1]{\underline{#1}}
+\newcommand{\shardlit}[1]{\underline{\texttt{#1}}}
 \newcommand{\selection}{C}
 \newcommand{\selem}{c}
 \newcommand{\tframe}{F}
@@ -230,11 +231,12 @@
 \newcommand{\tframelit}[2]{#1\ \ \ttframelit\ \ #2}
 \newcommand{\sframelit}[2]{#1\ \ \tsframelit\ \ #2}
 \newcommand{\framehole}{\textcolor{black!35!}{\bullet}}
-\newcommand{\froot}{\color{black!40!}\boldsymbol\top}
+\newcommand{\froot}{{\color{black!40!}\boldsymbol\top}}
 
 \newcommand{\zip}{Z}
 % \newcommand{\zipper}[2]{#1\ \rotatebox[origin=c]{90}{\textcolor{black!40!}{$\boldsymbol\gtrdot$}}\ #2}
-\newcommand{\zipper}[2]{#1~{\color{black!40!}\boldsymbol\gtrdot}~#2}
+\newcommand{\tzipper}{{\color{black!40!}\boldsymbol\gtrdot}}
+\newcommand{\zipper}[2]{#1~\tzipper~#2}
 \newcommand{\subject}{B}
 \newcommand{\zframe}{M}
 \newcommand{\pointing}[2]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}#2}
@@ -293,7 +295,7 @@
 \newcommand{\pieceDisassembles}[2]{#1\tpiecedd#2}
 
 \newcommand{\tpiecesdd}{\searrow}
-\newcommand{\nsegmentdd}[1]{#1\searrow\times}
+\newcommand{\nsegmentdd}[1]{#1\tpiecedd\times}
 
 \newcommand{\tframedu}{\Nearrow}
 \newcommand{\framedu}[2]{#1 \tframedu #2}
