@@ -3,7 +3,7 @@
   \begin{mathpar}
 
 \inferrule[RMoveRightCracked]{
-  \text{\note{not\ }}\wholeSelection{s}{\selection_2}
+  \text{$\selection_2$ is cracked}
 }{
   \rmove{
     \zipper{\restructuring{\selection_1}{\selection_2}{\tile^{s}\selection_3}}{\zframe}
@@ -15,7 +15,7 @@
 }
 
 \inferrule[RMoveRightIntact]{
-  \wholeSelection{s}{\selection_2} \\
+  \text{$\selection_2$ is intact} \\
   \pmove{
     \zipper{\pointing{\selection_1}{\selection_3}}{\zframe}
   }{

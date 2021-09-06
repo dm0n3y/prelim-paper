@@ -161,41 +161,41 @@ indirectly propagate those edits to the term structure,
 \tylr~ recovers many of the flexible editing affordances to
 which we are accustomed in text editors.
 
-\setlength\intextsep{0pt}
-\begin{wrapfigure}{r}{0.08\columnwidth}
-  \centering
-  \hspace*{-0.07\columnwidth}
-  \includegraphics[width=0.15\columnwidth]{img/circles-parabola.png}
-\end{wrapfigure}
+% \setlength\intextsep{0pt}
+% \begin{wrapfigure}{r}{0.08\columnwidth}
+%   \centering
+%   \hspace*{-0.07\columnwidth}
+%   \includegraphics[width=0.15\columnwidth]{img/circles-parabola.png}
+% \end{wrapfigure}
 
 \paragraph{Leaf tiles}
 We update the function to
 draw circles along the parabola $y = x^2/9$,
-as depicted on the right,
+% as depicted on the right,
 using the edit sequence below.
 
-\begin{figure}[h]
+\begin{center}
   \centering
 % \begin{minipage}[t]{0.2\columnwidth}
 %   \includegraphics[width=\textwidth]{img/circles-parabola.png}
 % \end{minipage}
 % \hfill
 % \begin{minipage}{0.65\columnwidth}
-  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-0.png}
-  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-1.png}
-  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-2.png}
-  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-3.png}
-  \includegraphics[width=0.7\columnwidth]{img/linear-insertion-4.png}
+  \includegraphics[width=0.6\columnwidth]{img/linear-insertion-0.png}
+  \includegraphics[width=0.6\columnwidth]{img/linear-insertion-1.png}
+  \includegraphics[width=0.6\columnwidth]{img/linear-insertion-2.png}
+  \includegraphics[width=0.6\columnwidth]{img/linear-insertion-3.png}
+  \includegraphics[width=0.6\columnwidth]{img/linear-insertion-4.png}
   % \caption{Inserting}
 % \end{minipage}
-\end{figure}
+\end{center}
 
-\setlength\intextsep{0pt}
-\begin{wrapfigure}{r}{0.08\columnwidth}
-  \centering
-  \hspace*{-0.07\columnwidth}
-  \includegraphics[width=0.15\columnwidth]{img/circles-parabola-transpose.png}
-\end{wrapfigure}
+% \setlength\intextsep{0pt}
+% \begin{wrapfigure}{r}{0.08\columnwidth}
+%   \centering
+%   \hspace*{-0.07\columnwidth}
+%   \includegraphics[width=0.15\columnwidth]{img/circles-parabola-transpose.png}
+% \end{wrapfigure}
 
 If we decided now to draw circles along the reflected
 parabola $x = y^2/9$, we could similarly remove the inserted
@@ -203,13 +203,13 @@ tiles right-to-left from the $y$-coordinate and re-insert
 them in the $x$-coordinate.
 
 \begin{center}
-  \includegraphics[width=0.65\columnwidth]{img/removal-0.png}
-  \includegraphics[width=0.65\columnwidth]{img/removal-1.png}
-  \includegraphics[width=0.65\columnwidth]{img/removal-2.png}
-  \includegraphics[width=0.65\columnwidth]{img/removal-3.png}
-  \includegraphics[width=0.65\columnwidth]{img/removal-4.png}
-  \includegraphics[width=0.65\columnwidth]{img/removal-5.png}
-  \includegraphics[width=0.65\columnwidth]{img/removal-6.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-0.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-1.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-2.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-3.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-4.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-5.png}
+  \includegraphics[width=0.6\columnwidth]{img/removal-6.png}
 \end{center}
 
 These simple editing workflows are not trivial
@@ -263,56 +263,56 @@ without compromising structure.
 
 % \note{perhaps go back to editor syntax terminology}
 
-\begin{figure*}
-  \begin{tabular}{cp{0.7\textwidth}}
-  \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-1.png}
-  &
-  {
-    \begin{align*}
-      & \texttt{$\lambda$ n . let x , y = \_|in ( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let x , y = \_|in|( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let x , y = [in]( n * n / 9 , n ) , 1} \\
-      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )[in], 1} \\
-      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )|in \_ , 1} \\\\
-      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|) in x , y , 1 } \\
-      & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|)|in x , y , 1 } \\
-      & \texttt{$\lambda$ n . let x , y = |(|n * n / 9 , n[)]in x , y , 1 } \\
-      & \texttt{$\lambda$ n . let x , y = |(|[)]n * n / 9 , n in x , y , 1 } \\
-      & \texttt{$\lambda$ n . let x , y = [(][)]n * n / 9 , n in x , y , 1 } \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in [(][)]x , y , 1 } \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y[)], 1 } \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y|) , 1 } \\\\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|x + y } \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|(|[)]x + y } \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|(|x + y[)]} \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y|)} \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y )|} \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y ) /|\_} \\
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y ) / 4|}
-    \end{align*}
-  }
-  \end{tabular}
-\end{figure*}
+% \begin{figure*}
+%   \begin{tabular}{cp{0.7\textwidth}}
+%   \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-1.png}
+%   &
+%   {
+%     \begin{align*}
+%       & \texttt{$\lambda$ n . let x , y = \_|in ( n * n / 9 , n ) , 1} \\
+%       & \texttt{$\lambda$ n . let x , y = \_|in|( n * n / 9 , n ) , 1} \\
+%       & \texttt{$\lambda$ n . let x , y = [in]( n * n / 9 , n ) , 1} \\
+%       & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )[in], 1} \\
+%       & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n )|in \_ , 1} \\\\
+%       & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|) in x , y , 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = ( n * n / 9 , n|)|in x , y , 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = |(|n * n / 9 , n[)]in x , y , 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = |(|[)]n * n / 9 , n in x , y , 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = [(][)]n * n / 9 , n in x , y , 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in [(][)]x , y , 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y[)], 1 } \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y|) , 1 } \\\\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|x + y } \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|(|[)]x + y } \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) ,|(|x + y[)]} \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y|)} \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y )|} \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y ) /|\_} \\
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n in ( x , y ) , ( x + y ) / 4|}
+%     \end{align*}
+%   }
+%   \end{tabular}
+% \end{figure*}
 
-\begin{figure*}
-  \begin{tabular}{cp{0.7\textwidth}}
-  \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-2.png}
-  &
-  {
-    \begin{align*}
-      & \texttt{$\lambda$ n . let x , y = n * n / 9 , n|in ( x , y ) , n / 3} \\
-      & \texttt{$\lambda$ n .|let x , y =|n * n / 9 , n[in] ( x , y ) , n / 3} \\
-      & \texttt{$\lambda$ n . n * n / 9 , n|\_ ( x , y ) , n / 3} \\
-      & \texttt{$\lambda$ n . n * n / 9 , n \_ (|x , y ) , n / 3} \\
-      & \texttt{$\lambda$ n . n * n / 9 , n \_ (|x , y|) , n / 3} \\
-      & \texttt{$\lambda$ n . n * n / 9 , n \_ (|\_ ) , n / 3} \\
-      & \texttt{$\lambda$ n . n * n / 9 , n [(]|)|, n / 3} \\
-      & \texttt{$\lambda$ n .[(]n * n / 9 , n|)|, n / 3} \\
-      & \texttt{$\lambda$ n .|( n * n / 9 , n ), n / 3}
-    \end{align*}
-  }
-  \end{tabular}
-\end{figure*}
+% \begin{figure*}
+%   \begin{tabular}{cp{0.7\textwidth}}
+%   \includegraphics[width=0.1\textwidth]{img/circles-parabola-grow-2.png}
+%   &
+%   {
+%     \begin{align*}
+%       & \texttt{$\lambda$ n . let x , y = n * n / 9 , n|in ( x , y ) , n / 3} \\
+%       & \texttt{$\lambda$ n .|let x , y =|n * n / 9 , n[in] ( x , y ) , n / 3} \\
+%       & \texttt{$\lambda$ n . n * n / 9 , n|\_ ( x , y ) , n / 3} \\
+%       & \texttt{$\lambda$ n . n * n / 9 , n \_ (|x , y ) , n / 3} \\
+%       & \texttt{$\lambda$ n . n * n / 9 , n \_ (|x , y|) , n / 3} \\
+%       & \texttt{$\lambda$ n . n * n / 9 , n \_ (|\_ ) , n / 3} \\
+%       & \texttt{$\lambda$ n . n * n / 9 , n [(]|)|, n / 3} \\
+%       & \texttt{$\lambda$ n .[(]n * n / 9 , n|)|, n / 3} \\
+%       & \texttt{$\lambda$ n .|( n * n / 9 , n ), n / 3}
+%     \end{align*}
+%   }
+%   \end{tabular}
+% \end{figure*}
 
 \paragraph{Non-leaf tiles}
 While insertion and removal of leaf tiles closely mimics the
@@ -322,9 +322,9 @@ For example, consider below how we would remove the parentheses
 wrapping the origin coordinates in \tylr.
 
 \begin{center}
-  \includegraphics[width=0.65\columnwidth]{img/remove-nonleaf-0.png}
-  \includegraphics[width=0.65\columnwidth]{img/remove-nonleaf-1.png}
-  \includegraphics[width=0.65\columnwidth]{img/remove-nonleaf-2.png}
+  \includegraphics[width=0.6\columnwidth]{img/remove-nonleaf-0.png}
+  \includegraphics[width=0.6\columnwidth]{img/remove-nonleaf-1.png}
+  \includegraphics[width=0.6\columnwidth]{img/remove-nonleaf-2.png}
 \end{center}
 
 Where a text editor would simply remove the closing parenthesis
@@ -349,10 +349,10 @@ Now consider how we might re-insert the parentheses
 around the origin coordinates.
 
 \begin{center}
-  \includegraphics[width=0.65\columnwidth]{img/insert-nonleaf-0.png}
-  \includegraphics[width=0.65\columnwidth]{img/insert-nonleaf-1.png}
-  \includegraphics[width=0.65\columnwidth]{img/insert-nonleaf-2.png}
-  \includegraphics[width=0.65\columnwidth]{img/insert-nonleaf-3.png}
+  \includegraphics[width=0.6\columnwidth]{img/insert-nonleaf-0.png}
+  \includegraphics[width=0.6\columnwidth]{img/insert-nonleaf-1.png}
+  \includegraphics[width=0.6\columnwidth]{img/insert-nonleaf-2.png}
+  \includegraphics[width=0.6\columnwidth]{img/insert-nonleaf-3.png}
 \end{center}
 
 \noindent
@@ -466,13 +466,13 @@ restructuring mode to move them.
 % inserted in the $y$-coordinate---an impossible
 % selection in prior structure editors.
 
-\begin{figure}[h]
-  \includegraphics[width=0.65\columnwidth]{img/restructuring-full-0.png}
-  \includegraphics[width=0.65\columnwidth]{img/restructuring-full-1.png}
-  \includegraphics[width=0.65\columnwidth]{img/restructuring-full-2.png}
-  \includegraphics[width=0.65\columnwidth]{img/restructuring-full-3.png}
-  \includegraphics[width=0.65\columnwidth]{img/restructuring-full-4.png}
-\end{figure}
+\begin{center}
+  \includegraphics[width=0.6\columnwidth]{img/restructuring-full-0.png}
+  \includegraphics[width=0.6\columnwidth]{img/restructuring-full-1.png}
+  \includegraphics[width=0.6\columnwidth]{img/restructuring-full-2.png}
+  \includegraphics[width=0.6\columnwidth]{img/restructuring-full-3.png}
+  \includegraphics[width=0.6\columnwidth]{img/restructuring-full-4.png}
+\end{center}
 % You then pick it up into your backpack to enter
 % restructuring mode.
 % Moving left to the $x$-coordinate and putting down
@@ -511,7 +511,7 @@ In that case, we say that the backpack is \emph{hungry}...
 
 Now we would like the circles' radii to grow
 with their origin coordinates; accordingly,
-as shown at the top of Figure ??,
+as shown at the top of the edit sequence below,
 we have inserted
 a let tile introducing variables \code{x} and \code{y}
 in the function body.
@@ -524,10 +524,13 @@ move right once; and put it down,
 upon which \tylr~ reassembles the \code{let}-tile
 and returns us to pointing mode.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.9\columnwidth]{img/placeholder-restructuring-hungry.png}
-\end{figure}
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/restructure-hungry-0.png}
+  \includegraphics[width=\columnwidth]{img/restructure-hungry-1.png}
+  \includegraphics[width=\columnwidth]{img/restructure-hungry-2.png}
+  \includegraphics[width=\columnwidth]{img/restructure-hungry-3.png}
+  \includegraphics[width=\columnwidth]{img/restructure-hungry-4.png}
+\end{center}
 
 % \note{figure out a way to introduce hole fixing, why operand hole
 % disappears rather than operator hole being introduced, might be
@@ -593,9 +596,9 @@ or we may feed it.
 
 \paragraph{Feeding a hungry backpack}
 Now we rewrite the radius in terms of the variables
-\code{x} and \code{y}, as shown at the top of
-Figure ??.
-Along the way, however, we forget to parenthesize
+\code{x} and \code{y}, as shown at the top of the
+edit sequence below.
+Along the way, however, we forgot to parenthesize
 the origin coordinates.
 We also notice that the parentheses in the definition
 of the \code{let}-tile are now redundant and decide
@@ -612,6 +615,19 @@ now move freely out of the let definition
 to put down the parentheses around the origin coordinates.
 % \note{add labels to edit states,
 % label sentences here}
+
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-0.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-1.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-2.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-3.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-4.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-5.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-6.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-7.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-8.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-9.png}
+\end{center}
 
 % Say you have filled the hole in Figure ?? with
 % the variables \texttt{x} and \texttt{y} you defined
@@ -696,7 +712,10 @@ different sort.
 
 Consider, for example, the following selection:
 
-\note{example fig}
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/broken-overline.png}
+\end{center}
+
 
 \noindent
 The left cap is pattern-sorted while the right cap
@@ -730,15 +749,9 @@ Section \ref{sec:inserting-removing}.
 Removing a selection works in one of two ways,
 depending on whether the selection is intact or cracked.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\columnwidth]{img/test-wide.png}
-\end{figure}
-
 \paragraph{Removing intact selections}
-Say we fiddled some more with our last circle drawing
-and discovered a similar drawing we like a bit better,
-shown in Figure ??.
+Say we fiddled around with different ways to make
+the circles' radii grow.
 Upon reviewing our code, we realize we no longer
 need to define variables \code{x} and \code{y},
 since they are each used only once, and can inline
@@ -749,6 +762,11 @@ term and hitting Backspace.
 In this case, because our selection is intact, \tylr~
 immediately removes our selection, as we might
 expect from our experience with text editors.
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/remove-intact-0.png}
+  \includegraphics[width=\columnwidth]{img/remove-intact-1.png}
+  \includegraphics[width=\columnwidth]{img/remove-intact-2.png}
+\end{center}
 
 \paragraph{Removing cracked selections}
 Now we would like to remove the \code{let}-tile,
@@ -759,7 +777,12 @@ Because our selection is cracked, removing
 our selection would require also removing the
 matching \code{let}-shard that we have not
 explicitly selected ourselves.
-
+\begin{center}
+  \includegraphics[width=0.9\columnwidth]{img/remove-cracked-0.png}
+  \includegraphics[width=0.9\columnwidth]{img/remove-cracked-1.png}
+  \includegraphics[width=0.9\columnwidth]{img/remove-cracked-2.png}
+  \includegraphics[width=0.9\columnwidth]{img/remove-cracked-3.png}
+\end{center}
 \tylr~ does not remove both shards immediately but
 instead enters restructuring mode, giving us the option
 to move the \code{in}-shard like in Section \ref{sec:selecting-restructuring},
@@ -811,6 +834,12 @@ shard that forms a fragmentary selection, so you
 enter restructuring mode with the parenthesis in tow.
 You move left to the other side of the origin coordinates,
 then put down the parenthesis to complete the transformation.
+\begin{center}
+  \includegraphics[width=0.6\columnwidth]{img/remove-pointing-0.png}
+  \includegraphics[width=0.6\columnwidth]{img/remove-pointing-1.png}
+  \includegraphics[width=0.6\columnwidth]{img/remove-pointing-2.png}
+  \includegraphics[width=0.6\columnwidth]{img/remove-pointing-3.png}
+\end{center}
 
 % \note{more words here to wrap up}
 

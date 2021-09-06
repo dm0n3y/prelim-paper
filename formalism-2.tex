@@ -16,11 +16,11 @@ defining the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 describing supporting judgments and relevant metatheory
 along the way.
-Our discussion will use concrete examples
-centered around edit states of the following program.
-\begin{center}
-  \texttt{\textbf{let} f = $\boldsymbol{\lambda}$ a , b \textbf{.} \textbf{(} a + b \textbf{)} / \textbf{(} a * b \textbf{)} \textbf{in} $\ophole$}
-\end{center}
+% Our discussion will use concrete examples
+% centered around edit states of the following program.
+% \begin{center}
+%   \texttt{\textbf{let} f = $\boldsymbol{\lambda}$ a , b \textbf{.} \textbf{(} a + b \textbf{)} / \textbf{(} a * b \textbf{)} \textbf{in} $\ophole$}
+% \end{center}
 
 \subsection{Zippers} \label{sec:zippers}
 
@@ -734,8 +734,8 @@ Hole fixing is governed by the following lemma.
 
 \[
   \inferrule[PutDown]{
-    \text{\note{not\ }}\wholeSelection{s'}{\selection_2}
-    \vee \wholeSelection{s}{\selection_2} \\
+    \text{$\selection_2$ is cracked}
+    \vee \text{$\selection_2$ is $s$-intact} \\
     \fixHolesSelections{\selection_1}{\selection_2\selection_3}{s}{\selection_4}{\selection_5}
   }{
     \performAction{
