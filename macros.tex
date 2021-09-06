@@ -8,10 +8,15 @@
 \newcommand{\tylr}{\texttt{tylr}}
 \newcommand{\ty}{\textsf{tylrcore}}
 
+\newcommand{\typ}{\texttt{typ}}
+\newcommand{\pat}{\texttt{pat}}
+\newcommand{\expr}{\texttt{exp}}
+
 % Violet hot dog buns; highlight color helps distinguish them
 \newcommand{\llparenthesiscolor}{\textcolor{violet}{\llparenthesis}}
 \newcommand{\rrparenthesiscolor}{\textcolor{violet}{\rrparenthesis}}
 
+\newcommand{\termm}{m}
 \newcommand{\styp}{t}
 \newcommand{\spat}{p}
 \newcommand{\sexp}{e}
@@ -222,8 +227,8 @@
 \newcommand{\shardlit}[1]{\underline{\texttt{#1}}}
 \newcommand{\selection}{C}
 \newcommand{\selem}{c}
-\newcommand{\tframe}{F}
-\newcommand{\tfrelem}{f}
+\newcommand{\tframe}{R}
+\newcommand{\tfrelem}{r}
 % \newcommand{\tframelit}[2]{#1 ~\gg~ #2}
 \newcommand{\ttframelit}{{\color{black!35!}\boldsymbol\gg}}
 % \newcommand{\tsframelit}{\rotatebox[origin=c]{90}{\textcolor{black!35!}{$\boldsymbol\ggg$}}}
@@ -238,7 +243,7 @@
 \newcommand{\tzipper}{{\color{black!40!}\boldsymbol\gtrdot}}
 \newcommand{\zipper}[2]{#1~\tzipper~#2}
 \newcommand{\subject}{B}
-\newcommand{\zframe}{M}
+\newcommand{\zframe}{F}
 \newcommand{\pointing}[2]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}#2}
 \newcommand{\selecting}[3]{#1\hspace{-3pt}\multimapbothvert\hspace{-3pt}\overline{#2}#3}
 \newcommand{\selectingRight}[3]{#1\overline{#2}\hspace{-3pt}\multimapbothvert\hspace{-3pt}#3}
@@ -289,10 +294,6 @@
 
 \newcommand{\parseSelection}[1]{\left\lceil#1\right\rceil}
 \newcommand{\parseZipper}[1]{\left\lfloor#1\right\rfloor}
-
-\newcommand{\typ}{\texttt{typ}}
-\newcommand{\pat}{\texttt{pat}}
-\newcommand{\expr}{\texttt{exp}}
 
 % \newcommand{\tpiecedd}{\scalebox{1.2}{\rotatebox[origin=c]{-45}{$\twoheadrightarrow$}}}
 \newcommand{\tpiecedd}{\Searrow}

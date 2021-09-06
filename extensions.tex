@@ -14,8 +14,8 @@ editing to support larger-scale program authoring.
 In particular, it does not support left-to-right selecting,
 multi-selection restructuring, or automatic restructuring
 upon construction.
-\note{also doesn't support other basic conveniences
-like deleting in pointing or selecting mode}
+% \note{also doesn't support other basic conveniences
+% like deleting in pointing or selecting mode}
 
 The first limitation is easily overcome by adding
 a new variant $\selectingRight{\selection}{\selection}{\selection}$
@@ -41,7 +41,7 @@ Such intermediate shards have the useful property of having same-sort
 tips and represent the minimal restructurable units of the
 parent tile.
 Finally we extend the action datatype in Figure \ref{fig:action-syntax}
-so that the $\actionlit{construct}$ action takes a shard instead of
+so that the $\actionlit{insert}$ action takes a shard instead of
 a complete tile---specifically, we expect this shard to have same-sort tips.
 Constructing such a shard then enters restructuring mode
 upon with the matching same-sort-tipped shards in the backpack.
@@ -62,7 +62,7 @@ Moreover, \tylr's underlying language is tiny and
 features neither a type system nor an evaluation semantics.
 
 We developed \tylr~ with the intention of scaling up
-its editing techniques to Hazel \note{cite},
+its editing techniques to Hazel \cite{HazelnutSNAPL},
 a more mature structure editor that renders
 edit states in the usual multi-line text-like layout.
 Scaling up tile-based editing to multi-line output

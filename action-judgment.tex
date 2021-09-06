@@ -13,13 +13,13 @@
     }
   }
 
-  \inferrule[Construct]{
+  \inferrule[Insert]{
     \fixHolesSelections{\selection_1}{\tile^s\selection_2}{s}{\selection'_1}{\selection'_2}
   }{
     \performAction{
       \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
     }{
-      \actionlit{construct}\ \tile^s
+      \actionlit{insert}\ \tile^s
     }{
       \zipper{\pointing{\selection'_1}{\selection'_2}}{\tfrelem^{s}}
     }
@@ -73,13 +73,13 @@
     }
   }
 
-  \inferrule[Delete]{
+  \inferrule[Remove]{
     \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
-      \actionlit{delete}
+      \actionlit{remove}
     }{
       \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^s}
     }

@@ -1,82 +1,82 @@
 \begin{figure}
-  \judgbox{\flattenTerm{p}{\selection}}{$p$ disassembles to $\selection$ \note{todo: different terminology}}
+  \judgbox{\flattenTerm{\termm^\pat}{\selection}}{$\termm^\pat$ flattens to $\selection$}
   \begin{mathpar}
     \inferrule[]{
     }{
-      \flattenTerm{\term{\ophole}}{\optile{\ophole}}
+      \flattenTerm{\term{\ophole}}{\soptile{\ophole}}
     }\hspace{20pt}
     \inferrule[]{
     }{
-      \flattenTerm{\term{\svar{x}}}{\optile{\svar{x}}}
+      \flattenTerm{\term{\svar{x}}}{\soptile{\svar{x}}}
     }\hspace{20pt}
     \inferrule[]{
-      \flattenTerm{p}{\tiles^{\pat}}
+      \flattenTerm{\termm^\pat}{\tiles^{\pat}}
     }{
-      \flattenTerm{\term{\sparen{p}}}{\optile{\sparen{\tiles^{\pat}}}}
+      \flattenTerm{\term{\sparen{\termm^\pat}}}{\soptile{\sparen{\tiles^{\pat}}}}
     }\\
     \inferrule[]{
-      \flattenTerm{p_1}{\selection_1} \\
-      \flattenTerm{p_2}{\selection_2}
+      \flattenTerm{\termm^\pat_1}{\selection_1} \\
+      \flattenTerm{\termm^\pat_2}{\selection_2}
     }{
-      \flattenTerm{\term{\sbinhole{p_1}{p_2}}}{\selection_1~\bintile{\binhole}~\selection_2}
+      \flattenTerm{\term{\sbinhole{\termm^\pat_1}{\termm^\pat_2}}}{\selection_1~\sbintile{\binhole}~\selection_2}
     }\hspace{20pt}
     \inferrule[]{
-      \flattenTerm{p_1}{\selection_1} \\
-      \flattenTerm{p_2}{\selection_2}
+      \flattenTerm{\termm^\pat_1}{\selection_1} \\
+      \flattenTerm{\termm^\pat_2}{\selection_2}
     }{
-      \flattenTerm{\term{\sprod{p_1}{p_2}}}{\selection_1~\bintile{\tprod}~\selection_2}
+      \flattenTerm{\term{\sprod{\termm^\pat_1}{\termm^\pat_2}}}{\selection_1~\sbintile{\tprod}~\selection_2}
     }
   \end{mathpar}
 
   \vspace{10pt}
-  \judgbox{\flattenTerm{e}{\selection}}{$e$ disassembles to $\selection$ \note{todo: different terminology}}
+  \judgbox{\flattenTerm{\termm^\expr}{\selection}}{$\termm^\expr$ flattens to $\selection$}
   \begin{mathpar}
     \inferrule[]{
     }{
-      \flattenTerm{\term{\ophole}}{\optile{\ophole}}
+      \flattenTerm{\term{\ophole}}{\soptile{\ophole}}
     }\hspace{15pt}
     \inferrule[]{
     }{
-      \flattenTerm{\term{\snumlit{n}}}{\optile{\snumlit{n}}}
+      \flattenTerm{\term{\snumlit{n}}}{\soptile{\snumlit{n}}}
     }\hspace{15pt}
     \inferrule[]{
     }{
-      \flattenTerm{\term{\svar{x}}}{\optile{\svar{x}}}
+      \flattenTerm{\term{\svar{x}}}{\soptile{\svar{x}}}
     }\hspace{15pt}
     \inferrule[]{
-      \flattenTerm{e}{\tiles^{\expr}}
+      \flattenTerm{\termm^\expr}{\tiles^{\expr}}
     }{
-      \flattenTerm{\term{\sparen{e}}}{\optile{\sparen{\tiles^{\expr}}}}
+      \flattenTerm{\term{\sparen{\termm^\expr}}}{\soptile{\sparen{\tiles^{\expr}}}}
     }\\
     \inferrule[]{
-      \flattenTerm{e_1}{\selection_1} \\
-      \flattenTerm{e_2}{\selection_2}
+      \flattenTerm{\termm^\expr_1}{\selection_1} \\
+      \flattenTerm{\termm^\expr_2}{\selection_2}
     }{
-      \flattenTerm{\term{\sbinhole{e_1}{e_2}}}{\selection_1~\bintile{\binhole}~\selection_2}
+      \flattenTerm{\term{\sbinhole{\termm^\expr_1}{\termm^\expr_2}}}{\selection_1~\sbintile{\binhole}~\selection_2}
     }\hspace{20pt}
     \inferrule[]{
-      \flattenTerm{e_1}{\selection_1} \\
-      \flattenTerm{e_2}{\selection_2}
+      \flattenTerm{\termm^\expr_1}{\selection_1} \\
+      \flattenTerm{\termm^\expr_2}{\selection_2}
     }{
-      \flattenTerm{\term{\sprod{e_1}{e_2}}}{\selection_1~\bintile{\tprod}~\selection_2}
+      \flattenTerm{\term{\sprod{\termm^\expr_1}{\termm^\expr_2}}}{\selection_1~\sbintile{\tprod}~\selection_2}
     }\\
     \inferrule[]{
-      \flattenTerm{p}{\tiles^{\pat}} \\
-      \flattenTerm{e}{\selection}
+      \flattenTerm{\termm^\pat}{\tiles^{\pat}} \\
+      \flattenTerm{\termm^\expr}{\selection}
     }{
-      \flattenTerm{\term{\slam{p}{e}}}{\pretile{\tlam{\tiles^{\pat}}}~\selection}
+      \flattenTerm{\term{\slam{\termm^\pat}{\termm^\expr}}}{\spretile{\tlam{\tiles^{\pat}}}~\selection}
     }\\
     \inferrule[]{
-      \flattenTerm{p}{\tiles^{\pat}} \\
-      \flattenTerm{e_1}{\tiles^{\expr}} \\
-      \flattenTerm{e_2}{\selection}
+      \flattenTerm{\termm^\pat}{\tiles^{\pat}} \\
+      \flattenTerm{\termm^\expr_1}{\tiles^{\expr}} \\
+      \flattenTerm{\termm^\expr_2}{\selection}
     }{
-      \flattenTerm{\term{\slet{p}{e_1}{e_2}}}{\pretile{\tlet{\tiles^{\pat}}{\tiles^{\expr}}}~\selection}
+      \flattenTerm{\term{\slet{\termm^\pat}{\termm^\expr_1}{\termm^\expr_2}}}{\spretile{\tlet{\tiles^{\pat}}{\tiles^{\expr}}}~\selection}
     }
   \end{mathpar}
 
   \caption{
-    Term disassembly
+    Term flattening
   }
   \label{fig:flatten-term}
   \end{figure}

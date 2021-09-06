@@ -74,6 +74,8 @@ $\pointing{\soptile{\svar{a}}}{\sbintile{\tplus}\soptile{\svar{b}}}$.
 Segments $\selection$ are sequences of \emph{tiles}
 and \emph{shards}, collectively called \emph{pieces},
 as shown in Figure \ref{fig:segment-syntax}.
+Segments containing only tiles are called \emph{intact},
+otherwise \emph{cracked}.
 The two segments $\soptile{\svar{a}}$ and
 $\sbintile{\tplus}\soptile{\svar{b}}$ in the last example consist
 entirely of expression tiles $\tile^{\expr}$,
@@ -220,9 +222,11 @@ on the left to produce the total unfocused segment.
       \tiles_1^\expr\spretile{\tlet{\tiles^\pat}{\tiles^{\expr}}}\tiles_2^\expr
     }{\tfrelem^\expr}
 \end{array}\]
-Note that it is only partially defined for when the
+Note that frame filling is only partially defined for when the
 left segment argument is a sequence of tiles of the
 expected sort.
+This implies that whenever cursor erasure succeeds on a zipper $\zipper{\subject}{\zframe}$,
+then the cursor-erased subject $\erasesub{\subject}$ must be intact.
 
 \subsection{Actions} \label{sec:actions}
 
@@ -232,23 +236,18 @@ Figure \ref{fig:action-syntax} gives the syntax of actions $\action$.
 Actions are given meaning by the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
 which we will define over the course of this section.
-We will start by introducing the central \emph{parsability} invariant
-that governs action behavior,
-then describe the eight rules defining the action judgment, grouped
-into five feature categories:
-moving, % (\ref{sec:moving}),
-constructing, % (\ref{sec:constructing}),
-selecting, % (\ref{sec:selecting}),
-restructuring, and % (\ref{sec:restructuring}), and
-deleting. % (\ref{sec:deleting}).
-
-\subsubsection{Parsability} \label{sec:parsability}
+Moving forward, we will adopt the new notation $\termm^{\pat}$
+and $\termm^{\expr}$ in place of $\spat$ and $\sexp$,
+as were defined in Figure \ref{fig:term-syntax},
+and $\termm^s$ for a term whose sort may vary.
 
 \input{term-flattening}
 
+We begin with the central \emph{parsability invariant}
+governing the action judgment's design.
 A segment $C$ is called \emph{$s$-parsable} if there
-exists a term $x$ of sort $s$ that \emph{flattens} to
-it, as defined by the term flattening judgments $\flattenTerm{x}{C}$
+exists a term $\termm^s$ that \emph{flattens} to
+it, as defined by the term flattening judgments $\flattenTerm{\termm^s}{C}$
 given in Figure \ref{fig:flatten-term}.
 Term flattening is akin to switching from term view
 to tile view in \tylr, as we saw in Figure \ref{fig:pan}.
@@ -262,15 +261,23 @@ derive the conclusion
     \parenaplusb
     \sbintile{\tdiv}
     \parenamultb
-  }
+  }.
 \]
+The parsability invariant is as follows.
 
-Actions are governed by the following theorem.
-
-\begin{theorem}
+\begin{theorem} \label{thm:parsability-invariant}
 If $\erasezip{\zip_1}$ is $\expr$-parsable and $\performAction{\zip_1}{\action}{\zip_2}$
 then $\erasezip{\zip_2}$ is $\expr$-parsable.
 \end{theorem}
+
+With this guideline in mind, we will now describe
+each of the eight rules defining the action judgment,
+grouped into five feature categories:
+moving, % (\ref{sec:moving}),
+inserting, % (\ref{sec:inserting}),
+selecting, % (\ref{sec:selecting}),
+restructuring, and % (\ref{sec:restructuring}), and
+removing. % (\ref{sec:removing}).
 
 % \note{introduce action syntax}
 
@@ -304,7 +311,8 @@ a one-dimensional interaction model, where the client may
 view the total edit state as its serialization, navigate through it
 in a linear fashion, and select arbitrary subranges.
 Toward these ends, actions rely
-on a form of incremental unparsing and reparsing by which
+on a form of incremental unparsing and reparsing---distinct
+from term flattening---by which
 hierarchical structures may be temporarily serialized
 as needed for linear traversal or partial selection.
 In this section, we will introduce the
@@ -375,6 +383,7 @@ to define movement in pointing mode.
 
 % \input{piece-disassembly}
 \input{subject-disassembly}
+\input{disassemble-frame-tile}
 
 \newcommand{\prefixtwo}{\soptile{\snumlit{2}}\sbintile{\tmult}}
 \newcommand{\parenthreefour}{\soptile{\sparen{\splus{\snumlit{3}}{\snumlit{4}}}}}
@@ -399,7 +408,7 @@ are iteratively rewritten according to the grammar rules.
 A parser for a CFG may then be characterized as a function
 that takes a string of terminal symbols and identifies,
 if any exist,
-a derivation from the grammar's starting nonterminal
+a derivation from the grammar's start
 symbol to the input string.
 We may similarly characterize a parser on pieces according
 to the disassembly relation.
@@ -429,7 +438,6 @@ We say that the operator $\parseSelection{\cdot}$ performs \emph{segment assembl
 % We defer presenting a constructive implementation of segment
 % assembly to the yet-imaginary appendix.
 
-\input{disassemble-frame-tile}
 % \input{step-disassemble-zipper}
 
 We define disassembly and assembly of zippers in a similar fashion.
@@ -528,44 +536,26 @@ so we simply move it to the left of the cursor to produce $\zip$.
 Finally, we invoke zipper assembly on $\zip$ to reassemble
 the parentheses shards into a tile frame around the new cursor position.
 
-\subsubsection{Constructing} \label{sec:constructing}
-\[
-  \inferrule[Construct]{
-    \fixHolesSelections{\selection_1}{\tile^s\selection_2}{s}{\selection'_1}{\selection'_2}
-  }{
-    \performAction{
-      \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
-    }{
-      \actionlit{construct}\ \tile^s
-    }{
-      \zipper{\pointing{\selection'_1}{\selection'_2}}{\tfrelem^{s}}
-    }
-  }
-\]
+\subsubsection{Inserting} \label{sec:inserting}
 
-We characterize assembly of pieces into terms
-similarly to how we characterized segment assembly
-in Section \ref{sec:shards-and-pieces}.
-Figure \ref{fig:flatten-term} defines the \emph{term
-disassembly} judgments $\flattenTerm{p}{\selection}$
-and $\flattenTerm{e}{\selection}$, which decompose
-the terms $p$ and $e$ into segments $\selection$.
+When only moving we may be confident that parsability
+of the cursor-erased zipper is maintained.
+This begins to change as we turn to insertion.
 
-\input{term-flattening}
+Reasoning directly and constructively about the existence
+of parsed terms on each modification is not ideal,
+especially later when we see how actions act on
+arbitrary segments.
+It turns out we can reason instead about more
+sequential properties.
 
-The segments produced by term disassembly always satisfy
-a couple properties. First, they are always \emph{intact}:
-\begin{definition}
-  A segment $\selection$ is called \emph{intact} if it consists
-  solely of tiles.
-\end{definition}
+Notice in Figure \ref{fig:flatten-term} how a segment
+$\selection$ produced by term flattening will satisfy a couple
+properties. First, $\selection$ is intact.
 \begin{lemma}
-  If $\flattenTerm{p}{\selection}$ or $\flattenTerm{e}{\selection}$ then $\selection$ is intact.
+  If $\flattenTerm{\termm^s}{\selection}$ then $\selection$ is intact.
 \end{lemma}
-\note{call back to initial \tylr~ figure showing term
-vs tile view of lambda term}
-
-Second, each piece in a term disassemblage ``fits''
+Second, each piece in a flattened term ``fits''
 its neighbors, \ie, each piece's left and right \emph{tips}
 match, respectively, the right tip of its left neighbor
 and the left tip of its right neighbor.
@@ -573,66 +563,63 @@ We have suggestively notated the tile and shard forms with
 approximations of their tips, but have elided some relevant
 sort information.
 More completely, we define in Figure \ref{fig:piece-tips}
-the syntax for tips and the operators $\leftTip{c}$
-and $\rightTip{c}$ that return the left and right tips
-of a piece $c$.
-\note{describe tips, discuss a tile example and
-a shard example}
-
-In fact, this notion of ``fit'' extends to all disassemblages
-of a disassembled term. \note{todo: different names for term
-disassembly vs tile disassembly}
-More precisely, Figure \ref{fig:tip-tip-connected} defines
-\emph{$\tau_1\tau_2$-connectedness} of a segment.
-\note{a little more discussion, example of connected vs not connected segment}
-We say that a segment $\selection$ is \emph{connected} if there exist
-tips $\tau_1$ and $\tau_2$ such that $\selection$ is $\tau_1\tau_2$-connected.
-
-\begin{lemma}
-  If $\flattenTerm{p}{C}$ then $C$ is $\lltip{\pat}~\rrtip{\pat}$-connected.
-  If $\flattenTerm{e}{C}$ then $C$ is $\lltip{\expr}~\rrtip{\expr}$-connected.
-  \note{todo: sort-indexed terms}
-\end{lemma}
+the syntax for tips and the operators $\leftTip{\selem}$
+and $\rightTip{\selem}$ that return the left and right tips
+of a piece $\selem$.
+% \note{describe tips, discuss a tile example and
+% a shard example}
 
 \input{piece-tips}
 \input{tip-tip-connected}
 
-These two properties of segments---intactness
-and connectedness---are in fact also \emph{sufficient} to
-guarantee there exists a term that disassembles to
-the segment in question.
+In fact, this notion of ``fit'' extends to all disassemblages
+of a flattened term.
+More precisely, Figure \ref{fig:tip-tip-connected} defines
+\emph{$\tau_1\tau_2$-connectedness} of a segment.
+% \note{a little more discussion, example of connected vs not connected segment}
+We say that a segment $\selection$ is \emph{connected} if there exist
+tips $\tau_1$ and $\tau_2$ such that $\selection$ is $\tau_1\tau_2$-connected.
 
-\begin{theorem} \label{thm:term-parseability}
-  A segment $\selection$ is intact and $\lltip{s}~\rrtip{s}$-connected
-  if and only if there exists a term $x$ of sort $s$ such that
-  $\flattenTerm{x}{\selection}$.
-  \note{todo: sort-indexed terms}
+\begin{lemma}
+  If $\flattenTerm{\termm^s}{C}$ then $C$ is $s$-convex.
+\end{lemma}
+\noindent
+
+We call $\lltip{s}~\rrtip{s}$-connected segments, in particular, \emph{$s$-convex}.
+A segment that is both intact and $s$-convex is called an \emph{$s$-opseq}.
+Being an $s$-opseq is not only necessary for the segment in question to be
+$s$-parsable, but also sufficient.
+
+\begin{theorem} \label{thm:term-parsability}
+  A segment $\selection$ is an $s$-opseq
+  if and only if it is $s$-parsable.
 \end{theorem}
 \noindent
-We call such a segment an \emph{opseq of sort $s$}.
-\note{move above theorem, state theorem in terms of that}
+% \note{move above theorem, state theorem in terms of that}
 
-\paragraph{Hole fixing}
-We have seen in Section \ref{sec:overview} how tile-based
-editing supports temporary departure from intactness of
-the edit state while selecting and restructuring.
-However, edit actions must take care to maintain
-connectedness at all times to preserve opseq structure
-upon reassembling shards and returning to pointing mode.
+Composing Theorems \ref{thm:term-parsability} and \ref{thm:parsability-invariant}
+gives us the following corollary.
+\begin{corollary}
+  If $\erasezip{\zip_1}$ is an $s$-opseq and $\performAction{\zip_1}{\action}{\zip_2}$
+  then $\erasezip{\zip_2}$ is an $s$-opseq.
+\end{corollary}
+\noindent
+Thus, our actions need only concern themselves with
+maintaining proper shard assemblage and connectedness.
 
 \input{hole-fixing-judgment}
 
-Toward this end, we will see that actions make use of the hole fixing judgment
+For the purposes of maintaining connectedness, we
+define a \emph{hole fixing} judgment
 $\fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}$
 given in Figure \ref{fig:fixholes-2},
 which takes a pair of segments $\selection_1$ and $\selection_2$
 and inserts and removes holes of sort $s$ to produce $\selection'_1$
 and $\selection'_2$.
-\note{add discussion of auxiliary judgment}
 Hole fixing is governed by the following lemma.
 
-\note{need to explain how I'm dropping holes along the way.}
-\note{examples for the two rules where holes are inserted in auxiliary judgment.}
+% \note{need to explain how I'm dropping holes along the way.}
+% \note{examples for the two rules where holes are inserted in auxiliary judgment.}
 
 \begin{lemma}
   Suppose $\selection_1$ and $\selection_2$ are connected segments
@@ -644,8 +631,44 @@ Hole fixing is governed by the following lemma.
         $\selection_1$ and $\selection_2$ respectively; and
     \item there exist no neighboring holes in $\selection'_1\selection'_2$.
   \end{enumerate}
-  \note{formalize 2 (note same order) and 3}
+  % \note{formalize 2 (note same order) and 3}
 \end{lemma}
+
+
+
+\[
+  \inferrule[Construct]{
+    \fixHolesSelections{\selection_1}{\tile^s\selection_2}{s}{\selection'_1}{\selection'_2}
+  }{
+    \performAction{
+      \zipper{\pointing{\selection_1}{\selection_2}}{\tfrelem^s}
+    }{
+      \actionlit{insert}\ \tile^s
+    }{
+      \zipper{\pointing{\selection'_1}{\selection'_2}}{\tfrelem^{s}}
+    }
+  }
+\]
+
+% We characterize assembly of pieces into terms
+% similarly to how we characterized segment assembly
+% in Section \ref{sec:shards-and-pieces}.
+% Figure \ref{fig:flatten-term} defines the \emph{term
+% disassembly} judgments $\flattenTerm{p}{\selection}$
+% and $\flattenTerm{e}{\selection}$, which decompose
+% the terms $p$ and $e$ into segments $\selection$.
+
+% The segments produced by term disassembly always satisfy
+% a couple properties. First, they are always \emph{intact}:
+% \begin{definition}
+%   A segment $\selection$ is called \emph{intact} if it consists
+%   solely of tiles.
+% \end{definition}
+
+% \note{call back to initial \tylr~ figure showing term
+% vs tile view of lambda term}
+
+
 
 
 \subsubsection{Selecting} \label{sec:selecting}
@@ -727,15 +750,15 @@ Hole fixing is governed by the following lemma.
 
 \input{move-restructuring}
 
-\subsubsection{Deleting} \label{sec:deleting}
+\subsubsection{Removing} \label{sec:removing}
 \[
-  \inferrule[Delete]{
+  \inferrule[Remove]{
     \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
   }{
     \performAction{
       \zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\tfrelem^s}
     }{
-      \actionlit{delete}
+      \actionlit{remove}
     }{
       \zipper{\pointing{\selection'_1}{\selection'_3}}{\tfrelem^s}
     }

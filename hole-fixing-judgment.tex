@@ -32,6 +32,26 @@
   %     \fixholes{\tau_1}{\selem\selection}{\tau_2}{\selem\selection'}
   %   }
   % \end{mathpar}
+  \judgbox{
+    \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection_3}{\selection_4}
+  }{$\selection_1$ and $\selection_2$ are hole fixed \\
+    \ \ to produce $\selection_3$ and $\selection_4$
+  }
+  \vspace{10pt}
+  \begin{mathpar}
+    \inferrule[]{
+      \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
+      \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\rrtip{s}}
+    }{
+      \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}
+    } \\
+    \inferrule[]{
+      \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
+      \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\lltip{s}}
+    }{
+      \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2\optile{\ophole}^s}
+    }
+  \end{mathpar}
 
   \judgbox{
     \fixHolesSelection{\tip_1}{\selection_1}{\selection_2}{\tip_2}
@@ -72,29 +92,8 @@
       \fixHolesSelection{\rrtip{s}}{\selem\selection}{\bintile{\binhole}^s\selem\selection'}{\tip'}
     } \\
   \end{mathpar}
-
-  \judgbox{
-    \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection_3}{\selection_4}
-  }{$\selection_1$ and $\selection_2$ are hole fixed \\
-    \ \ to produce $\selection_3$ and $\selection_4$
-  }
-  \vspace{10pt}
-  \begin{mathpar}
-    \inferrule[]{
-      \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
-      \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\rrtip{s}}
-    }{
-      \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2}
-    } \\
-    \inferrule[]{
-      \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
-      \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\lltip{s}}
-    }{
-      \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2\optile{\ophole}^s}
-    }
-  \end{mathpar}
   \caption{
-    Hole fixing \note{swap order}
+    Hole fixing
   }
   \label{fig:fixholes-2}
   \end{figure}
