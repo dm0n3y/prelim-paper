@@ -259,7 +259,7 @@ the course of this section.
 % to support linear traversal and partial selection.
 
 
-\subsubsection{Moving}
+\subsubsection{Moving} \label{sec:moving}
 
 \ty's actions are designed around
 a one-dimensional interaction model, where the client may
@@ -269,8 +269,8 @@ Toward these ends, actions rely
 on a form of incremental unparsing and reparsing by which
 hierarchical structures may be temporarily serialized
 as needed for linear traversal or partial selection.
-In this section, we will introduce the operations of
-\emph{disassembly} and \emph{assembly} of segments
+In this section, we will introduce the
+\emph{disassembly} and \emph{assembly} relations on segments
 and zippers, then show how these operations are used
 to define movement in pointing mode.
 
@@ -463,17 +463,19 @@ an excerpt of which is presented in Figure \ref{fig:move-pointing}.
 
 At a high level, this excerpt tells us that, to move
 the cursor right in pointing mode, the system should
-iteratively disassemble in-place whatever is to the
-right of the cursor until that is no longer possible,
-move past an atomic piece, and reassemble the pieces.
+iteratively step-disassemble in-place the piece or tile frame
+to the right of the cursor until that is no longer possible,
+move past the non-disassembling piece, and reassemble the
+shards into tiles or tile frames around the cursor.
 
 \input{move-pointing-derivation}
 
 More concretely, consider the derivation of the
 rightward movement in Figure \ref{fig:pmove-derivation},
-which we tour from an implementator's perspective,
-starting with the input edit state
-$\zipper{\pointing{\prefixtwo}{\parenthreefour}}{\froot}$.
+which we tour from an implementor's perspective.
+Our implementation input is the initial edit state
+$\zipper{\pointing{\prefixtwo}{\parenthreefour}}{\froot}$
+in the conclusion.
 Looking to the right of the cursor, we find a piece
 $\parenthreefour$ that step-disassembles to
 $\shardlit{(}\threefour\shardlit{)}$, as shown
@@ -481,13 +483,14 @@ in the first antecedent of the applied rule \\
 \texttt{PMoveRightDisassembles}.
 We accordingly replace the piece with its step-disassemblage
 and recursively invoke rightward movement.
-Now the piece $\shardlit{(}$ to the right of the cursor is atomic,
+Now the piece $\shardlit{(}$ to the right of the cursor does
+not step-disassemble,
 as shown in the antecedent of \texttt{PMoveRightAtomic},
 so we simply move it to the left of the cursor to produce $\zip$.
 Finally, we invoke zipper assembly on $\zip$ to reassemble
-the parentheses shards into a tile frame.
+the parentheses shards into a tile frame around the new cursor position.
 
-\subsubsection{Constructing}
+\subsubsection{Constructing} \label{sec:constructing}
 \[
   \inferrule[Construct]{
     \fixHolesSelections{\selection_1}{\tile^s\selection_2}{s}{\selection'_1}{\selection'_2}
@@ -607,7 +610,7 @@ Hole fixing is governed by the following lemma.
 \end{lemma}
 
 
-\subsubsection{Selecting}
+\subsubsection{Selecting} \label{sec:selecting}
 \[
   \inferrule[StartSelecting]{
   }{
@@ -637,7 +640,7 @@ Hole fixing is governed by the following lemma.
 
 \input{move-selecting}
 
-\subsubsection{Restructuring}
+\subsubsection{Restructuring} \label{sec:restructuring}
 
 \[
   \inferrule[PickUp]{
@@ -686,7 +689,7 @@ Hole fixing is governed by the following lemma.
 
 \input{move-restructuring}
 
-\subsubsection{Deleting}
+\subsubsection{Deleting} \label{sec:deleting}
 \[
   \inferrule[Delete]{
     \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
