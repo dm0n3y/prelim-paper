@@ -145,6 +145,85 @@ and $\froot$.
 Moving forward, for brevity, we will elide $\tsframelit~\froot$ from the
 end of non-root frames.
 
+\paragraph{Cursor erasure}
+Given a zipper $\zip$, we will often wish to refer to the
+underlying segment $\erasezip{\zip}$ without regard for
+how the cursor is positioned.
+The operator $\erasezip{\cdot}$ is called \emph{cursor erasure}
+and is defined for zippers below.
+\[
+  \erasezip{(\zipper{\subject}{\zframe})} = \fillFrame{\erasesub{\subject}}{\zframe}
+\]
+This definition depends on two sub-operations:
+cursor erasure $\erasezip{\cdot}$ on subjects
+and \emph{frame filling} $\fillFrame{\cdot}{\cdot}$.
+
+Cursor erasure is defined for pointing subjects as follows.
+\[\arraycolsep=2pt\begin{array}{rcl}
+  \erasesub{(\pointing{\selection_1}{\selection_2})} & = & \selection_1\selection_2 \\
+\end{array}\]
+We will define cursor erasure on selecting and
+restructuring subjects in Section \ref{sec:selecting}
+after we have developed some additional machinery.
+
+Frame filling $\fillFrame{\cdot}{\cdot}$, defined below,
+takes a frame on the right and fills it with the segment
+on the left to produce the total unfocused segment.
+\[\begin{array}{cl}
+  & \fillFrame{\tiles^{s}}{\froot}\ =\ \tiles^{s} \\\\
+
+  & \fillFrame{\tiles^{s}}{
+    \tframelit{
+      \soptile{\sparen{\framehole}}
+    }{
+      \sframelit{\tiles_1^s\framehole\tiles_2^s}{\tfrelem^s}
+    }
+  } \\
+  = &
+    \fillFrame{
+      \tiles_1^s\soptile{\sparen{\tiles^s}}\tiles_2^s
+    }{\tfrelem^s} \\\\
+
+  & \fillFrame{\tiles^{\pat}}{
+    \tframelit{
+      \spretile{\tlam{\framehole}}
+    }{
+      \sframelit{\tiles_1^\expr\framehole\tiles_2^\expr}{\tfrelem^\expr}
+    }
+  } \\
+  = &
+    \fillFrame{
+      \tiles_1^\expr\spretile{\tlam{\tiles^\pat}}\tiles_2^\expr
+    }{\tfrelem^\expr} \\\\
+
+  & \fillFrame{\tiles^{\pat}}{
+    \tframelit{
+      \spretile{\tlet{\framehole}{\tiles^\expr}}
+    }{
+      \sframelit{\tiles_1^\expr\framehole\tiles_2^\expr}{\tfrelem^\expr}
+    }
+  } \\
+  = &
+    \fillFrame{
+      \tiles_1^\expr\spretile{\tlet{\tiles^\pat}{\tiles^{\expr}}}\tiles_2^\expr
+    }{\tfrelem^\expr} \\\\
+
+  & \fillFrame{\tiles^{\expr}}{
+    \tframelit{
+      \spretile{\tlet{\tiles^\pat}{\framehole}}
+    }{
+      \sframelit{\tiles_1^\expr\framehole\tiles_2^\expr}{\tfrelem^\expr}
+    }
+  } \\
+  = &
+    \fillFrame{
+      \tiles_1^\expr\spretile{\tlet{\tiles^\pat}{\tiles^{\expr}}}\tiles_2^\expr
+    }{\tfrelem^\expr}
+\end{array}\]
+Notice that it is only partially defined for when the
+left segment argument is a sequence of tiles of the
+expected sort.
+
 \subsection{Actions} \label{sec:actions}
 
 \input{action-syntax}
