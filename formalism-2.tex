@@ -231,8 +231,46 @@ expected sort.
 Figure \ref{fig:action-syntax} gives the syntax of actions $\action$.
 Actions are given meaning by the action judgment
 $\performAction{\editState_1}{\action}{\editState_2}$,
-whose eight defining rules we will describe over
-the course of this section.
+which we will define over the course of this section.
+We will start by introducing the central \emph{parsability} invariant
+that governs action behavior,
+then describe the eight rules defining the action judgment, grouped
+into five feature categories:
+moving, % (\ref{sec:moving}),
+constructing, % (\ref{sec:constructing}),
+selecting, % (\ref{sec:selecting}),
+restructuring, and % (\ref{sec:restructuring}), and
+deleting. % (\ref{sec:deleting}).
+
+\subsubsection{Parsability} \label{sec:parsability}
+
+\input{term-flattening}
+
+A segment $C$ is called \emph{$s$-parsable} if there
+exists a term $x$ of sort $s$ that \emph{flattens} to
+it, as defined by the term flattening judgments $\flattenTerm{x}{C}$
+given in Figure \ref{fig:flatten-term}.
+Term flattening is akin to switching from term view
+to tile view in \tylr, as we saw in Figure \ref{fig:pan}.
+For example, the rules of term flattening would let us
+derive the conclusion
+\[
+  \flattenTerm{
+    \term{\slam{\sprod{a}{b}}{\sdiv{\sparen{\splus{\svar{a}}{\svar{b}}}}{\smult{\svar{a}}{\svar{b}}}}}
+  }{
+    \lamab
+    \parenaplusb
+    \sbintile{\tdiv}
+    \parenamultb
+  }
+\]
+
+Actions are governed by the following theorem.
+
+\begin{theorem}
+If $\erasezip{\zip_1}$ is $\expr$-parsable and $\performAction{\zip_1}{\action}{\zip_2}$
+then $\erasezip{\zip_2}$ is $\expr$-parsable.
+\end{theorem}
 
 % \note{introduce action syntax}
 
