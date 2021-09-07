@@ -679,6 +679,12 @@ Hole fixing is governed by the following lemma.
 
 
 \subsubsection{Selecting} \label{sec:selecting}
+The $\actionlit{mark}$ action is used to transition
+between subject modes.
+Performing $\actionlit{mark}$ in pointing mode
+drops the right selection anchor and
+transitions the subject to selecting mode with
+an empty selection.
 \[
   \inferrule[StartSelecting]{
   }{
@@ -692,6 +698,10 @@ Hole fixing is governed by the following lemma.
   }
 \]
 
+A selection is then specified by moving the left
+selection anchor, the rule for which is given below.
+For simplicity, we only model right-to-left selection
+in \ty.
 \[
   \inferrule[Select]{
     \smove{\zipper{\selecting{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
@@ -705,6 +715,25 @@ Hole fixing is governed by the following lemma.
     }
   }
 \]
+Movement in selecting mode defers to the
+supporting judgment $\smove{\editState_1}{\direction}{\editState_2}$.
+This judgment follows a similar high-level flow
+as its pointing analogue $\pmove{\editState_1}{\direction}{\editState_2}$,
+additionally accounting for asymmetric movement in this context.
+
+Leftward movement grows the selection and is described by
+rules \texttt{SMoveLeftAtomic}, \texttt{SMoveLeftDisassembles},
+and \texttt{SMoveLeftFrame}.
+Note how \texttt{SMoveLeftAtomic}
+assembles the selected segment with each piece that is added to
+retain maximal structure in the selection.
+
+Rightward movement shrinks the selection and is described
+by rules \texttt{SMoveRightAtomic} and \texttt{SMoveRightDisassembles}.
+Note how \texttt{SMoveRightAtomic} shifts the head selected piece
+$c$ to the prefix, assembles the prefix segment, and
+assembles the prefix-suffix zipper surrounding the shrunken selection,
+ensuring the unselected segments and frame retain maximal structure.
 
 \input{move-selecting}
 

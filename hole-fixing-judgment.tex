@@ -49,7 +49,7 @@
       \fixHolesSelection{\lltip{s}}{\selection_1}{\selection'_1}{\tip} \\
       \fixHolesSelection{\tip}{\selection_2}{\selection'_2}{\lltip{s}}
     }{
-      \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2\optile{\ophole}^s}
+      \fixHolesSelections{\selection_1}{\selection_2}{s}{\selection'_1}{\selection'_2\soptile{\ophole}^s}
     }
   \end{mathpar}
 
@@ -82,14 +82,14 @@
       \rrtip{s} = \leftTip{\selem} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{\lltip{s}}{\selem\selection}{\optile{\ophole}^s\selem\selection'}{\tip'}
+      \fixHolesSelection{\lltip{s}}{\selem\selection}{\soptile{\ophole}^s\selem\selection'}{\tip'}
     } \\
     \inferrule[]{
       \neg(\ishole{\selem}) \\
       \lltip{s} = \leftTip{\selem} \\
       \fixHolesSelection{\rightTip{\selem}}{\selection}{\selection'}{\tip'}
     }{
-      \fixHolesSelection{\rrtip{s}}{\selem\selection}{\bintile{\binhole}^s\selem\selection'}{\tip'}
+      \fixHolesSelection{\rrtip{s}}{\selem\selection}{\sbintile{\binhole}^s\selem\selection'}{\tip'}
     } \\
   \end{mathpar}
   \caption{
