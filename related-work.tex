@@ -6,11 +6,18 @@ to the introduction of the Cornell Program Synthesizer
 \cite{Cornell} in 1981.
 Here we focus our attention on contemporary editors.
 
+\setlength\intextsep{0pt}
+\begin{wrapfigure}{r}{0.35\columnwidth}
+  \includegraphics[width=0.4\columnwidth]{img/scratch.png}
+  \caption{}
+  \label{fig:scratch}
+\end{wrapfigure}
 The most popular structure editors today
 are block-based editors such as Scratch \cite{scratch}, Snap!,
 App Inventor, Alice, and many more.
 In these editors, the user authors a program
-like the one shown to the right
+like the Scratch program shown to the right
+(adapted from \cite{blocks-csed})
 by dragging-and-dropping blocks together on a canvas.
 Each block corresponds to a syntactic form of
 the underlying language and is shaped, based on its
@@ -26,8 +33,11 @@ become unwieldy once users start creating and maintaining
 larger or more expression-oriented programs.
 For example---adapting an observation by
 Brown \etal \cite{no-keyboard-cripples}---constructing
-the small calculation shown in
-Figure ?? involves assembling seven blocks, each
+\begin{wrapfigure}{l}{0.35\columnwidth}
+  \includegraphics[width=0.4\columnwidth]{img/scratch-opseq.png}
+\end{wrapfigure}
+the small calculation shown on the left
+involves assembling seven blocks, each
 requiring a sequence of gestures to find and
 drag-and-drop the appropriate block into the right spot
 in the canvas;
@@ -47,7 +57,7 @@ elements corresponded to complete syntactic terms.
 Of the negative half, half (6) were about the difficulty
 of refactoring when the desired selection
 does not correspond to a complete term;
-for example, in Figure ??, dragging the \code{move} block out of
+for example, in Figure \ref{fig:scratch}, dragging the \code{move} block out of
 the \code{repeat} block drags all the statements below
 along with it, thereby requiring multiple gestures
 in sum to select and remove the single \code{move} block.
@@ -87,7 +97,7 @@ trees in operator sequences while constructing them
 linearly; and dangling parenthesis annotations in the
 edit state to support constructing parentheses individually.
 Despite these techniques, as a term-based editor, MPS
-does not support directly selecting partial terms.
+does not support directly selecting partial terms \cite{TowardUserFriendly}.
 For example, having typed \code{2 + 3 * 4} into MPS, it would
 not be possible to select \code{2 + 3} because this cuts
 across the parsed associative structure.
@@ -155,7 +165,7 @@ same sort as the deleted tile.
 % in limitation section, possibly mention statements, lean into
 % our philosophy but here are some thoughts}
 
-Fructure is a structure editor for the Lisp family of
+Fructure \cite{fructure} is a structure editor for the Lisp family of
 programming languages.
 Similarly motivated to reduce the viscosity of structure
 editing, Fructure features a novel \emph{transformation mode}
