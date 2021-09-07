@@ -130,8 +130,8 @@ For this reason, \tylr~ automatically inserts
 and removes placeholder tiles called \emph{holes}
 as we edit to maintain opseq structure.
 There are two kinds of holes:
-\emph{operand holes} \optile{\ophole}
-and \emph{operator holes} \bintile{\binhole}.
+\emph{operand holes} $\soptile{\ophole}$
+and \emph{operator holes} $\sbintile{\binhole}$.
 We will soon see a number of examples of
 automatic hole fixing as we turn our attention
 to editing.
@@ -597,7 +597,7 @@ or we may feed it.
 % \end{itemize}
 
 \paragraph{Feeding a hungry backpack}
-Now we rewrite the radius in terms of the variables
+Say we have rewritten the origin in terms of
 \code{x} and \code{y}, as shown at the top of the
 edit sequence below.
 Along the way, however, we forgot to parenthesize
@@ -605,31 +605,45 @@ the origin coordinates.
 We also notice that the parentheses in the definition
 of the \code{let}-tile are now redundant and decide
 to recycle them.
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-0.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-1.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-2.png}
+\end{center}
 At this point the backpack is hungry and restricts
 our movement to the tile sequence within the
 let definition.
 Instead of emptying our backpack like in the
 last example, this time we move over to the
 left parenthesis and pick it up as well.
+\begin{center}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-3.png}
+  \includegraphics[width=\columnwidth]{img/multi-restructure-4.png}
+\end{center}
 Now our backpack is full, as it carries both shards
 needed to assemble a parentheses tile, and we may
 now move freely out of the let definition
 to put down the parentheses around the origin coordinates.
-% \note{add labels to edit states,
-% label sentences here}
-
 \begin{center}
-  \includegraphics[width=\columnwidth]{img/multi-restructure-0.png}
-  \includegraphics[width=\columnwidth]{img/multi-restructure-1.png}
-  \includegraphics[width=\columnwidth]{img/multi-restructure-2.png}
-  \includegraphics[width=\columnwidth]{img/multi-restructure-3.png}
-  \includegraphics[width=\columnwidth]{img/multi-restructure-4.png}
   \includegraphics[width=\columnwidth]{img/multi-restructure-5.png}
   \includegraphics[width=\columnwidth]{img/multi-restructure-6.png}
   \includegraphics[width=\columnwidth]{img/multi-restructure-7.png}
   \includegraphics[width=\columnwidth]{img/multi-restructure-8.png}
   \includegraphics[width=\columnwidth]{img/multi-restructure-9.png}
 \end{center}
+
+The last example showed how \tylr~ lets us carry \emph{multiple}
+related range selections in the backpack.
+This ability significantly improves our selecting precision
+compared to prior designs.
+From the perspective of the term syntax,
+where other structure editors force us to select
+complete subtrees, \tylr~ lets us cut out individual
+\emph{nodes} of the tree and splice them back in
+elsewhere.
+
+% \note{add labels to edit states,
+% label sentences here}
 
 % Say you have filled the hole in Figure ?? with
 % the variables \texttt{x} and \texttt{y} you defined
@@ -660,22 +674,13 @@ to put down the parentheses around the origin coordinates.
 % down first the last picked up selection; we discuss
 % deviations
 
-Now your backpack is full, as it carries both shards
-needed to assemble a whole parentheses tile,
-and you may move freely again.
-You carry the parentheses over to the body of the
-let term and wrap \texttt{x , y} to complete your
-restructuring.
+% Now your backpack is full, as it carries both shards
+% needed to assemble a whole parentheses tile,
+% and you may move freely again.
+% You carry the parentheses over to the body of the
+% let term and wrap \texttt{x , y} to complete your
+% restructuring.
 
-The last example showed how \tylr~ lets you carry \emph{multiple}
-related range selections in your backpack.
-This ability vastly improves your selecting precision
-compared to prior designs.
-From the perspective of the term syntax,
-where other structure editors force you to select
-complete subtrees, \tylr~ lets you cut out individual
-\emph{nodes} of the tree and splice them back in
-elsewhere.
 % \note{either remove this or rewrite when it's more as
 % an emergent phenomenon}
 
