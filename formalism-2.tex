@@ -812,6 +812,10 @@ and of the same sort as the target position.
 \]
 
 \subsubsection{Removing} \label{sec:removing}
+
+The last rule concerns removal.
+For simplicity, we restrict removal of segments
+in \ty~ to restructuring mode.
 \[
   \inferrule[Remove]{
     \fixHolesSelections{\filterTiles{s}{\selection_1}}{\filterTiles{s}{\selection_3}}{s}{\selection'_1}{\selection'_3}
@@ -825,3 +829,11 @@ and of the same sort as the target position.
     }
   }
 \]
+Removal of the backpack segment requires removing
+any additional shards matching those in the backpack,
+as well as any tiles of different sort than that
+expected by the frame; this pruning is performed by
+the metafunction $\filterTiles{s}{\cdot}$, which filters
+out any pieces in the input segment that are not tiles of sort $s$.
+After filtering, holes are fixed and the edit state returns
+to pointing mode.
