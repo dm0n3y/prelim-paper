@@ -739,6 +739,10 @@ ensuring the unselected segments and frame retain maximal structure.
 
 \subsubsection{Restructuring} \label{sec:restructuring}
 
+Restructuring begins by performing $\actionlit{mark}$
+in selecting mode, which picks up the selection into
+the backpack, provided that the selection's tips have
+the same sort.
 \[
   \inferrule[PickUp]{
     \sortoftip{\leftTip{\selection_2}} = \sortoftip{\rightTip{\selection_2}} \\
@@ -754,6 +758,10 @@ ensuring the unselected segments and frame retain maximal structure.
   }
 \]
 
+\input{move-restructuring}
+
+Movement in restructuring mode moves the
+the backpack segment around its neighboring tiles.
 \[
   \inferrule[Restructure]{
     \rmove{\zipper{\restructuring{\selection_1}{\selection_2}{\selection_3}}{\zframe}}{\direction}{\editState}
@@ -767,7 +775,26 @@ ensuring the unselected segments and frame retain maximal structure.
     }
   }
 \]
+An excerpt defining rightward movement for
+supporting judgment $\rmove{\editState_1}{\direction}{\editState_2}$
+is given in Figure \ref{fig:move-restructuring}.
+If the backpack segment is cracked, rule \texttt{RMoveRightCracked}
+permits movement past entire tiles.
+No rule allows movement of a cracked segment beyond a shard,
+as doing so would violate proper nesting of matching shards.
+If the backpack segment is intact, then the existing shard
+matching structure is stable and
+so rule \texttt{RMoveRightCracked} allows movement the backpack segment
+as if it were empty and in pointing mode.
 
+Finally restructuring is completed by performing
+\texttt{mark} at an appropriate target position,
+which inserts the backpack segment, fixes holes, and
+assembles the result.
+A target position is appropriate if the backpack
+segment is cracked, in which case movement was
+restricted to valid positions, or if it is whole
+and of the same sort as the target position.
 \[
   \inferrule[PutDown]{
     \text{$\selection_2$ is cracked}
@@ -783,8 +810,6 @@ ensuring the unselected segments and frame retain maximal structure.
     }
   }
 \]
-
-\input{move-restructuring}
 
 \subsubsection{Removing} \label{sec:removing}
 \[
