@@ -640,9 +640,10 @@ Hole fixing is governed by the following lemma.
 \end{lemma}
 
 
-
+With hole fixing in hand, we may now give the rule for
+inserting tiles.
 \[
-  \inferrule[Construct]{
+  \inferrule[Insert]{
     \fixHolesSelections{\selection_1}{\tile^s\selection_2}{s}{\selection'_1}{\selection'_2}
   }{
     \performAction{
@@ -654,6 +655,9 @@ Hole fixing is governed by the following lemma.
     }
   }
 \]
+Given a pointing zipper whose frame has sort $s$, the client
+may insert a tile $\tile^s$ of sort $s$ to the right of the cursor.
+Hole fixing upon insertion ensures that we maintain proper connectedness.
 
 % We characterize assembly of pieces into terms
 % similarly to how we characterized segment assembly
